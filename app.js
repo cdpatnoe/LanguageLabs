@@ -3387,10 +3387,10 @@ function getVocabAnomalies(item) {
     anomalies.push({ type: 'error', text: 'Missing English' });
   }
 
-  if (item.pos === 'Noun' && cleanHindi) {
+  if (item.pos === 'Noun' && cleanHindi && !item.explicitGender) {
     if ((cleanHindi.endsWith('ी') || cleanHindi.endsWith('िया')) && item.gender === 'Masculine') {
       anomalies.push({ type: 'warning', text: 'Check: Usually Fem (-ी)' });
-    } else if (cleanHindi.endsWith('ा') && item.gender === 'Feminine') {
+    } else if (cleanHindi.endsWith('ा') && !cleanHindi.endsWith('िया') && item.gender === 'Feminine') {
       anomalies.push({ type: 'warning', text: 'Check: Usually Masc (-ा)' });
     }
   }
@@ -6638,8 +6638,14 @@ function initVocabNotesStudio() {
       if (!hindiMatch) continue;
 
       const hindi = hindiMatch[0];
-      // Skip if it looks like an infinitive verb ending in -ना
-      if (hindi.endsWith('ना') && hindi.length > 2) continue;
+      // Skip only if it is an actual infinitive verb (in Verb Lab or explicitly glossed with "to ...")
+      if (hindi.endsWith('ना') && hindi.length > 2) {
+        const hasExplicitNounGender = /(?:[\s,\|;\:\-\/\.\—\–\(\[]+)(?:m|f|masc|fem|masculine|feminine|noun|adj)\.?(?=[\s,\|;\:\-\/\)\]]|$)/i.test(line);
+        const hasInfinitiveGloss = /\bto\s+[a-z]{2,}/i.test(line) || /\b(?:v|verb|tr|intr|transitive|intransitive)\b/i.test(line);
+        if (!hasExplicitNounGender && (hasInfinitiveGloss || state.hasVerb(hindi))) {
+          continue;
+        }
+      }
 
       let roman = '';
       // 1. Check all parentheses in the line
@@ -6712,11 +6718,14 @@ function initVocabNotesStudio() {
       const delimitedFemRegex = /(?:^|[\s,\|;\:\-\/\(\[])(?:f|fem|feminine)\.?(?=[\s,\|;\:\-\/\)\]]|$)/i;
 
       let gender = null;
+      let explicitGender = false;
       if (/\[m\.?\]|\(m\.?\)|\bmasc\b|\bmasculine\b/i.test(line) || trailingMascRegex.test(line) || delimitedMascRegex.test(line)) {
         gender = 'Masculine';
+        explicitGender = true;
       } else if (/\[f\.?\]|\(f\.?\)|\bfem\b|\bfeminine\b/i.test(line) || trailingFemRegex.test(line) || delimitedFemRegex.test(line)) {
         gender = 'Feminine';
-      } else if (hindi.endsWith('ी')) {
+        explicitGender = true;
+      } else if (hindi.endsWith('ी') || hindi.endsWith('िया')) {
         gender = 'Feminine';
       } else if (hindi.endsWith('ा')) {
         gender = 'Masculine';
@@ -6761,6 +6770,7 @@ function initVocabNotesStudio() {
         english: english || 'meaning to review',
         pos,
         gender,
+        explicitGender,
         sourceFile: currentSource,
         isDuplicate: isDup,
         existingWord: state.getWord(hindi),
