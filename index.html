@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#d94819">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Hindi Lab">
+  <meta name="format-detection" content="telephone=no">
   <title>Hindi Language Lab (हिन्दी अभ्यासशाला) - Verbs & Vocabulary</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -23,7 +29,7 @@
         <div class="logo-badge" aria-hidden="true">हि</div>
         <div class="logo-text">
           <h1 id="app-main-title">Hindi Language Lab <span id="app-title-sub" style="font-weight:400; font-family:var(--font-hindi); font-size:1.15rem; color:var(--primary);">(हिन्दी अभ्यासशाला)</span></h1>
-          <p><span class="status-dot" aria-hidden="true"></span> 100% Offline & Local • Cross-Platform (Windows & Mac)</p>
+          <p class="app-tagline"><span class="status-dot" aria-hidden="true"></span> 100% Offline & Local • Cross-Platform (Windows & Mac)</p>
         </div>
       </div>
 
@@ -33,30 +39,30 @@
           <button type="button" class="focus-pill-btn active" id="focus-verbs-btn" data-module="verbs" role="radio" aria-checked="true" aria-label="Switch to Verb Lab (क्रियाशाला)">
             <span class="focus-pill-icon">⚡</span>
             <span class="focus-pill-text">
-              <span class="focus-pill-title">Verb Lab</span>
+              <span class="focus-pill-title">Verb Lab</span><span class="focus-pill-short" aria-hidden="true">Verbs</span>
               <span class="focus-pill-sub">क्रियाशाला</span>
             </span>
           </button>
           <button type="button" class="focus-pill-btn" id="focus-vocab-btn" data-module="vocab" role="radio" aria-checked="false" aria-label="Switch to Vocabulary Studio (शब्दशाला)">
             <span class="focus-pill-icon">📖</span>
             <span class="focus-pill-text">
-              <span class="focus-pill-title">Vocabulary Studio</span>
+              <span class="focus-pill-title">Vocabulary Studio</span><span class="focus-pill-short" aria-hidden="true">Vocab</span>
               <span class="focus-pill-sub">शब्दशाला</span>
             </span>
           </button>
           <button type="button" class="focus-pill-btn" id="focus-matra-btn" data-module="matras" role="radio" aria-checked="false" aria-label="Switch to Matra Reading Practice (मात्रा वाचन)">
             <span class="focus-pill-icon">🔤</span>
             <span class="focus-pill-text">
-              <span class="focus-pill-title">Matra Reading</span>
+              <span class="focus-pill-title">Matra Reading</span><span class="focus-pill-short" aria-hidden="true">Matras</span>
               <span class="focus-pill-sub">मात्रा वाचन</span>
             </span>
           </button>
         </div>
         <button type="button" class="switch-focus-btn" id="open-lexicon-manager-btn" aria-label="Open Data Cleanup & Lexicon Manager" title="Clean up, edit, and sanitize saved words database (Shortcut: D)" style="background:var(--card-warm); border:1.5px solid var(--border); color:var(--secondary); font-weight:600;">
-          <span aria-hidden="true">🛠️</span> Clean Up Data
+          <span aria-hidden="true">🛠️</span> <span class="btn-label">Clean Up Data</span>
         </button>
         <button type="button" class="switch-focus-btn" id="open-focus-modal-btn" aria-label="Open learning focus chooser dialog (Shortcut: Key M)" title="Choose learning focus (Shortcut: M)">
-          <span>⚙️</span> Choose Focus
+          <span aria-hidden="true">⚙️</span> <span class="btn-label">Choose Focus</span>
         </button>
       </div>
 
@@ -64,19 +70,19 @@
       <nav aria-label="Main Navigation">
         <div role="tablist" class="nav-tabs" aria-label="Study Modes">
           <button role="tab" id="tab-nav-explorer" aria-selected="true" class="nav-btn active" data-tab-type="explorer">
-            <span class="tab-icon" aria-hidden="true">📚</span> <span class="tab-text" id="nav-text-explorer">Explorer</span>
+            <span class="tab-icon" aria-hidden="true">📚</span> <span class="tab-short" aria-hidden="true">Explore</span><span class="tab-text" id="nav-text-explorer">Explorer</span>
           </button>
           <button role="tab" id="tab-nav-flashcard" aria-selected="false" class="nav-btn" data-tab-type="flashcard">
-            <span class="tab-icon" aria-hidden="true">🎴</span> <span class="tab-text" id="nav-text-flashcard">Flashcards (SRS)</span>
+            <span class="tab-icon" aria-hidden="true">🎴</span> <span class="tab-short" aria-hidden="true">Cards</span><span class="tab-text" id="nav-text-flashcard">Flashcards (SRS)</span>
           </button>
           <button role="tab" id="tab-nav-match" aria-selected="false" class="nav-btn" data-tab-type="match">
-            <span class="tab-icon" aria-hidden="true">⚡</span> <span class="tab-text" id="nav-text-match">Speed Match</span>
+            <span class="tab-icon" aria-hidden="true">⚡</span> <span class="tab-short" aria-hidden="true">Match</span><span class="tab-text" id="nav-text-match">Speed Match</span>
           </button>
           <button role="tab" id="tab-nav-quiz" aria-selected="false" class="nav-btn" data-tab-type="quiz">
-            <span class="tab-icon" aria-hidden="true">🎯</span> <span class="tab-text" id="nav-text-quiz">'ने' & Tense Quiz</span>
+            <span class="tab-icon" aria-hidden="true">🎯</span> <span class="tab-short" aria-hidden="true">Quiz</span><span class="tab-text" id="nav-text-quiz">'ने' & Tense Quiz</span>
           </button>
           <button role="tab" id="tab-nav-notes" aria-selected="false" class="nav-btn" data-tab-type="notes">
-            <span class="tab-icon" aria-hidden="true">➕</span> <span class="tab-text" id="nav-text-notes">Add from Notes</span>
+            <span class="tab-icon" aria-hidden="true">➕</span> <span class="tab-short" aria-hidden="true">Add</span><span class="tab-text" id="nav-text-notes">Add from Notes</span>
           </button>
         </div>
       </nav>

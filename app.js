@@ -376,6 +376,9 @@ function findHindiVoice(options = {}) {
   return voice;
 }
 
+// True on phones/tablets (no hover, coarse pointer) – used to show touch-friendly prompts
+const IS_TOUCH_DEVICE = typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
 let speakDebounceTimer = null;
 
 function speakHindi(text, buttonEl = null, options = {}) {
@@ -2426,7 +2429,7 @@ function renderFlashcard() {
       <div class="flash-hindi">${verb.hindi}</div>
       <div class="flash-roman" style="${translitDisplay}">${verb.roman}</div>
       <button class="audio-btn" id="flash-front-audio" style="margin-top:0.5rem;" aria-label="Pronounce ${verb.hindi}" title="Listen to pronunciation (Key A)">🔊</button>
-      <div class="flash-prompt">Click or press Space to reveal English meaning</div>
+      <div class="flash-prompt">${IS_TOUCH_DEVICE ? 'Tap' : 'Click or press Space'} to reveal English meaning</div>
     `;
 
     const imperativesHtml = `
@@ -5259,7 +5262,7 @@ function renderVocabFlashcard() {
         </div>
         <div style="margin-top:0.75rem;">${genderBadge}</div>
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted);">Press Space or click to flip</div>
+      <div style="font-size:0.8rem; color:var(--text-muted);">${IS_TOUCH_DEVICE ? 'Tap to flip' : 'Press Space or click to flip'}</div>
     `;
 
     back.innerHTML = `
@@ -5290,7 +5293,7 @@ function renderVocabFlashcard() {
         </div>
         <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.5rem;">Category: ${word.category || 'General'}</div>
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted);">Press Space or click to reveal Hindi</div>
+      <div style="font-size:0.8rem; color:var(--text-muted);">${IS_TOUCH_DEVICE ? 'Tap' : 'Press Space or click'} to reveal Hindi</div>
     `;
 
     back.innerHTML = `
@@ -9955,3 +9958,95 @@ function wireLexiconManagerListeners(container, allEntries, issueCount, totalCou
   });
 }
 
+
+// ==========================================================================
+// MOBILE SUPPORT: swipe gestures on flashcards + iOS speech unlock
+// ==========================================================================
+(function initMobileSupport() {
+  if (typeof window === 'undefined' || typeof document === 'undefined' || !document.addEventListener) return;
+
+  // iOS Safari only allows speechSynthesis after it has been started inside a
+  // user gesture. speakHindi() speaks from a short setTimeout, so the very
+  // first utterance can be silently dropped. Speaking an empty utterance
+  // synchronously on the first touch "unlocks" the engine for the session.
+  let speechUnlocked = false;
+  function unlockSpeech() {
+    if (speechUnlocked) return;
+    speechUnlocked = true;
+    try {
+      if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined') {
+        const u = new SpeechSynthesisUtterance('');
+        u.volume = 0;
+        window.speechSynthesis.speak(u);
+      }
+    } catch (e) { /* ignore */ }
+    document.removeEventListener('touchend', unlockSpeech, true);
+    document.removeEventListener('click', unlockSpeech, true);
+  }
+  document.addEventListener('touchend', unlockSpeech, true);
+  document.addEventListener('click', unlockSpeech, true);
+
+  // Horizontal swipe on a flashcard = previous / next card.
+  // Reuses each deck's existing ArrowLeft / ArrowRight keyboard handling.
+  function attachSwipe(el) {
+    if (!el || el.dataset.swipeBound) return;
+    el.dataset.swipeBound = '1';
+    let startX = 0, startY = 0, startT = 0, tracking = false;
+
+    el.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startT = Date.now();
+      tracking = true;
+    }, { passive: true });
+
+    el.addEventListener('touchend', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      const dt = Date.now() - startT;
+      // Mostly-horizontal, deliberate swipe
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5 || dt > 700) return;
+      // Don't hijack swipes inside horizontally scrollable children
+      if (e.target.closest && e.target.closest('.matra-contrast-subbar, .filter-tags, .matra-filter-bar, table')) return;
+      e.preventDefault();
+      const key = dx < 0 ? 'ArrowRight' : 'ArrowLeft';
+      el.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+      el.classList.remove('swipe-left', 'swipe-right');
+      void el.offsetWidth;
+      el.classList.add(dx < 0 ? 'swipe-left' : 'swipe-right');
+      setTimeout(() => el.classList.remove('swipe-left', 'swipe-right'), 260);
+    });
+  }
+
+  function addSwipeHint(container) {
+    if (!container) return;
+    const actions = container.parentElement && container.parentElement.querySelector('.flashcard-actions');
+    if (!actions || actions.nextElementSibling?.classList?.contains('swipe-hint')) return;
+    const hint = document.createElement('div');
+    hint.className = 'swipe-hint';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.textContent = '👆 Tap card to flip · Swipe ← → to change cards';
+    if (container.id === 'matra-flashcard-container') {
+      hint.textContent = '👈 Swipe left or right to change cards 👉';
+    }
+    actions.insertAdjacentElement('afterend', hint);
+  }
+
+  function setup() {
+    ['flashcard-container', 'vocab-flashcard-container', 'matra-flashcard-container'].forEach(id => {
+      const el = document.getElementById(id);
+      attachSwipe(el);
+      addSwipeHint(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
