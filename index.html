@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#d94819">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Hungarian Lab">
+  <meta name="format-detection" content="telephone=no">
+  <title>Hungarian Language Lab (Magyar Nyelvi Labor) - Verbs, Vocabulary &amp; Pronunciation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Accessibility: Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Accessibility: Dynamic Live Region Announcer for Screen Readers -->
+  <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Hungarian Tricolor Accent Ribbon -->
+  <div class="top-ornament-bar" aria-hidden="true" style="background: linear-gradient(90deg, #ce2939 0%, #ce2939 33%, #ffffff 33%, #ffffff 66%, #477050 66%, #477050 100%); height: 5px; border-bottom: 1px solid var(--border);"></div>
+
+  <!-- App Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-group">
+        <div class="logo-badge" aria-hidden="true">HU</div>
+        <div class="logo-text">
+          <h1 id="app-main-title">Hungarian Language Lab <span id="app-title-sub" style="font-weight:400; font-family:var(--font-hindi); font-size:1.15rem; color:var(--primary);">(Magyar Nyelvi Labor)</span></h1>
+          <p class="app-tagline"><span class="status-dot" aria-hidden="true"></span> 100% Offline &amp; Local • Config-Driven Language Pack Engine (hu-HU)</p>
+        </div>
+      </div>
+
+      <!-- Module Focus Switcher -->
+      <div class="header-actions">
+        <div class="focus-pill-switcher" role="radiogroup" aria-label="Select Learning Module">
+          <button type="button" class="focus-pill-btn active" id="focus-verbs-btn" data-module="verbs" role="radio" aria-checked="true" aria-label="Switch to Verb Lab (Igelabor)">
+            <span class="focus-pill-icon">⚡</span>
+            <span class="focus-pill-text">
+              <span class="focus-pill-title">Verb Lab</span><span class="focus-pill-short" aria-hidden="true">Verbs</span>
+              <span class="focus-pill-sub">Igelabor</span>
+            </span>
+          </button>
+          <button type="button" class="focus-pill-btn" id="focus-vocab-btn" data-module="vocab" role="radio" aria-checked="false" aria-label="Switch to Vocabulary Studio (Szókincs)">
+            <span class="focus-pill-icon">📖</span>
+            <span class="focus-pill-text">
+              <span class="focus-pill-title">Vocabulary Studio</span><span class="focus-pill-short" aria-hidden="true">Vocab</span>
+              <span class="focus-pill-sub">Szókincs</span>
+            </span>
+          </button>
+          <button type="button" class="focus-pill-btn" id="focus-matra-btn" data-module="matras" role="radio" aria-checked="false" aria-label="Switch to Sounds &amp; Pairs (Kiejtés és Hangok)">
+            <span class="focus-pill-icon">🔤</span>
+            <span class="focus-pill-text">
+              <span class="focus-pill-title">Sounds &amp; Pairs</span><span class="focus-pill-short" aria-hidden="true">Sounds</span>
+              <span class="focus-pill-sub">Kiejtés</span>
+            </span>
+          </button>
+        </div>
+        <button type="button" class="switch-focus-btn" id="open-lexicon-manager-btn" aria-label="Open Data Cleanup &amp; Lexicon Manager" title="Clean up, edit, and sanitize saved words database (Shortcut: D)" style="background:var(--card-warm); border:1.5px solid var(--border); color:var(--secondary); font-weight:600;">
+          <span aria-hidden="true">🛠️</span> <span class="btn-label">Clean Up Data</span>
+        </button>
+        <button type="button" class="switch-focus-btn" id="open-focus-modal-btn" aria-label="Open learning focus chooser dialog (Shortcut: Key M)" title="Choose learning focus (Shortcut: M)">
+          <span aria-hidden="true">⚙️</span> <span class="btn-label">Choose Focus</span>
+        </button>
+      </div>
+
+      <!-- Main Tab Navigation -->
+      <nav aria-label="Main Navigation">
+        <div role="tablist" class="nav-tabs" aria-label="Study Modes">
+          <button role="tab" id="tab-nav-explorer" aria-selected="true" class="nav-btn active" data-tab-type="explorer">
+            <span class="tab-icon" aria-hidden="true">📚</span> <span class="tab-short" aria-hidden="true">Explore</span><span class="tab-text" id="nav-text-explorer">Explorer</span>
+          </button>
+          <button role="tab" id="tab-nav-flashcard" aria-selected="false" class="nav-btn" data-tab-type="flashcard">
+            <span class="tab-icon" aria-hidden="true">🎴</span> <span class="tab-short" aria-hidden="true">Cards</span><span class="tab-text" id="nav-text-flashcard">Flashcards (SRS)</span>
+          </button>
+          <button role="tab" id="tab-nav-match" aria-selected="false" class="nav-btn" data-tab-type="match">
+            <span class="tab-icon" aria-hidden="true">⚡</span> <span class="tab-short" aria-hidden="true">Match</span><span class="tab-text" id="nav-text-match">Speed Match</span>
+          </button>
+          <button role="tab" id="tab-nav-quiz" aria-selected="false" class="nav-btn" data-tab-type="quiz">
+            <span class="tab-icon" aria-hidden="true">🎯</span> <span class="tab-short" aria-hidden="true">Quiz</span><span class="tab-text" id="nav-text-quiz">Definite &amp; Tense Quiz</span>
+          </button>
+          <button role="tab" id="tab-nav-notes" aria-selected="false" class="nav-btn" data-tab-type="notes">
+            <span class="tab-icon" aria-hidden="true">➕</span> <span class="tab-short" aria-hidden="true">Add</span><span class="tab-text" id="nav-text-notes">Add from Notes</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- =====================================================================
+         MODULE 1: VERB LAB (Igelabor)
+         ===================================================================== -->
+
+    <!-- TAB 1 (VERBS): VERB EXPLORER -->
+    <section id="verbs-tab" role="tabpanel" aria-labelledby="tab-nav-explorer" class="tab-content active" tabindex="0">
+      <div class="controls-bar">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="verb-search" class="search-input" placeholder="Search Hungarian verb (e.g. olvas, eszik, megy), pronunciation, or English...">
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Curriculum Clusters
+          </div>
+          <div class="filter-tags">
+            <button class="filter-chip active" data-cluster="all">All Clusters (20)</button>
+            <button class="filter-chip" data-cluster="The Big 4 Irregulars">The Big 4 (van, megy, jön, csinál)</button>
+            <button class="filter-chip" data-cluster="-ik Verbs &amp; Dining">-ik Verbs &amp; Dining (eszik, iszik)</button>
+            <button class="filter-chip" data-cluster="Motion &amp; Movement">Motion (Intransitive)</button>
+            <button class="filter-chip" data-cluster="Daily Essentials">Daily Living</button>
+            <button class="filter-chip" data-cluster="Study &amp; Communication">Study &amp; Speech</button>
+            <button class="filter-chip" data-cluster="Perception &amp; Mind">Cognition &amp; Senses</button>
+            <button class="filter-chip" data-cluster="Objects &amp; Actions">Objects &amp; Actions</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Filter by Definite (Tárgyas) vs Indefinite (Alanyi) Conjugation
+          </div>
+          <div class="filter-tags">
+            <button class="filter-chip active" data-ne="all">All Verbs</button>
+            <button class="filter-chip ne-true" data-ne="takes-ne">Takes Definite Conjugation (-om/-od/-ja • Transitive)</button>
+            <button class="filter-chip ne-false" data-ne="no-ne">Indefinite Only (Alanyi • Intransitive)</button>
+          </div>
+        </div>
+
+        <div class="stats-summary">
+          <span id="verb-count-label">Loading verbs...</span>
+          <span style="font-size:0.8rem;">💡 Tip: Click any card for Indefinite, Definite &amp; Past conjugation matrix</span>
+        </div>
+      </div>
+
+      <!-- Verbs Grid -->
+      <div class="verb-grid" id="verb-grid"></div>
+    </section>
+
+    <!-- TAB 2 (VERBS): FLASHCARDS (SRS) -->
+    <section id="flashcard-tab" role="tabpanel" aria-labelledby="tab-nav-flashcard" class="tab-content" tabindex="0">
+      <div class="flashcard-arena">
+        <div class="flashcard-header">
+          <div>
+            <strong id="flash-progress" style="color:var(--text-muted); font-size:0.95rem;">Card 1 of 20</strong>
+          </div>
+          <div class="flashcard-settings">
+            <button id="toggle-translit-btn" class="toggle-btn" aria-label="Toggle phonetic guide display">Show Pronunciation</button>
+            <button id="toggle-direction-btn" class="toggle-btn" aria-label="Toggle prompt language direction">Prompt: Hungarian</button>
+            <button id="shuffle-cards-btn" class="toggle-btn" aria-label="Shuffle flashcards">
+              <span aria-hidden="true">🔀</span> Shuffle
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Flippable Card -->
+        <div class="card-perspective" id="flashcard-container" tabindex="0" role="button" aria-label="Flashcard. Press Space or Enter to flip">
+          <div class="card-inner" id="flashcard-inner">
+            <div class="card-front" id="card-front-content"></div>
+            <div class="card-back" id="card-back-content"></div>
+          </div>
+        </div>
+
+        <!-- Action / Review Controls -->
+        <div class="flashcard-actions">
+          <button class="action-btn nav-card" id="prev-card-btn" aria-label="Previous flashcard (Left Arrow key)">← Previous</button>
+          <button class="action-btn again" id="card-again-btn" aria-label="Mark as needs review (Key 1)">Needs Review ↺</button>
+          <button class="action-btn good" id="card-good-btn" aria-label="Mark as mastered (Key 2)">Got It! ✓</button>
+          <button class="action-btn nav-card" id="next-card-btn" aria-label="Next flashcard (Right Arrow key)">Next →</button>
+        </div>
+
+        <!-- Accessible Keyboard Shortcuts Hint -->
+        <div class="flashcard-shortcuts-hint" aria-label="Keyboard Shortcuts: Space or Enter to flip card, T to cycle tenses, E for sentence audio, A for verb audio, Left Arrow for previous, Right Arrow for next, 1 for needs review, 2 for got it, M to switch focus">
+          ⌨️ <strong>Shortcuts:</strong> <kbd>Space</kbd> Flip &bull; <kbd>T</kbd> Cycle Tense &bull; <kbd>E</kbd> Sentence Audio &bull; <kbd>A</kbd> Verb Audio &bull; <kbd>←</kbd> Prev &bull; <kbd>→</kbd> Next &bull; <kbd>1</kbd> Review &bull; <kbd>2</kbd> Mastered &bull; <kbd>M</kbd> Switch Focus
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3 (VERBS): SPEED MATCH GAME -->
+    <section id="match-tab" role="tabpanel" aria-labelledby="tab-nav-match" class="tab-content" tabindex="0">
+      <div class="game-container">
+        <div class="game-header">
+          <div>
+            <h2 style="font-size:1.4rem;">⚡ Verb Speed Match Drill</h2>
+            <p id="match-status" style="color:var(--text-muted); font-size:0.9rem;" aria-live="polite">
+              Click a Hungarian verb, then match its English meaning.
+            </p>
+          </div>
+          <div class="game-header-actions" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            <button class="toggle-btn match-toggle-translit-btn" id="match-toggle-translit-btn" type="button" aria-label="Toggle phonetic guide display" aria-pressed="false" title="Show or hide pronunciation guide (Shortcut: T)">
+              <span class="match-translit-icon" aria-hidden="true">🔤</span> <span class="match-translit-label">Hide Pronunciation</span>
+            </button>
+            <button class="action-btn nav-card" id="restart-match-btn" style="flex:none; padding:0.5rem 1rem;" aria-label="Restart speed match round">
+              <span aria-hidden="true">🔄</span> New Round
+            </button>
+          </div>
+        </div>
+
+        <div class="match-grid">
+          <div class="match-column" id="match-hindi-col" role="group" aria-label="Hungarian Verbs"></div>
+          <div class="match-column" id="match-english-col" role="group" aria-label="English Meanings"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4 (VERBS): DEFINITE vs INDEFINITE & CONJUGATION QUIZ -->
+    <section id="quiz-tab" role="tabpanel" aria-labelledby="tab-nav-quiz" class="tab-content" tabindex="0">
+      <div class="quiz-container">
+        <div class="quiz-header-bar">
+          <div>
+            <h2 style="font-size:1.35rem;">🎯 Verb Grammar: Definite vs Indefinite &amp; Past Quiz</h2>
+            <p style="font-size:0.85rem; color:var(--text-muted);">
+              Drills for Definite (Tárgyas) vs Indefinite (Alanyi) conjugation, -ik verbs, and Past tense (-t/-ott/-ett).
+            </p>
+          </div>
+          <div class="quiz-stats-group">
+            <div class="quiz-badge quiz-timer-badge" id="verbs-quiz-timer-badge" title="Elapsed Time">
+              ⏱️ <span id="verbs-quiz-timer-text">0s</span>
+            </div>
+            <div class="quiz-badge quiz-best-badge" id="verbs-quiz-best-badge" title="Best Completion Time">
+              🏆 <span id="verbs-quiz-best-text">Best: --</span>
+              <button type="button" class="quiz-clear-best-btn" id="clear-verbs-best-btn" title="Clear best time" aria-label="Clear best time" style="display:none;">✕</button>
+            </div>
+            <div class="badge badge-tr" id="quiz-score-badge" style="font-size:0.9rem; padding:0.4rem 0.8rem;" aria-live="polite">
+              Score: 0 / 10
+            </div>
+          </div>
+        </div>
+
+        <!-- Verb Quiz Topic Selector Bar -->
+        <div class="targeted-quiz-bar" style="margin-bottom:1.25rem; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:0.85rem 1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:0.6rem; flex:1; min-width:260px;">
+              <label for="verbs-quiz-topic-select" style="font-size:0.85rem; font-weight:700; color:var(--secondary); white-space:nowrap; display:flex; align-items:center; gap:0.35rem;">
+                <span aria-hidden="true">🎯</span> Verb Drill:
+              </label>
+              <select id="verbs-quiz-topic-select" class="targeted-quiz-select" style="flex:1;" aria-label="Select Verb Quiz Topic">
+                <option value="mixed">🔄 Comprehensive: Definite vs Indefinite &amp; Past (Mixed)</option>
+                <option value="ne-rule">⚡ Transitive Definite (Tárgyas) vs Indefinite Focus</option>
+                <option value="irregular-past">🔥 Past Tense (-t/-ott/-ett) &amp; Irregulars Only</option>
+                <option value="continuous-agreement">🏃 Definite Object Conjugation (-om/-od/-ja) Focus</option>
+              </select>
+            </div>
+          </div>
+          <div id="verbs-quiz-topic-desc" style="font-size:0.825rem; color:var(--text-muted); margin-top:0.45rem; line-height:1.4;">
+            Drills for Definite (Tárgyas) vs Indefinite (Alanyi) conjugation, -ik verbs, and past tense forms across all verbs.
+          </div>
+        </div>
+
+        <div id="quiz-card"></div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+          <button class="action-btn nav-card" id="restart-quiz-btn" style="display:none; flex:none;">
+            Restart
+          </button>
+          <button class="action-btn good" id="next-quiz-btn" style="display:none; flex:none; padding:0.75rem 1.5rem;">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5 (VERBS): NOTES INGESTION & PARSER STUDIO -->
+    <section id="notes-tab" role="tabpanel" aria-labelledby="tab-nav-notes" class="tab-content" tabindex="0">
+      <div style="max-width:850px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
+        
+        <!-- Batch Ingestion Studio Card -->
+        <div style="background:white; padding:2rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <h2 style="font-size:1.4rem;">📥 Ingest Verb Notes</h2>
+              <p style="font-size:0.9rem; color:var(--text-muted);">
+                Paste typed notes or drop a file (.rtf, .txt, .md, .csv, .json). Automatically extracts Hungarian verbs, generates phonetic guides, and detects transitivity (Definite vs Indefinite).
+              </p>
+            </div>
+            <button id="load-sample-notes-btn" class="action-btn nav-card" style="font-size:0.8rem; padding:0.4rem 0.8rem; flex:none;">
+              Load Sample Notes
+            </button>
+          </div>
+
+          <!-- Drag and Drop Zone with Multiple Files & RTF support -->
+          <div class="drop-zone" id="notes-drop-zone">
+            <span class="drop-zone-icon">📁</span>
+            <div style="font-weight:700; font-size:1.05rem; color:var(--secondary); margin-bottom:0.25rem;">
+              Drop verb notes file(s) here (.rtf, .txt, .md, .csv, .json)
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+              Select or drop multiple files at once from Windows Explorer or Mac Finder
+            </div>
+            <div class="file-type-pills">
+              <span class="file-pill highlight">✨ Multiple Files</span>
+              <span class="file-pill highlight">✨ .RTF (Rich Text)</span>
+              <span class="file-pill">.MD</span>
+              <span class="file-pill">.TXT</span>
+              <span class="file-pill">.CSV</span>
+              <span class="file-pill">.JSON</span>
+            </div>
+            <input type="file" id="notes-file-input" accept=".txt,.md,.markdown,.csv,.json,.rtf,text/rtf,application/rtf" multiple style="display:none;">
+            <button type="button" class="action-btn nav-card" id="browse-file-btn" style="max-width:200px; margin:1rem auto 0; font-size:0.85rem;">
+              Browse File(s)
+            </button>
+          </div>
+
+          <!-- Live File Status & State Indicator -->
+          <div id="ingest-file-status-wrap" style="display:none;"></div>
+          <div id="ingest-status-banner-wrap"></div>
+
+          <!-- Paste Textarea -->
+          <div style="margin-top:1.25rem;">
+            <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.4rem;">
+              Or paste typed lecture notes directly:
+            </label>
+            <textarea id="notes-raw-text" class="notes-textarea" placeholder="Paste notes in any format, e.g.:
+- táncol (taan-tsol) - to dance
+- énekel (ee-ne-kel) - to sing
+- úszik: to swim
+- kinyit | to open | tr"></textarea>
+          </div>
+
+          <div class="format-hints">
+            💡 <strong>Smart Parser supports:</strong> Bullet lists (`- szó: meaning`), tables (`szó | meaning`), CSV (`1.,táncol,to dance`), or parentheses for pronunciation guide.
+          </div>
+
+          <div style="margin-top:1.25rem; display:flex; justify-content:flex-end;">
+            <button id="analyze-notes-btn" class="action-btn good" style="max-width:240px; padding:0.75rem 1.25rem;">
+              Analyze &amp; Extract Verbs
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview & Confirmation Table -->
+        <div id="parser-preview-section" style="display:none; background:white; padding:1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <h3 style="font-size:1.15rem;" id="preview-heading">Extracted Verbs Preview</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Review detected transitivity and stems before importing to your study deck.
+              </p>
+            </div>
+            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+              <span id="preview-selected-count" style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">0 verbs selected</span>
+              <button id="clean-verbs-noise-btn" type="button" class="action-btn nav-card" style="font-size:0.8rem; padding:0.45rem 0.75rem; flex:none;" title="Clean trailing punctuation and note noise across all verbs">
+                🧹 Auto-Clean Noise
+              </button>
+              <button id="select-new-verbs-btn" type="button" class="action-btn nav-card" style="font-size:0.8rem; padding:0.45rem 0.75rem; flex:none;">
+                Select New Only
+              </button>
+              <button id="confirm-import-btn" class="action-btn good" style="font-size:0.85rem; padding:0.5rem 1rem;">
+                Import Verbs to Deck
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview Search Filter Bar -->
+          <div style="margin-bottom:0.85rem; display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+            <div class="search-input-wrap" style="flex:1; min-width:240px; max-width:380px;">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="preview-search-input" class="search-input" placeholder="Search extracted verbs (Hungarian, Phonetic, English)..." style="padding-top:0.45rem; padding-bottom:0.45rem; font-size:0.88rem;">
+            </div>
+            <button type="button" id="preview-search-clear-btn" class="action-btn nav-card" style="display:none; font-size:0.8rem; padding:0.45rem 0.75rem;">Clear</button>
+            <span id="preview-search-status" style="font-size:0.82rem; color:var(--text-muted);"></span>
+          </div>
+
+          <div style="overflow-x:auto; max-height:400px;">
+            <table class="preview-table">
+              <thead>
+                <tr>
+                  <th style="width:36px;"><input type="checkbox" id="select-all-preview" checked aria-label="Select all verbs"></th>
+                  <th style="min-width:140px;">Hungarian Verb (3sg)</th>
+                  <th style="min-width:130px;">Pronunciation Guide</th>
+                  <th style="min-width:170px;">English Meaning</th>
+                  <th style="min-width:150px;">Transitivity (Definite)</th>
+                  <th style="min-width:140px;">Quality / Status</th>
+                  <th style="width:36px;" title="Remove row"></th>
+                </tr>
+              </thead>
+              <tbody id="preview-table-body"></tbody>
+            </table>
+          </div>
+          <div id="import-success-banner" style="display:none; margin-top:1rem; padding:0.85rem 1.25rem; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; color:#065f46; font-weight:600;">
+            ✓ Verbs successfully imported to your deck!
+          </div>
+        </div>
+
+        <!-- Single Quick Add Accordion / Card -->
+        <details style="background:white; padding:1.25rem 1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <summary style="font-weight:600; cursor:pointer; font-size:1rem; color:var(--text-main);">
+            ➕ Or add a single custom verb manually
+          </summary>
+          <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border);">
+            <form id="add-verb-form" style="display:flex; flex-direction:column; gap:1.2rem;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Hungarian Verb (3rd Person / Citation) *</label>
+                  <input type="text" id="custom-hindi" class="search-input" placeholder="e.g. táncol" required style="font-family:var(--font-hindi); font-size:1.2rem;">
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Pronunciation Guide</label>
+                  <input type="text" id="custom-roman" class="search-input" placeholder="e.g. taan-tsol">
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">English Meaning *</label>
+                  <input type="text" id="custom-english" class="search-input" placeholder="e.g. to dance" required>
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Conjugation Type (Definite / Indefinite) *</label>
+                  <select id="custom-transitivity" class="search-input" style="background:white;">
+                    <option value="Intransitive">Indefinite Only (Alanyi - Intransitive)</option>
+                    <option value="Transitive">Takes Definite (Tárgyas - Transitive)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Memory Mnemonic / Hook</label>
+                <input type="text" id="custom-mnemonic" class="search-input" placeholder="e.g. TÁNC-ol sounds like DANCE!">
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Sentence (Hungarian)</label>
+                  <input type="text" id="custom-example-hindi" class="search-input" placeholder="e.g. Ő nagyon jól táncol.">
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Translation</label>
+                  <input type="text" id="custom-example-english" class="search-input" placeholder="e.g. She dances very well.">
+                </div>
+              </div>
+
+              <button type="submit" class="action-btn good" style="margin-top:0.5rem;">
+                Add Verb to Deck
+              </button>
+            </form>
+            <div id="add-verb-success" style="display:none; margin-top:1rem; padding:0.75rem 1rem; background:#ecfdf5; color:#065f46; border-radius:8px; font-weight:600; text-align:center;">
+              ✓ Verb successfully added!
+            </div>
+          </div>
+        </details>
+
+        <!-- Database Backup / Export Card -->
+        <div style="background:white; padding:1.25rem 1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <div style="font-weight:600; font-size:0.95rem;">💾 Manage Your Imported Verbs Database</div>
+            <div style="font-size:0.85rem; color:var(--text-muted);" id="db-status-label">
+              Total custom verbs stored locally: 0
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button id="open-lexicon-from-verb-notes" type="button" class="action-btn good" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              🛠️ Manage & Clean Lexicon
+            </button>
+            <button id="export-db-btn" class="action-btn nav-card" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              📥 Export Database (JSON)
+            </button>
+            <button id="clear-custom-btn" class="action-btn again" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              🗑️ Clear Custom Verbs
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         MODULE 2: VOCABULARY STUDIO (Szókincs - Nouns, Adjectives &amp; Harmony)
+         ===================================================================== -->
+
+    <!-- TAB 1 (VOCAB): VOCABULARY EXPLORER -->
+    <section id="vocab-tab" role="tabpanel" aria-labelledby="tab-nav-explorer" class="tab-content" tabindex="0">
+      <div class="controls-bar">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="vocab-search" class="search-input" placeholder="Search Hungarian (e.g. könyv, jó, szoba), pronunciation, or English...">
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Part of Speech
+          </div>
+          <div class="filter-tags">
+            <button class="filter-chip active" data-vocab-pos="all">All Words</button>
+            <button class="filter-chip" data-vocab-pos="Noun">Nouns (Főnév)</button>
+            <button class="filter-chip" data-vocab-pos="Adjective">Adjectives (Melléknév)</button>
+            <button class="filter-chip" data-vocab-pos="Pronoun">Pronouns (Névmás)</button>
+            <button class="filter-chip" data-vocab-pos="Postposition">Postpositions (Névutó)</button>
+            <button class="filter-chip" data-vocab-pos="Adverb">Adverbs (Határozószó)</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Filter by Vowel Harmony (Magánhangzó-harmónia)
+          </div>
+          <div class="filter-tags">
+            <button class="filter-chip active" data-vocab-gender="all">All Harmony Classes</button>
+            <button class="filter-chip" data-vocab-gender="Back" style="color:#1e40af;">Back Vowels (Mély: a, á, o, ó, u, ú - B)</button>
+            <button class="filter-chip" data-vocab-gender="Front" style="color:#be123c;">Front Vowels (Magas: e, é, i, í, ö, ő, ü, ű - F)</button>
+            <button class="filter-chip" data-vocab-gender="none">Invariable / Mixed</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Curriculum Categories
+          </div>
+          <div class="filter-tags">
+            <button class="filter-chip active" data-vocab-category="all">All Categories</button>
+            <button class="filter-chip" data-vocab-category="People &amp; Family">People &amp; Family</button>
+            <button class="filter-chip" data-vocab-category="Home &amp; Everyday">Home &amp; Everyday</button>
+            <button class="filter-chip" data-vocab-category="Food &amp; Drinks">Food &amp; Drinks</button>
+            <button class="filter-chip" data-vocab-category="Places &amp; Nature">Places &amp; Nature</button>
+            <button class="filter-chip" data-vocab-category="Descriptive Adjectives">Descriptive Adjectives</button>
+            <button class="filter-chip" data-vocab-category="Colors &amp; Shapes">Colors &amp; Shapes</button>
+            <button class="filter-chip" data-vocab-category="Postpositions &amp; Connectors">Postpositions &amp; Connectors</button>
+            <button class="filter-chip" data-vocab-category="Time &amp; Calendar">Time &amp; Calendar</button>
+            <button class="filter-chip" data-vocab-category="Question Words &amp; Pronouns">Question Words &amp; Pronouns</button>
+          </div>
+        </div>
+
+        <div class="stats-summary">
+          <span id="vocab-count-label">Loading vocabulary...</span>
+          <span style="font-size:0.8rem;">💡 Tip: Click any card for full vowel harmony, plural (-k) &amp; accusative (-t) breakdown</span>
+        </div>
+      </div>
+
+      <!-- Vocab Grid -->
+      <div class="vocab-grid" id="vocab-grid"></div>
+    </section>
+
+    <!-- TAB 2 (VOCAB): VOCABULARY FLASHCARDS (SRS) -->
+    <section id="vocab-flashcard-tab" role="tabpanel" aria-labelledby="tab-nav-flashcard" class="tab-content" tabindex="0">
+      <div class="flashcard-arena">
+        <div class="flashcard-header">
+          <div>
+            <strong id="vocab-flash-progress" style="color:var(--text-muted); font-size:0.95rem;">Card 1 of 38</strong>
+          </div>
+          <div class="flashcard-settings">
+            <button id="vocab-toggle-translit-btn" class="toggle-btn" aria-label="Toggle phonetic guide display">Show Pronunciation</button>
+            <button id="vocab-toggle-direction-btn" class="toggle-btn" aria-label="Toggle prompt language direction">Prompt: Hungarian</button>
+            <button id="vocab-shuffle-cards-btn" class="toggle-btn" aria-label="Shuffle vocabulary flashcards">
+              <span aria-hidden="true">🔀</span> Shuffle
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Flippable Card -->
+        <div class="card-perspective" id="vocab-flashcard-container" tabindex="0" role="button" aria-label="Vocabulary flashcard. Press Space or Enter to flip">
+          <div class="card-inner" id="vocab-flashcard-inner">
+            <div class="card-front" id="vocab-card-front-content"></div>
+            <div class="card-back" id="vocab-card-back-content"></div>
+          </div>
+        </div>
+
+        <!-- Action / Review Controls -->
+        <div class="flashcard-actions">
+          <button class="action-btn nav-card" id="vocab-prev-card-btn" aria-label="Previous vocabulary card (Left Arrow key)">← Previous</button>
+          <button class="action-btn again" id="vocab-card-again-btn" aria-label="Mark vocabulary card as needs review (Key 1)">Needs Review ↺</button>
+          <button class="action-btn good" id="vocab-card-good-btn" aria-label="Mark vocabulary card as mastered (Key 2)">Got It! ✓</button>
+          <button class="action-btn nav-card" id="vocab-next-card-btn" aria-label="Next vocabulary card (Right Arrow key)">Next →</button>
+        </div>
+
+        <!-- Accessible Keyboard Shortcuts Hint -->
+        <div class="flashcard-shortcuts-hint" aria-label="Keyboard Shortcuts: Space or Enter to flip card, A for word audio, E for sentence audio, Left Arrow for previous, Right Arrow for next, 1 for needs review, 2 for got it, M to switch focus">
+          ⌨️ <strong>Shortcuts:</strong> <kbd>Space</kbd> Flip &bull; <kbd>A</kbd> Word Audio &bull; <kbd>E</kbd> Sentence Audio &bull; <kbd>←</kbd> Prev &bull; <kbd>→</kbd> Next &bull; <kbd>1</kbd> Review &bull; <kbd>2</kbd> Mastered &bull; <kbd>M</kbd> Switch Focus
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3 (VOCAB): VOCABULARY SPEED MATCH GAME -->
+    <section id="vocab-match-tab" role="tabpanel" aria-labelledby="tab-nav-match" class="tab-content" tabindex="0">
+      <div class="game-container">
+        <div class="game-header">
+          <div>
+            <h2 style="font-size:1.4rem;">⚡ Vocab Speed Match Drill</h2>
+            <p id="vocab-match-status" style="color:var(--text-muted); font-size:0.9rem;" aria-live="polite">
+              Click a Hungarian word, then match its English meaning.
+            </p>
+          </div>
+          <div class="game-header-actions" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            <button class="toggle-btn match-toggle-translit-btn" id="vocab-match-toggle-translit-btn" type="button" aria-label="Toggle phonetic guide display" aria-pressed="false" title="Show or hide pronunciation guide (Shortcut: T)">
+              <span class="match-translit-icon" aria-hidden="true">🔤</span> <span class="match-translit-label">Hide Pronunciation</span>
+            </button>
+            <button class="action-btn nav-card" id="vocab-restart-match-btn" style="flex:none; padding:0.5rem 1rem;" aria-label="Restart speed match round">
+              <span aria-hidden="true">🔄</span> New Round
+            </button>
+          </div>
+        </div>
+
+        <div class="match-grid">
+          <div class="match-column" id="vocab-match-hindi-col" role="group" aria-label="Hungarian Words"></div>
+          <div class="match-column" id="vocab-match-english-col" role="group" aria-label="English Meanings"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4 (VOCAB): VOWEL HARMONY & PLURAL/CASE QUIZ -->
+    <section id="vocab-quiz-tab" role="tabpanel" aria-labelledby="tab-nav-quiz" class="tab-content" tabindex="0">
+      <div class="quiz-container">
+        <div class="quiz-header-bar">
+          <div>
+            <h2 style="font-size:1.35rem;">🎯 Vowel Harmony, Plurals &amp; Cases Quiz</h2>
+            <p style="font-size:0.85rem; color:var(--text-muted);">
+              Drills for Back (Mély) vs Front (Magas) Vowel Harmony, Plural (-k/-ok/-ek/-ök), and Accusative (-t) forms.
+            </p>
+          </div>
+          <div class="quiz-stats-group">
+            <div class="quiz-badge quiz-timer-badge" id="vocab-quiz-timer-badge" title="Elapsed Time">
+              ⏱️ <span id="vocab-quiz-timer-text">0s</span>
+            </div>
+            <div class="quiz-badge quiz-best-badge" id="vocab-quiz-best-badge" title="Best Completion Time">
+              🏆 <span id="vocab-quiz-best-text">Best: --</span>
+              <button type="button" class="quiz-clear-best-btn" id="clear-vocab-best-btn" title="Clear best time" aria-label="Clear best time" style="display:none;">✕</button>
+            </div>
+            <div class="badge badge-tr" id="vocab-quiz-score-badge" style="font-size:0.9rem; padding:0.4rem 0.8rem;" aria-live="polite">
+              Score: 0 / 10
+            </div>
+          </div>
+        </div>
+
+        <!-- Targeted Quiz Selector Bar -->
+        <div class="targeted-quiz-bar" style="margin-bottom:1.25rem; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:0.85rem 1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:0.6rem; flex:1; min-width:260px;">
+              <label for="vocab-quiz-topic-select" style="font-size:0.85rem; font-weight:700; color:var(--secondary); white-space:nowrap; display:flex; align-items:center; gap:0.35rem;">
+                <span aria-hidden="true">🎯</span> Topic Drill:
+              </label>
+              <select id="vocab-quiz-topic-select" class="targeted-quiz-select" style="flex:1;" aria-label="Select Quiz Topic">
+                <option value="mixed">🔄 Comprehensive: Vowel Harmony, Plurals &amp; Cases (Mixed)</option>
+                <optgroup label="Targeted Practice Packs">
+                  <option value="days-of-week">🗓️ Days of the Week (A hét napjai)</option>
+                  <option value="question-words">❓ Question Words (Kérdőszavak)</option>
+                  <option value="time-frequency">⏰ Time &amp; Frequency (Idő és gyakoriság)</option>
+                  <option value="directions">🧭 Directions &amp; Positions (Irányok és névutók)</option>
+                  <option value="numbers-1-10">🔢 Numbers 1–10 (Számok 1–10)</option>
+                </optgroup>
+                <optgroup label="My Custom Quizzes" id="vocab-custom-quiz-optgroup">
+                  <!-- Custom user quizzes will be inserted here dynamically -->
+                </optgroup>
+              </select>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+              <button type="button" class="action-btn nav-card" id="open-custom-quiz-modal-btn" style="padding:0.45rem 0.85rem; font-size:0.825rem; font-weight:600;" title="Create a custom targeted quiz for words you struggle with">
+                <span aria-hidden="true">➕</span> New Quiz
+              </button>
+              <button type="button" class="action-btn text-danger-btn" id="delete-active-custom-pack-btn" style="display:none; padding:0.45rem 0.75rem; font-size:0.825rem;" title="Delete this custom quiz">
+                <span aria-hidden="true">🗑️</span> Delete Quiz
+              </button>
+            </div>
+          </div>
+          <div id="targeted-quiz-topic-desc" style="font-size:0.825rem; color:var(--text-muted); margin-top:0.45rem; line-height:1.4;">
+            Drills for Back vs Front Vowel Harmony, Plural (-k/-ok/-ek/-ök), and Accusative (-t) across core curriculum.
+          </div>
+        </div>
+
+        <div id="vocab-quiz-card"></div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+          <button class="action-btn nav-card" id="vocab-restart-quiz-btn" style="display:none; flex:none;">
+            Restart
+          </button>
+          <button class="action-btn good" id="vocab-next-quiz-btn" style="display:none; flex:none; padding:0.75rem 1.5rem;">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5 (VOCAB): VOCABULARY NOTES INGESTION STUDIO -->
+    <section id="vocab-notes-tab" role="tabpanel" aria-labelledby="tab-nav-notes" class="tab-content" tabindex="0">
+      <div style="max-width:850px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
+        
+        <!-- Batch Ingestion Studio Card -->
+        <div style="background:white; padding:2rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <h2 style="font-size:1.4rem;">📥 Ingest Vocabulary Notes</h2>
+              <p style="font-size:0.9rem; color:var(--text-muted);">
+                Paste typed words or drop a file (.rtf, .txt, .md, .csv, .json). Automatically parses Hungarian nouns and adjectives, detects Vowel Harmony (Back/Front), and extracts definitions.
+              </p>
+            </div>
+            <button id="load-sample-vocab-btn" class="action-btn nav-card" style="font-size:0.8rem; padding:0.4rem 0.8rem; flex:none;">
+              Load Sample Vocabulary
+            </button>
+          </div>
+
+          <!-- Drag and Drop Zone with Multiple Files & RTF support -->
+          <div class="drop-zone" id="vocab-drop-zone">
+            <span class="drop-zone-icon">📁</span>
+            <div style="font-weight:700; font-size:1.05rem; color:var(--secondary); margin-bottom:0.25rem;">
+              Drop vocabulary file(s) here (.rtf, .txt, .md, .csv, .json)
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+              Select or drop multiple files at once from Windows Explorer or Mac Finder
+            </div>
+            <div class="file-type-pills">
+              <span class="file-pill highlight">✨ Multiple Files</span>
+              <span class="file-pill highlight">✨ .RTF (Rich Text)</span>
+              <span class="file-pill">.MD</span>
+              <span class="file-pill">.TXT</span>
+              <span class="file-pill">.CSV</span>
+              <span class="file-pill">.JSON</span>
+            </div>
+            <input type="file" id="vocab-file-input" accept=".txt,.md,.markdown,.csv,.json,.rtf,text/rtf,application/rtf" multiple style="display:none;">
+            <button type="button" class="action-btn nav-card" id="vocab-browse-file-btn" style="max-width:200px; margin:1rem auto 0; font-size:0.85rem;">
+              Browse File(s)
+            </button>
+          </div>
+
+          <div id="vocab-ingest-file-status-wrap" style="display:none;"></div>
+          <div id="vocab-ingest-status-banner-wrap"></div>
+
+          <!-- Paste Textarea -->
+          <div style="margin-top:1.25rem;">
+            <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.4rem;">
+              Or paste typed lecture vocabulary directly:
+            </label>
+            <textarea id="vocab-raw-text" class="notes-textarea" placeholder="Paste notes in any format, e.g.:
+- szoba (so-ba) - room [B]
+- könyv (koenyv) - book [F]
+- jó (yoh) - good [adj]
+- asztal | table | back"></textarea>
+          </div>
+
+          <div class="format-hints">
+            💡 <strong>Smart Parser detects:</strong> Vowel harmony tags (`[B]`, `[F]`, `back`, `front`) or automatically classifies Back (`a, á, o, ó, u, ú`) vs Front (`e, é, i, í, ö, ő, ü, ű`) vowels, parts of speech, and English definitions.
+          </div>
+
+          <div style="margin-top:1.25rem; display:flex; justify-content:flex-end;">
+            <button id="analyze-vocab-btn" class="action-btn good" style="max-width:240px; padding:0.75rem 1.25rem;">
+              Analyze &amp; Extract Words
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview & Confirmation Table -->
+        <div id="vocab-preview-section" style="display:none; background:white; padding:1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <h3 style="font-size:1.15rem;" id="vocab-preview-heading">Extracted Vocabulary Preview</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Review detected vowel harmony, part of speech, and meanings before adding to your vocabulary deck.
+              </p>
+            </div>
+            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+              <span id="vocab-preview-selected-count" style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">0 words selected</span>
+              <button id="clean-vocab-noise-btn" type="button" class="action-btn nav-card" style="font-size:0.8rem; padding:0.45rem 0.75rem; flex:none;" title="Clean trailing punctuation and note noise across all words">
+                🧹 Auto-Clean Noise
+              </button>
+              <button id="select-new-vocab-btn" type="button" class="action-btn nav-card" style="font-size:0.8rem; padding:0.45rem 0.75rem; flex:none;">
+                Select New Only
+              </button>
+              <button id="confirm-vocab-import-btn" class="action-btn good" style="font-size:0.85rem; padding:0.5rem 1rem;">
+                Import Words to Deck
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview Search Filter Bar -->
+          <div style="margin-bottom:0.85rem; display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+            <div class="search-input-wrap" style="flex:1; min-width:240px; max-width:380px;">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="vocab-preview-search-input" class="search-input" placeholder="Search extracted words (Hungarian, Phonetic, English)..." style="padding-top:0.45rem; padding-bottom:0.45rem; font-size:0.88rem;">
+            </div>
+            <button type="button" id="vocab-preview-search-clear-btn" class="action-btn nav-card" style="display:none; font-size:0.8rem; padding:0.45rem 0.75rem;">Clear</button>
+            <span id="vocab-preview-search-status" style="font-size:0.82rem; color:var(--text-muted);"></span>
+          </div>
+
+          <div style="overflow-x:auto; max-height:400px;">
+            <table class="preview-table">
+              <thead>
+                <tr>
+                  <th style="width:36px;"><input type="checkbox" id="select-all-vocab-preview" checked aria-label="Select all words"></th>
+                  <th style="min-width:140px;">Hungarian Word</th>
+                  <th style="min-width:130px;">Pronunciation Guide</th>
+                  <th style="min-width:170px;">English Meaning</th>
+                  <th style="min-width:120px;">Part of Speech</th>
+                  <th style="min-width:115px;">Vowel Harmony</th>
+                  <th style="min-width:140px;">Quality / Status</th>
+                  <th style="width:36px;" title="Remove row"></th>
+                </tr>
+              </thead>
+              <tbody id="vocab-preview-table-body"></tbody>
+            </table>
+          </div>
+          <div id="vocab-import-success-banner" style="display:none; margin-top:1rem; padding:0.85rem 1.25rem; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; color:#065f46; font-weight:600;">
+            ✓ Vocabulary words successfully imported to your deck!
+          </div>
+        </div>
+
+        <!-- Single Quick Add Accordion / Card -->
+        <details style="background:white; padding:1.25rem 1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <summary style="font-weight:600; cursor:pointer; font-size:1rem; color:var(--text-main);">
+            ➕ Or add a single custom noun or adjective manually
+          </summary>
+          <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border);">
+            <form id="add-vocab-form" style="display:flex; flex-direction:column; gap:1.2rem;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Hungarian Word *</label>
+                  <input type="text" id="custom-vocab-hindi" class="search-input" placeholder="e.g. szoba" required style="font-family:var(--font-hindi); font-size:1.2rem;">
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Pronunciation Guide</label>
+                  <input type="text" id="custom-vocab-roman" class="search-input" placeholder="e.g. so-ba">
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">English Meaning *</label>
+                  <input type="text" id="custom-vocab-english" class="search-input" placeholder="e.g. room" required>
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Part of Speech *</label>
+                  <select id="custom-vocab-pos" class="search-input" style="background:white;">
+                    <option value="Noun">Noun (Főnév)</option>
+                    <option value="Adjective">Adjective (Melléknév)</option>
+                    <option value="Postposition">Postposition (Névutó)</option>
+                    <option value="Adverb">Adverb (Határozószó)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Vowel Harmony Class</label>
+                  <select id="custom-vocab-gender" class="search-input" style="background:white;">
+                    <option value="Back">Back Vowels (Mély - B)</option>
+                    <option value="Front">Front Vowels (Magas - F)</option>
+                    <option value="none">None / Invariable</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Plural Form (-k / -ok / -ek / -ök)</label>
+                  <input type="text" id="custom-vocab-plural" class="search-input" placeholder="e.g. szobák (so-baak)">
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Memory Mnemonic / Hook</label>
+                <input type="text" id="custom-vocab-mnemonic" class="search-input" placeholder="e.g. Sitting on a SOFA in my SZOBA (room)">
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Sentence (Hungarian)</label>
+                  <input type="text" id="custom-vocab-example-hindi" class="search-input" placeholder="e.g. Ez a szoba nagy.">
+                </div>
+                <div>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Translation</label>
+                  <input type="text" id="custom-vocab-example-english" class="search-input" placeholder="e.g. This room is big.">
+                </div>
+              </div>
+
+              <button type="submit" class="action-btn good" style="margin-top:0.5rem;">
+                Add Word to Deck
+              </button>
+            </form>
+            <div id="add-vocab-success" style="display:none; margin-top:1rem; padding:0.75rem 1rem; background:#ecfdf5; color:#065f46; border-radius:8px; font-weight:600; text-align:center;">
+              ✓ Word successfully added to vocabulary deck!
+            </div>
+          </div>
+        </details>
+
+        <!-- Database Backup / Export Card -->
+        <div style="background:white; padding:1.25rem 1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <div style="font-weight:600; font-size:0.95rem;">💾 Manage Your Custom Vocabulary</div>
+            <div style="font-size:0.85rem; color:var(--text-muted);" id="vocab-db-status-label">
+              Total custom words stored locally: 0
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button id="open-lexicon-from-vocab-notes" type="button" class="action-btn good" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              🛠️ Manage &amp; Clean Lexicon
+            </button>
+            <button id="export-vocab-db-btn" class="action-btn nav-card" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              📥 Export Vocabulary (JSON)
+            </button>
+            <button id="clear-custom-vocab-btn" class="action-btn again" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              🗑️ Clear Custom Words
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         MODULE 3: SOUNDS & PAIRS (Kiejtés és Hangok)
+         ===================================================================== -->
+
+    <!-- TAB 1 (MATRA): SOUNDS & DIGRAPHS EXPLORER -->
+    <section id="matra-tab" role="tabpanel" aria-labelledby="tab-nav-explorer" class="tab-content" tabindex="0">
+      <div class="controls-bar">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="matra-search" class="search-input" placeholder="Search Hungarian words, pronunciation (e.g. gyűrű, szerda), English, or sound family...">
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Filter by Sound &amp; Digraph Family (Hangcsoportok)
+          </div>
+          <div class="filter-tags" id="matra-filter-chips-list">
+            <button class="filter-chip active" data-matra="all">All Sounds (30)</button>
+            <button class="filter-chip" data-matra="mukta">a / e (Short Base Vowels)</button>
+            <button class="filter-chip" data-matra="aa">á (Long A)</button>
+            <button class="filter-chip" data-matra="e">é (Long E)</button>
+            <button class="filter-chip" data-matra="i">i / í (Short &amp; Long I)</button>
+            <button class="filter-chip" data-matra="o">o / ó / u / ú (Rounded Back)</button>
+            <button class="filter-chip" data-matra="oe">ö / ő (Rounded Front O)</button>
+            <button class="filter-chip" data-matra="ue">ü / ű (Rounded Front U)</button>
+            <button class="filter-chip" data-matra="sz_s">sz vs s (Sibilants)</button>
+            <button class="filter-chip" data-matra="cs_c">cs, c, zs (Affricates)</button>
+            <button class="filter-chip" data-matra="palatal">gy, ny, ty, ly (Palatals)</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            Syllable / Sound Count (Szótagszám)
+          </div>
+          <div class="filter-tags">
+            <button class="filter-chip active" data-matra-length="all">All Lengths</button>
+            <button class="filter-chip" data-matra-length="2">Short Words (1–2 Syllables)</button>
+            <button class="filter-chip" data-matra-length="3">Medium Words (3 Units)</button>
+            <button class="filter-chip" data-matra-length="4">Longer Words (4+ Units)</button>
+          </div>
+        </div>
+
+        <div class="stats-summary">
+          <span id="matra-count-label">Loading pronunciation words...</span>
+          <span style="font-size:0.8rem;">💡 Tip: Click any card for digraph &amp; phonics breakdown</span>
+        </div>
+      </div>
+
+      <!-- Matra Word Grid -->
+      <div class="verb-grid" id="matra-grid"></div>
+    </section>
+
+    <!-- TAB 2 (MATRA): READING PRACTICE FLASHCARDS -->
+    <section id="matra-flashcard-tab" role="tabpanel" aria-labelledby="tab-nav-flashcard" class="tab-content" tabindex="0">
+      <div class="flashcard-arena">
+        
+        <!-- Matra Filter Pills Bar right inside flashcard header for deliberate practice -->
+        <div class="matra-filter-bar" role="toolbar" aria-label="Scope flashcards by specific sound family">
+          <span style="font-size:0.8rem; font-weight:700; color:var(--text-muted); align-self:center; margin-right:0.25rem;">Drill:</span>
+          <button type="button" class="matra-filter-pill matra-pill-contrast" data-flash-matra="minimal-pairs" id="matra-filter-minimal-pairs-pill" title="Drill Minimal Pairs &amp; Confusion Busters">⚡ Minimal Pairs (20 Pairs)</button>
+          <button type="button" class="matra-filter-pill matra-pill-practice" data-flash-matra="needs-practice" id="matra-filter-needs-practice-pill" title="Drill words marked as needing practice">🔥 Needs Practice (<span id="matra-needs-practice-count">0</span>)</button>
+          <button type="button" class="matra-filter-pill active" data-flash-matra="all">All Sounds (30)</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="mukta">a / e (Base)</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="aa">á (Long A)</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="e">é (Long E)</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="i">i / í</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="o">o / ó / u / ú</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="oe">ö / ő</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="ue">ü / ű</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="sz_s">sz vs s</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="cs_c">cs, c, zs</button>
+          <button type="button" class="matra-filter-pill" data-flash-matra="palatal">gy, ny, ty, ly</button>
+        </div>
+
+        <!-- Minimal Pairs Vowel Sub-category Filter Bar (Appears when Minimal Pairs is active) -->
+        <div class="matra-contrast-subbar" id="matra-contrast-subbar" style="display:none;" role="toolbar" aria-label="Filter minimal pairs by sound contrast">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--secondary); align-self:center;">Sound Contrast:</span>
+          <button type="button" class="contrast-subpill active" data-contrast-cat="all">All Pairs (20)</button>
+          <button type="button" class="contrast-subpill" data-contrast-cat="a_vs_aa">a vs á (Short vs Long A)</button>
+          <button type="button" class="contrast-subpill" data-contrast-cat="e_vs_ee">e vs é (Short vs Long E)</button>
+          <button type="button" class="contrast-subpill" data-contrast-cat="o_vs_oo_oe">o / ó vs ö / ő (Back vs Front)</button>
+          <button type="button" class="contrast-subpill" data-contrast-cat="sz_vs_s">sz vs s (s vs sh)</button>
+          <button type="button" class="contrast-subpill" data-contrast-cat="cs_c_gy">cs / c &amp; gy / ny (Digraphs)</button>
+        </div>
+
+        <div class="flashcard-header">
+          <div>
+            <strong id="matra-flash-progress" style="color:var(--text-muted); font-size:0.95rem;">Card 1 of 30</strong>
+          </div>
+          <div class="flashcard-settings">
+            <button id="matra-toggle-autospeak-btn" class="toggle-btn" aria-label="Toggle auto-pronunciation on card flip and next" title="Auto-speak word on next">
+              <span>🔊</span> Auto-Speak: <strong id="matra-autospeak-label">OFF</strong>
+            </button>
+            <button id="matra-shuffle-cards-btn" class="toggle-btn" aria-label="Shuffle sound flashcards">
+              <span aria-hidden="true">🔀</span> Shuffle
+            </button>
+          </div>
+        </div>
+
+        <!-- Matra Reading Practice Card Container -->
+        <div class="matra-reading-card-arena" id="matra-flashcard-container" role="region" aria-label="Pronunciation practice card"></div>
+
+        <!-- Action / Review Controls -->
+        <div class="flashcard-actions">
+          <button class="action-btn nav-card" id="matra-prev-card-btn" aria-label="Previous card (Left Arrow key)">← Previous</button>
+          <button class="action-btn again" id="matra-card-again-btn" aria-label="Mark card as needs practice (Key 1)">Need More Practice ↺</button>
+          <button class="action-btn good" id="matra-card-good-btn" aria-label="Mark card as read correctly (Key 2)">Read Correctly ✓</button>
+          <button class="action-btn nav-card" id="matra-next-card-btn" aria-label="Next card (Right Arrow key)">Next →</button>
+        </div>
+
+        <!-- Accessible Keyboard Shortcuts Hint -->
+        <div class="flashcard-shortcuts-hint" aria-label="Keyboard Shortcuts: Space or A to listen to pronunciation, S for slow pronunciation, 1 for needs practice, 2 for read correctly, Left Arrow for previous, Right Arrow for next, R to check details">
+          ⌨️ <strong>Shortcuts:</strong> <kbd>Space</kbd> / <kbd>A</kbd> Listen &bull; <kbd>S</kbd> Slow (0.6x) &bull; <kbd>1</kbd> Need Practice &bull; <kbd>2</kbd> Read Correctly &bull; <kbd>←</kbd> Prev &bull; <kbd>→</kbd> Next &bull; <kbd>R</kbd> Check Details
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3 (MATRA): SPEED MATCH DRILL -->
+    <section id="matra-match-tab" role="tabpanel" aria-labelledby="tab-nav-match" class="tab-content" tabindex="0">
+      <div class="game-container">
+        <div class="game-header">
+          <div>
+            <h2 style="font-size:1.4rem;">⚡ Sounds &amp; Digraphs Speed Match</h2>
+            <p id="matra-match-status" style="color:var(--text-muted); font-size:0.9rem;" aria-live="polite">
+              Click a Hungarian word, then match its sound / English meaning.
+            </p>
+          </div>
+          <div class="game-header-actions" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            <button class="toggle-btn match-toggle-translit-btn" id="matra-match-toggle-translit-btn" type="button" aria-label="Toggle phonetic guide display" aria-pressed="false" title="Show or hide pronunciation guide (Shortcut: T)">
+              <span class="match-translit-icon" aria-hidden="true">🔤</span> <span class="match-translit-label">Hide Pronunciation</span>
+            </button>
+            <button class="action-btn nav-card" id="matra-restart-match-btn" style="flex:none; padding:0.5rem 1rem;" aria-label="Restart speed match round">
+              <span aria-hidden="true">🔄</span> New Round
+            </button>
+          </div>
+        </div>
+
+        <div class="game-stats-bar">
+          <div class="game-stat">
+            <span class="game-stat-label">Timer</span>
+            <span class="game-stat-val timer-val" id="matra-match-timer">60s</span>
+          </div>
+          <div class="game-stat">
+            <span class="game-stat-label">Matches</span>
+            <span class="game-stat-val" id="matra-match-score">0 / 6</span>
+          </div>
+          <div class="game-stat">
+            <span class="game-stat-label">Streak</span>
+            <span class="game-stat-val" id="matra-match-streak">🔥 0</span>
+          </div>
+        </div>
+
+        <div class="match-grid" id="matra-match-grid">
+          <div class="match-column" id="matra-match-hindi-col" role="group" aria-label="Hungarian Sound Words"></div>
+          <div class="match-column" id="matra-match-english-col" role="group" aria-label="English Meanings &amp; Phonics"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4 (MATRA): IDENTIFICATION & SOUND QUIZ -->
+    <section id="matra-quiz-tab" role="tabpanel" aria-labelledby="tab-nav-quiz" class="tab-content" tabindex="0">
+      <div class="quiz-container">
+        <div class="quiz-header-bar">
+          <div>
+            <h2 style="font-size:1.4rem;">🎯 Hungarian Vowel Length &amp; Digraph Quiz</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+              Test your recognition of short vs long vowels (a/á, e/é, ö/ő, ü/ű), digraphs (sz/s, cs/c, gy/ny), and native pronunciation.
+            </p>
+          </div>
+          <div class="quiz-stats-group">
+            <div class="quiz-badge quiz-timer-badge" id="matras-quiz-timer-badge" title="Elapsed Time">
+              ⏱️ <span id="matras-quiz-timer-text">0s</span>
+            </div>
+            <div class="quiz-badge quiz-best-badge" id="matras-quiz-best-badge" title="Best Completion Time">
+              🏆 <span id="matras-quiz-best-text">Best: --</span>
+              <button type="button" class="quiz-clear-best-btn" id="clear-matras-best-btn" title="Clear best time" aria-label="Clear best time" style="display:none;">✕</button>
+            </div>
+            <div class="quiz-score-badge" id="matra-quiz-score-badge">Score: 0 / 10</div>
+          </div>
+        </div>
+
+        <div class="quiz-body" id="matra-quiz-card"></div>
+
+        <div class="quiz-footer">
+          <button class="action-btn nav-card" id="matra-restart-quiz-btn" style="display:none;" aria-label="Restart sound quiz">
+            🔄 Restart Quiz
+          </button>
+          <button class="action-btn good" id="matra-next-quiz-btn" style="display:none;" aria-label="Next quiz question">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5 (MATRA): CUSTOM READING WORDS & NOTES -->
+    <section id="matra-notes-tab" role="tabpanel" aria-labelledby="tab-nav-notes" class="tab-content" tabindex="0">
+      <div style="max-width:850px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
+        
+        <!-- Quick Add Single Word -->
+        <div style="background:white; padding:2rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow);">
+          <div style="margin-bottom:1.5rem;">
+            <h2 style="font-size:1.4rem; margin-bottom:0.3rem;">➕ Add Custom Pronunciation Word</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+              Add any new Hungarian word you encounter in your studies to practice reading, digraphs, and pronunciation.
+            </p>
+          </div>
+
+          <form id="add-matra-form">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1rem;">
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Hungarian Word *</label>
+                <input type="text" id="custom-matra-hindi" class="search-input" placeholder="e.g. pillangó" required style="font-family:var(--font-hindi); font-size:1.2rem;">
+              </div>
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Pronunciation Guide</label>
+                <input type="text" id="custom-matra-roman" class="search-input" placeholder="e.g. pil-lan-goh (auto-generated if empty)">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1rem;">
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">English Meaning *</label>
+                <input type="text" id="custom-matra-english" class="search-input" placeholder="e.g. butterfly" required>
+              </div>
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Sound / Digraph Family</label>
+                <select id="custom-matra-family" class="table-select" style="width:100%; height:42px;">
+                  <option value="auto">Auto-Detect from Word</option>
+                  <option value="mukta">a / e (Short Base Vowels)</option>
+                  <option value="aa">á (Long A)</option>
+                  <option value="e">é (Long E)</option>
+                  <option value="i">i / í (Short &amp; Long I)</option>
+                  <option value="o">o / ó / u / ú (Rounded Back)</option>
+                  <option value="oe">ö / ő (Rounded Front O)</option>
+                  <option value="ue">ü / ű (Rounded Front U)</option>
+                  <option value="sz_s">sz vs s (Sibilants)</option>
+                  <option value="cs_c">cs, c, zs (Affricates)</option>
+                  <option value="palatal">gy, ny, ty, ly (Palatals)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Phrase / Collocation (Hungarian)</label>
+                <input type="text" id="custom-matra-phrase-hindi" class="search-input" placeholder="e.g. szép pillangó" style="font-family:var(--font-hindi);">
+              </div>
+              <div>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Phrase Meaning</label>
+                <input type="text" id="custom-matra-phrase-english" class="search-input" placeholder="e.g. pretty butterfly">
+              </div>
+            </div>
+
+            <button type="submit" class="action-btn good" style="width:100%; padding:0.85rem; font-size:1rem;">
+              Save Word to Sounds &amp; Pairs Deck
+            </button>
+          </form>
+
+          <div id="add-matra-success" style="display:none; margin-top:1rem; padding:0.75rem 1rem; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:var(--radius-sm); color:#065f46; font-size:0.9rem;" role="status">
+            ✓ Word successfully added to your reading deck!
+          </div>
+        </div>
+
+        <!-- Local Storage Manager Card -->
+        <div style="background:white; padding:1.25rem 1.75rem; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <div style="font-weight:600; font-size:0.95rem;">💾 Manage Your Custom Sound Words</div>
+            <div style="font-size:0.85rem; color:var(--text-muted);" id="matra-db-status-label">
+              Total custom words stored locally: 0
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button id="open-lexicon-from-matra-notes" type="button" class="action-btn good" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              🛠️ Manage &amp; Clean Lexicon
+            </button>
+            <button id="export-matra-db-btn" class="action-btn nav-card" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              📥 Export Words (JSON)
+            </button>
+            <button id="clear-custom-matra-btn" class="action-btn again" style="font-size:0.85rem; flex:none; padding:0.5rem 1rem;">
+              🗑️ Clear Custom Words
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Complete Verb Inspection Modal -->
+  <div class="modal-overlay" id="verb-modal" role="dialog" aria-modal="true" aria-labelledby="modal-verb-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-title-badge" aria-hidden="true">📖</span>
+          <h2 id="modal-verb-title">
+            Verb Conjugation & Reference Sheet
+          </h2>
+        </div>
+        <div class="modal-header-actions">
+          <button class="modal-action-btn modal-fullscreen-btn" id="modal-verb-fullscreen-btn" aria-label="Maximize verb details window" title="Toggle full screen (⛶)">⛶</button>
+          <button class="modal-close" id="modal-close-btn" aria-label="Close modal dialog (Escape key)">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-verb-content"></div>
+    </div>
+  </div>
+
+  <!-- Complete Vocabulary Word Inspection Modal -->
+  <div class="modal-overlay" id="vocab-modal" role="dialog" aria-modal="true" aria-labelledby="modal-vocab-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-title-badge" aria-hidden="true">📖</span>
+          <h2 id="modal-vocab-title">
+            Word Inspector & Grammar Reference
+          </h2>
+        </div>
+        <div class="modal-header-actions">
+          <button class="modal-action-btn modal-fullscreen-btn" id="modal-vocab-fullscreen-btn" aria-label="Maximize vocabulary details window" title="Toggle full screen (⛶)">⛶</button>
+          <button class="modal-close" id="modal-vocab-close-btn" aria-label="Close word reference dialog (Escape key)">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-vocab-content"></div>
+    </div>
+  </div>
+
+  <!-- Complete Matra Word Inspection Modal -->
+  <div class="modal-overlay" id="matra-modal" role="dialog" aria-modal="true" aria-labelledby="modal-matra-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-title-badge" aria-hidden="true">🔤</span>
+          <h2 id="modal-matra-title">
+            Sound &amp; Digraph Breakdown
+          </h2>
+        </div>
+        <div class="modal-header-actions">
+          <button class="modal-action-btn modal-fullscreen-btn" id="modal-matra-fullscreen-btn" aria-label="Maximize pronunciation reference window" title="Toggle full screen (⛶)">⛶</button>
+          <button class="modal-close" id="modal-matra-close-btn" aria-label="Close pronunciation reference dialog (Escape key)">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-matra-content"></div>
+    </div>
+  </div>
+
+  <!-- Complete Data Cleanup & Lexicon Manager Modal -->
+  <div class="modal-overlay" id="lexicon-manager-modal" role="dialog" aria-modal="true" aria-labelledby="lexicon-manager-title">
+    <div class="modal-box lexicon-modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-title-badge" aria-hidden="true">🛠️</span>
+          <div>
+            <h2 id="lexicon-manager-title" style="margin: 0; font-size: 1.35rem; color: var(--secondary);">
+              Data Cleanup &amp; Lexicon Manager
+            </h2>
+            <div class="modal-subtitle" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+              Adattisztítás és Szótárkezelő • Review, edit, sanitize, or delete saved words &amp; fix imported mistakes
+            </div>
+          </div>
+        </div>
+        <div class="modal-header-actions">
+          <button class="modal-action-btn modal-fullscreen-btn" id="modal-lexicon-manager-fullscreen-btn" aria-label="Maximize Lexicon Manager window" title="Toggle full screen (⛶)">⛶</button>
+          <button class="modal-close" id="modal-lexicon-manager-close-btn" aria-label="Close Lexicon Manager (Escape key)">✕</button>
+        </div>
+      </div>
+
+      <div class="modal-body" id="modal-lexicon-manager-content">
+        <!-- Dynamic content injected by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Launch Focus Chooser Modal -->
+  <div class="modal-overlay" id="focus-modal" role="dialog" aria-modal="true" aria-labelledby="focus-modal-title">
+    <div class="launch-modal-box">
+      <div class="modal-header-actions" style="position:absolute; top:1.25rem; right:1.25rem; z-index:10;">
+        <button class="modal-action-btn modal-fullscreen-btn" id="focus-modal-fullscreen-btn" aria-label="Maximize focus chooser window" title="Toggle full screen (⛶)">⛶</button>
+        <button class="modal-close" id="focus-modal-close-btn" aria-label="Close focus chooser (Escape key)">✕</button>
+      </div>
+      
+      <div class="launch-header">
+        <h2 id="focus-modal-title">Choose Your Practice Focus</h2>
+        <p>Válaszd ki a gyakorlási területet • Master Hungarian conjugations, vowel harmony &amp; cases, or vowel lengths &amp; digraphs.</p>
+      </div>
+
+      <div class="launch-cards-grid">
+        <!-- Card 1: Verb Lab -->
+        <div class="launch-card verbs-card" id="launch-card-verbs" tabindex="0" role="button" aria-label="Select Verb Lab: Verbs, Tenses &amp; Conjugation">
+          <div>
+            <span class="launch-card-icon">⚡</span>
+            <span class="launch-card-badge badge-verb-theme">Actions &amp; Conjugation</span>
+            <div class="launch-card-title">Verb Lab</div>
+            <div class="launch-card-hindi">Igelabor</div>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
+              Master essential Hungarian verbs, -ik verbs, Definite (Tárgyas) vs Indefinite (Alanyi) conjugations, and Past tense.
+            </p>
+            <ul class="launch-features-list">
+              <li><span class="bullet-icon">✓</span> <strong>20 Core Curriculum Verbs</strong> (van, megy, jön, eszik, olvas)</li>
+              <li><span class="bullet-icon">✓</span> <strong>3 Paradigms:</strong> Present Indefinite, Definite &amp; Past (-t)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Definite vs Indefinite Rule:</strong> Object &amp; harmony drills</li>
+              <li><span class="bullet-icon">✓</span> <strong>Audio Pronunciation (hu-HU)</strong> for verbs &amp; sentences</li>
+              <li><span class="bullet-icon">✓</span> <strong>Conjugation Matrix &amp; Tense Quizzes</strong></li>
+            </ul>
+          </div>
+          <button type="button" class="launch-cta-btn verbs-btn" id="launch-choose-verbs-btn">
+            Enter Verb Lab →
+          </button>
+        </div>
+
+        <!-- Card 2: Vocabulary Studio -->
+        <div class="launch-card vocab-card-choice" id="launch-card-vocab" tabindex="0" role="button" aria-label="Select Vocabulary Studio: Nouns, Adjectives &amp; Vowel Harmony">
+          <div>
+            <span class="launch-card-icon">📖</span>
+            <span class="launch-card-badge badge-vocab-theme">Nouns, Cases &amp; Vowel Harmony</span>
+            <div class="launch-card-title">Vocabulary Studio</div>
+            <div class="launch-card-hindi">Szókincs</div>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
+              Build your core Hungarian vocabulary with Back vs Front vowel harmony, plurals (-k/-ok/-ek/-ök), and accusative (-t) cases.
+            </p>
+            <ul class="launch-features-list">
+              <li><span class="bullet-icon">✓</span> <strong>38+ Essential Words</strong> (Home, Food, People, Places)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Vowel Harmony:</strong> Back (Mély) vs Front (Magas)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Plural &amp; Accusative Cases</strong> (könyv → könyvek → könyvet)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Targeted Practice Packs:</strong> Days, Numbers 1–10, Questions</li>
+              <li><span class="bullet-icon">✓</span> <strong>Harmony Quizzes &amp; Speed Match</strong></li>
+            </ul>
+          </div>
+          <button type="button" class="launch-cta-btn vocab-btn" id="launch-choose-vocab-btn">
+            Enter Vocabulary Studio →
+          </button>
+        </div>
+
+        <!-- Card 3: Sounds & Pairs -->
+        <div class="launch-card matra-card-choice" id="launch-card-matra" tabindex="0" role="button" aria-label="Select Sounds &amp; Pairs: Vowels, Digraphs &amp; Minimal Pairs">
+          <div>
+            <span class="launch-card-icon">🔤</span>
+            <span class="launch-card-badge badge-matra-theme">Vowels, Digraphs &amp; Minimal Pairs</span>
+            <div class="launch-card-title">Sounds &amp; Pairs</div>
+            <div class="launch-card-hindi">Kiejtés és Hangok</div>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
+              Master Hungarian short vs long vowels (a/á, e/é, ö/ő, ü/ű) and consonant digraphs (sz/s, cs/c, zs, gy, ny, ty, ly).
+            </p>
+            <ul class="launch-features-list">
+              <li><span class="bullet-icon">✓</span> <strong>30 Graduated Words</strong> across 10 Sound &amp; Digraph families</li>
+              <li><span class="bullet-icon">✓</span> <strong>20 Minimal Pairs:</strong> kor vs kór, szél vs sál, megy vs meggy</li>
+              <li><span class="bullet-icon">✓</span> <strong>Digraph &amp; Phonics Math:</strong> (gy + ű + r + ű = gyűrű)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Recite &amp; Verify:</strong> Native hu-HU audio &amp; slow 0.6x mode</li>
+              <li><span class="bullet-icon">✓</span> <strong>Interactive Speed Match &amp; Sound Quizzes</strong></li>
+            </ul>
+          </div>
+          <button type="button" class="launch-cta-btn matra-btn" id="launch-choose-matra-btn">
+            Enter Sounds &amp; Pairs Lab →
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem; text-align:center; font-size:0.85rem; color:var(--text-muted);">
+        💡 You can switch between Verb Lab, Vocabulary Studio, and Sounds &amp; Pairs anytime from the top bar or by pressing <kbd style="padding:0.15rem 0.4rem; background:white; border:1px solid var(--border); border-radius:4px; font-weight:700;">M</kbd>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Create / Manage Targeted Quizzes -->
+  <div class="modal-overlay" id="custom-quiz-modal" role="dialog" aria-modal="true" aria-labelledby="custom-quiz-modal-title" tabindex="-1">
+    <div class="modal-box" style="max-width: 620px;">
+      <div class="modal-header">
+        <h2 id="custom-quiz-modal-title" style="font-size:1.35rem; display:flex; align-items:center; gap:0.5rem;">
+          <span>🎯</span> Create Targeted Quiz
+        </h2>
+        <button class="modal-close-btn" id="close-custom-quiz-modal-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding:1.25rem 1.5rem; max-height:75vh; overflow-y:auto;">
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1.2rem;">
+          Build your own custom drill for words or phrases you struggle with. Enter word pairs below and the app will generate interactive multiple-choice questions automatically.
+        </p>
+
+        <form id="custom-quiz-form" onsubmit="return false;">
+          <div style="display:flex; gap:0.75rem; margin-bottom:1rem;">
+            <div style="flex:1;">
+              <label for="custom-quiz-title" style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:0.35rem;">
+                Quiz Title <span style="color:var(--danger); font-weight:700;">*</span>
+              </label>
+              <input type="text" id="custom-quiz-title" class="search-input" placeholder="e.g. My Trouble Words, Family, Fruit" required style="width:100%;">
+            </div>
+            <div style="width:100px;">
+              <label for="custom-quiz-icon" style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:0.35rem;">
+                Icon
+              </label>
+              <input type="text" id="custom-quiz-icon" class="search-input" value="🎯" maxlength="4" style="width:100%; text-align:center; font-size:1.2rem;">
+            </div>
+          </div>
+
+          <div style="margin-bottom:1rem;">
+            <label for="custom-quiz-desc" style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:0.35rem;">
+              Description (Optional)
+            </label>
+            <input type="text" id="custom-quiz-desc" class="search-input" placeholder="e.g. Drill for common trouble words" style="width:100%;">
+          </div>
+
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+              <label for="custom-quiz-words-input" style="font-size:0.85rem; font-weight:700;">
+                Word Pairs <span style="color:var(--danger); font-weight:700;">*</span>
+              </label>
+              <span style="font-size:0.75rem; color:var(--text-muted);">One pair per line: Hungarian, Pronunciation, English</span>
+            </div>
+            <textarea id="custom-quiz-words-input" class="search-input" rows="6" placeholder="hétfő, heet-foe, Monday
+kedd, kedd, Tuesday
+szerda, ser-da, Wednesday" style="width:100%; font-family:monospace; font-size:0.85rem; line-height:1.5; padding:0.6rem;"></textarea>
+          </div>
+
+          <!-- Quick Emoji Pill Selector -->
+          <div style="margin-bottom:1.25rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-bottom:0.35rem;">Quick Icons:</div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="🗓️">🗓️ Days</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="❓">❓ Questions</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="⏰">⏰ Time</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="🧭">🧭 Directions</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="🔢">🔢 Numbers</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="🍎">🍎 Food</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="👨‍👩‍👧">👨‍👩‍👧 Family</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="💼">💼 Work</button>
+              <button type="button" class="filter-chip quiz-icon-pill" data-emoji="🔥">🔥 Trouble</button>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+            <button type="button" class="action-btn nav-card" id="cancel-custom-quiz-btn">Cancel</button>
+            <button type="button" class="action-btn good" id="save-custom-quiz-btn">
+              <span>💾 Save &amp; Launch Quiz</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Existing Custom Quizzes List -->
+        <div id="custom-quizzes-list-section" style="margin-top:2rem; border-top:1px solid var(--border); padding-top:1.25rem; display:none;">
+          <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--secondary);">Your Saved Custom Quizzes</h3>
+          <div id="custom-quizzes-container" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessible Notification Toasts Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Language Pack Config & Data Curricula -->
+  <script src="lang-config.js"></script>
+  <script src="verbs-data.js"></script>
+  <script src="vocab-data.js"></script>
+  <script src="matra-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
