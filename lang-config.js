@@ -2,7 +2,7 @@
 // LANGUAGE PACK CONFIGURATION: HUNGARIAN (MAGYAR)
 // Plug-and-play configuration for the Language Lab Engine.
 // To adapt this engine to another language, provide a LANGUAGE_CONFIG object
-// alongside your 3 curriculum data files (verbs-data.js, vocab-data.js, matra-data.js).
+// alongside your 3 curriculum data files (verbs-data.js, vocab-data.js, sounds-data.js).
 // =========================================================================
 
 window.LANGUAGE_CONFIG = {
@@ -20,11 +20,16 @@ window.LANGUAGE_CONFIG = {
     bcp47: 'hu-HU',
     langPrefix: 'hu',
     preferredLocalVoiceRegex: /Mariska|Szabolcs|Tünde|Hungarian|Magyar/i,
-    windowsVoiceAdvice: "No Hungarian speech voice installed on this PC. Go to Settings → Time & Language → Speech → Add voices → Select 'Hungarian (Magyar)'.",
-    macVoiceAdvice: "No Hungarian voice found. In macOS System Settings → Accessibility → Spoken Content → System Voice → Manage Voices, install 'Mariska (Hungarian)'."
+    fallbackNoticeWindows: "No Hungarian speech voice installed on this PC. Go to Settings → Time & Language → Speech → Add voices → Select 'Hungarian (Magyar)'.",
+    fallbackNoticeMac: "No Hungarian voice found. In macOS System Settings → Accessibility → Spoken Content → System Voice → Manage Voices, install 'Mariska (Hungarian)'."
   },
 
-  // --- 2. Phonetic Guide & Syllable Helpers (Pluggable per language) ---
+  // --- 2. Script Validation, Phonetic Guide & Syllable Helpers (Pluggable per language) ---
+  isTargetScript(str) {
+    if (!str || typeof str !== 'string') return false;
+    return /[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]/.test(str);
+  },
+
   // Splits a Hungarian word into spoken syllables, keeping digraphs/trigraphs intact
   splitSyllables(word) {
     if (!word || typeof word !== 'string') return [];
