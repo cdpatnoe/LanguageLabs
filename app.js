@@ -3322,10 +3322,12 @@ function sanitizeExtractedNoise(str) {
     .replace(/\[[^\]]*[\u0900-\u097F]+[^\]]*\]/g, '')
     .replace(/\([^)]*(?:unit|chapter|ch|page|pg|class|test|vocab|ex|notes?|verb|noun|adj|m|f|tr|intr)[^)]*\)/gi, '')
     .replace(/\[[^\]]*(?:unit|chapter|ch|page|pg|class|test|vocab|ex|notes?|verb|noun|adj|m|f|tr|intr)[^\]]*\]/gi, '')
+    .replace(/(?:[\s,\|;\:\-\/\.\—\–]+)(?:m|f|masc|fem|adj|noun|post|adv)\.?\s*$/i, '')
     .replace(/\(\s*\)/g, '')
     .replace(/\[\s*\]/g, '')
-    .replace(/^[\s\*\•\-\d\.\:\।\|\—\–\t]+/, '')
-    .replace(/[\s\|\—\–\t\.\,\;\:\-]+$/, '')
+    .replace(/^[\s\,\;\*\•\-\d\.\:\।\|\—\–\t]+/, '')
+    .replace(/[\s\,\;\|\—\–\t\.\:\-]+$/, '')
+    .replace(/,\s*,+/g, ',')
     .replace(/\s{2,}/g, ' ')
     .trim();
 }
@@ -6686,12 +6688,12 @@ function initVocabNotesStudio() {
       if (!roman && (/[\t\|]/.test(line) || / - /.test(line))) {
         const cols = line.split(/\s*[\t\|]\s*/).filter(c => c.length > 0);
         if (cols.length >= 3) {
-          const isCol2Tag = /^(?:m|f|masc|fem|adj|noun|post|postposition)$/i.test(cols[2].trim());
+          const isCol2Tag = /^(?:m|f|masc|fem|adj|noun|post|postposition)\.?$/i.test(cols[2].trim());
           if (!isCol2Tag) {
             const candidate = cols[1].trim();
             if (containsDevanagari(candidate)) {
               // Skip Devanagari in roman column
-            } else if (isLatinScript(candidate) && !/^(?:m|f|masc|fem|adj|noun|post)$/i.test(candidate)) {
+            } else if (isLatinScript(candidate) && !/^(?:m|f|masc|fem|adj|noun|post)\.?$/i.test(candidate)) {
               roman = candidate;
             }
           }
@@ -6703,16 +6705,26 @@ function initVocabNotesStudio() {
         roman = devanagariToLatin(hindi);
       }
 
-      // Detect gender & POS
+      // Detect gender & POS (including trailing M/F signals after space, comma, pipe, dash, or slash)
+      const trailingMascRegex = /(?:[\s,\|;\:\-\/\.\—\–]+|^)(?:m|masc|masculine)\.?\s*$/i;
+      const trailingFemRegex = /(?:[\s,\|;\:\-\/\.\—\–]+|^)(?:f|fem|feminine)\.?\s*$/i;
+      const delimitedMascRegex = /(?:^|[\s,\|;\:\-\/\(\[])(?:m|masc|masculine)\.?(?=[\s,\|;\:\-\/\)\]]|$)/i;
+      const delimitedFemRegex = /(?:^|[\s,\|;\:\-\/\(\[])(?:f|fem|feminine)\.?(?=[\s,\|;\:\-\/\)\]]|$)/i;
+
       let gender = null;
-      if (/\[m\]|\(m\)|\bmasc\b|\bmasculine\b/i.test(line)) gender = 'Masculine';
-      else if (/\[f\]|\(f\)|\bfem\b|\bfeminine\b/i.test(line)) gender = 'Feminine';
-      else if (hindi.endsWith('ी')) gender = 'Feminine';
-      else if (hindi.endsWith('ा')) gender = 'Masculine';
+      if (/\[m\.?\]|\(m\.?\)|\bmasc\b|\bmasculine\b/i.test(line) || trailingMascRegex.test(line) || delimitedMascRegex.test(line)) {
+        gender = 'Masculine';
+      } else if (/\[f\.?\]|\(f\.?\)|\bfem\b|\bfeminine\b/i.test(line) || trailingFemRegex.test(line) || delimitedFemRegex.test(line)) {
+        gender = 'Feminine';
+      } else if (hindi.endsWith('ी')) {
+        gender = 'Feminine';
+      } else if (hindi.endsWith('ा')) {
+        gender = 'Masculine';
+      }
 
       let pos = 'Noun';
-      if (/\[adj\]|\badj\b|\badjective\b/i.test(line)) pos = 'Adjective';
-      else if (/\[post\]|\bpost\b|\bpostposition\b/i.test(line)) pos = 'Postposition';
+      if (/\[adj\.?\]|\badj\b|\badjective\b/i.test(line)) pos = 'Adjective';
+      else if (/\[post\.?\]|\bpost\b|\bpostposition\b/i.test(line)) pos = 'Postposition';
 
       // Clean English definition
       let english = line.replace(hindi, '');
@@ -6721,17 +6733,24 @@ function initVocabNotesStudio() {
       if (roman && isLatinScript(roman) && english.includes(roman)) {
         english = english.replace(roman, '');
       }
-      english = english.replace(/\[\s*(?:tr|intr|transitive|intransitive|masc|fem|m|f|adj|noun|post|v|verb)\s*\]/gi, '');
-      english = english.replace(/\(\s*(?:tr|intr|transitive|intransitive|masc|fem|m|f|adj|noun|post|v|verb)\s*\)/gi, '');
-      english = english.replace(/\b(?:transitive|intransitive|masc|fem|masculine|feminine|adj|noun|postposition)\b/gi, '');
+      english = english.replace(/\[\s*(?:tr|intr|transitive|intransitive|masc|fem|m|f|adj|noun|post|adv|v|verb)\.?\s*\]/gi, '');
+      english = english.replace(/\(\s*(?:tr|intr|transitive|intransitive|masc|fem|m|f|adj|noun|post|adv|v|verb)\.?\s*\)/gi, '');
+      english = english.replace(/\b(?:transitive|intransitive|masc|fem|masculine|feminine|adj|noun|postposition)\b\.?/gi, '');
       english = english.replace(/[\u0900-\u097F]+/g, '');
-      english = english.replace(/[\s\|\:\-]+(?:m|f|masc|fem|adj|noun|post)$/i, '').trim();
+      // Strip trailing M / F / POS tags (repeatedly in case of e.g. "noun, M") and any delimiters around them
+      english = english.replace(/(?:[\s,\|;\:\-\/\.\—\–]+|^)(?:m|f|masc|fem|adj|noun|post|adv)\.?\s*$/gi, '').trim();
+      english = english.replace(/(?:[\s,\|;\:\-\/\.\—\–]+|^)(?:m|f|masc|fem|adj|noun|post|adv)\.?\s*$/gi, '').trim();
+      // Also strip standalone delimited M/F tokens if surrounded by commas/pipes/hyphens
+      english = english.replace(/(?:^|[\s,\|;\:\-\/]+)(?:m|f)\.?(?=$|[\s,\|;\:\-\/]+)/gi, ' ');
       english = english
         .replace(/\(\s*\)/g, '')
         .replace(/\[\s*\]/g, '')
-        .replace(/^[\s\*\•\-\d\.\:\।\|\—\–\t]+/, '')
-        .replace(/[\s\|\—\–\t]+$/, '')
-        .replace(/^[\:\-\|\—\–\t]+\s*/, '')
+        .replace(/,\s*,+/g, ',')
+        .replace(/^[\s\,\;\*\•\-\d\.\:\।\|\—\–\t]+/, '')
+        .replace(/[\s\,\;\|\—\–\t\.\:\-]+$/, '')
+        .replace(/^[\,\;\:\-\|\—\–\t]+\s*/, '')
+        .replace(/\s+,\s*/g, ', ')
+        .replace(/^,+|,+$/g, '')
         .replace(/\s{2,}/g, ' ')
         .trim();
 
