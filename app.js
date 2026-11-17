@@ -5546,6 +5546,36 @@ const BUILTIN_TARGETED_QUIZ_PACKS = [
       { id: "nau", hindi: "नौ", roman: "nau", english: "nine (9)", order: 9 },
       { id: "das", hindi: "दस", roman: "das", english: "ten (10)", order: 10 }
     ]
+  },
+  {
+    id: "swearing-slang",
+    title: "Swearing & Slang (गाली-गलौज)",
+    icon: "🌶️",
+    description: "Drill everyday Hindi swear words, insults, and spicy expressions — from mild banter to strong expletives.",
+    items: [
+      { id: "bakvas", hindi: "बकवास", roman: "bakvās", english: "nonsense / bullshit", hint: "[Mild–Moderate] Literally 'idle chatter', used everyday like 'bullshit'" },
+      { id: "bevakuf", hindi: "बेवकूफ़", roman: "bevakūf", english: "idiot / fool / stupid", hint: "[Mild] Classic mild insult" },
+      { id: "gadha", hindi: "गधा", roman: "gadhā", english: "donkey / jackass", hint: "[Mild] Friendly or annoyed 'jackass'" },
+      { id: "badtamiz", hindi: "बदतमीज़", roman: "badtamīz", english: "rude jerk / ill-mannered", hint: "[Mild] Literally 'bad manners'" },
+      { id: "sala", hindi: "साला", roman: "sālā", english: "damn / bloody / brother-in-law", hint: "[Mild–Moderate] Ubiquitous exclamation or friendly tease" },
+      { id: "kamina", hindi: "कमीना", roman: "kamīnā", english: "scoundrel / bastard", hint: "[Moderate] Classic Bollywood insult or friendly banter" },
+      { id: "kutta", hindi: "कुत्ता", roman: "kuttā", english: "dog / bastard", hint: "[Moderate] Sharp insult for someone treacherous" },
+      { id: "bhad_mein_ja", hindi: "भाड़ में जा", roman: "bhāṛ meñ jā", english: "go to hell", hint: "[Moderate] Literally 'go into the furnace'" },
+      { id: "aisi_ki_taisi", hindi: "तेरी ऐसी की तैसी", roman: "terī aisī kī taisī", english: "screw you / to hell with you", hint: "[Moderate] Idiomatic euphemistic curse" },
+      { id: "harami", hindi: "हरामी", roman: "harāmī", english: "bastard / crooked person", hint: "[Moderate–Strong] Devious or shameless person" },
+      { id: "haramzada", hindi: "हरामज़ादा", roman: "harāmzādā", english: "bastard / son of a bitch", hint: "[Strong] Heavy insult — avoid in polite company" },
+      { id: "chutiya", hindi: "चूतिया", roman: "cūtiyā", english: "asshole / dumbass", hint: "[Strong] Vulgar, NSFW, ubiquitous in casual bro-slang" },
+      { id: "haramkhor", hindi: "हरामखोर", roman: "harāmkhor", english: "freeloader / corrupt bastard", hint: "[Moderate–Strong] Literally 'eater of ill-gotten gains'" },
+      { id: "dalla", hindi: "दल्ला", roman: "dallā", english: "pimp / sellout / sleazy middleman", hint: "[Moderate–Strong] Sharp insult for a sellout or snitch" },
+      { id: "bakchodi", hindi: "बकचोदी", roman: "bakcodī", english: "bullshitting / talking crap", hint: "[Moderate–Strong] Spicier NSFW upgrade to 'bakvās'" },
+      { id: "chutiyapa", hindi: "चूतियापा", roman: "cūtiyāpā", english: "fuckery / total bullshit", hint: "[Strong] Absurdly stupid behavior or a total mess" },
+      { id: "gandu", hindi: "गांडू", roman: "gāṇḍū", english: "asshole / coward / loser", hint: "[Strong] Heavy insult derived from 'गांड' (ass)" },
+      { id: "bhosrike", hindi: "भोसड़ीके", roman: "bhosṛīke", english: "asshole / bastard (vocative)", hint: "[Strong] Famous vocative insult in street slang & memes" },
+      { id: "behenchod", hindi: "बहनचोद", roman: "behenchod", english: "sisterfucker / fuck!", hint: "[Strong] Versatile expletive ('BC') for shock or anger" },
+      { id: "madarchod", hindi: "मादरचोद", roman: "mādarchod", english: "motherfucker", hint: "[Strong] Exact equivalent of 'motherfucker' ('MC')" },
+      { id: "laude_lag_gaye", hindi: "लौड़े लग गए", roman: "lauṛe lag gae", english: "we're fucked / completely screwed", hint: "[Strong] Go-to idiom for being totally screwed" },
+      { id: "gand_phatna", hindi: "गांड फट गई", roman: "gāṇḍ phaṭ gaī", english: "scared shitless / terrified", hint: "[Strong] Literally 'ass tore apart' — terrified or overwhelmed" }
+    ]
   }
 ];
 

@@ -1992,6 +1992,491 @@ const VOCAB_CURRICULUM = [
       "english": "He walks every day in the morning.",
       "explanation": "Frequently used as रोज़ाना (rozānā) as well."
     }
+  },
+
+  // --- 10. Swearing & Slang (गाली-गलौज और बोलचाल) ---
+  {
+    "id": "bakvas",
+    "hindi": "बकवास",
+    "roman": "bakvās",
+    "english": "nonsense / bullshit / rubbish",
+    "pos": "Noun",
+    "gender": "Feminine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "बकवास (invariable)",
+    "pluralOblique": "बकवास (invariable)",
+    "mnemonic": "[Mild–Moderate] Literally 'idle chatter', used everyday like 'bullshit' or 'nonsense'. Safe in casual banter; avoid in formal meetings.",
+    "inflection": {
+      "direct_sg": "बकवास",
+      "direct_pl": "बकवास",
+      "oblique_sg": "बकवास",
+      "oblique_pl": "बकवास"
+    },
+    "example": {
+      "hindi": "यह सब बकवास बंद करो!",
+      "roman": "Yeh sab bakvās band karo!",
+      "english": "Stop all this nonsense / bullshit!",
+      "explanation": "Paired with 'करना' (bakvās karnā = to talk nonsense) or 'बंद करो' (band karo = stop it)."
+    }
+  },
+  {
+    "id": "bevakuf",
+    "hindi": "बेवकूफ़",
+    "roman": "bevakūf",
+    "english": "idiot / fool / stupid",
+    "pos": "Adjective",
+    "category": "Swearing & Slang",
+    "isInflecting": false,
+    "mnemonic": "[Mild] From Persian 'be-wuqūf' (without sense). Very common mild insult, like 'idiot' or 'moron'.",
+    "inflection": {
+      "m_sg": "बेवकूफ़",
+      "m_pl": "बेवकूफ़",
+      "f_sg": "बेवकूफ़",
+      "f_pl": "बेवकूफ़"
+    },
+    "example": {
+      "hindi": "तुम बिल्कुल बेवकूफ़ हो क्या?",
+      "roman": "Tum bilkul bevakūf ho kyā?",
+      "english": "Are you completely stupid or what?",
+      "explanation": "Invariable adjective — does not change for gender or number."
+    }
+  },
+  {
+    "id": "gadha",
+    "hindi": "गधा",
+    "roman": "gadhā",
+    "english": "donkey / jackass / idiot",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "गधे (gadhe)",
+    "pluralOblique": "गधों (gadhoñ)",
+    "mnemonic": "[Mild] Literally 'donkey', used affectionately or angrily between friends like 'jackass' or 'dummy'.",
+    "inflection": {
+      "direct_sg": "गधा",
+      "direct_pl": "गधे",
+      "oblique_sg": "गधे",
+      "oblique_pl": "गधों"
+    },
+    "example": {
+      "hindi": "अरे गधे, ध्यान से गाड़ी चला!",
+      "roman": "Are gadhe, dhyān se gāṛī calā!",
+      "english": "Hey jackass, drive carefully!",
+      "explanation": "Uses vocative/oblique singular 'गधे' (gadhe) when addressing someone directly."
+    }
+  },
+  {
+    "id": "badtamiz",
+    "hindi": "बदतमीज़",
+    "roman": "badtamīz",
+    "english": "rude jerk / ill-mannered / insolent",
+    "pos": "Adjective",
+    "category": "Swearing & Slang",
+    "isInflecting": false,
+    "mnemonic": "[Mild] 'Bad' (bad) + 'tamīz' (manners). Strong rebuke for someone acting disrespectful or obnoxious.",
+    "inflection": {
+      "m_sg": "बदतमीज़",
+      "m_pl": "बदतमीज़",
+      "f_sg": "बदतमीज़",
+      "f_pl": "बदतमीज़"
+    },
+    "example": {
+      "hindi": "इतना बदतमीज़ मत बनो।",
+      "roman": "Itnā badtamīz mat bano.",
+      "english": "Don't be such a rude jerk.",
+      "explanation": "Invariable adjective; often used as a noun too ('वह एक बदतमीज़ है')."
+    }
+  },
+  {
+    "id": "sala",
+    "hindi": "साला",
+    "roman": "sālā",
+    "english": "damn / bloody / brother-in-law (slang)",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "isInflecting": true,
+    "pluralDirect": "साले (sāle)",
+    "pluralOblique": "सालों (sāloñ)",
+    "mnemonic": "[Mild–Moderate] Literally 'wife's brother', but universally used as 'damn/bloody' or playful 'dude/bastard' among close friends.",
+    "inflection": {
+      "direct_sg": "साला",
+      "direct_pl": "साले",
+      "oblique_sg": "साले",
+      "oblique_pl": "सालों"
+    },
+    "example": {
+      "hindi": "साला, फिर से बारिश शुरू हो गई!",
+      "roman": "Sālā, phir se bāriś śurū ho gaī!",
+      "english": "Damn it, it started raining again!",
+      "explanation": "Can be an exclamation ('साला!') or an inflecting adjective before a noun ('साला ट्रैफ़िक', fem. 'साली ज़िंदगी')."
+    }
+  },
+  {
+    "id": "kamina",
+    "hindi": "कमीना",
+    "roman": "kamīnā",
+    "english": "scoundrel / bastard / lowlife",
+    "pos": "Adjective",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "isInflecting": true,
+    "mnemonic": "[Moderate] Classic Bollywood villain insult. Friendly teasing among close bros, or genuine insult if said in anger. Feminine: कमीनी (kamīnī).",
+    "inflection": {
+      "m_sg": "कमीना",
+      "m_pl": "कमीने",
+      "f_sg": "कमीनी",
+      "f_pl": "कमीनी"
+    },
+    "example": {
+      "hindi": "वह बहुत बड़ा कमीना है, पर मेरा दोस्त है।",
+      "roman": "Vah bahut baṛā kamīnā hai, par merā dost hai.",
+      "english": "He's a huge bastard, but he's my friend.",
+      "explanation": "Inflects like a Type 1 -आ adjective/noun: कमीना (M), कमीनी (F), कमीने (M.pl/vocative)."
+    }
+  },
+  {
+    "id": "kutta",
+    "hindi": "कुत्ता",
+    "roman": "kuttā",
+    "english": "dog / bastard (insult)",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "कुत्ते (kutte)",
+    "pluralOblique": "कुत्तों (kuttoñ)",
+    "mnemonic": "[Moderate] Literally 'dog', used as a sharp insult for someone treacherous or shameless. Feminine: कुत्ती (kuttī = bitch).",
+    "inflection": {
+      "direct_sg": "कुत्ता",
+      "direct_pl": "कुत्ते",
+      "oblique_sg": "कुत्ते",
+      "oblique_pl": "कुत्तों"
+    },
+    "example": {
+      "hindi": "कुत्ते, तूने मुझे धोखा दिया!",
+      "roman": "Kutte, tūne mujhe dhokhā diyā!",
+      "english": "You dog, you betrayed me!",
+      "explanation": "Uses the intimate/rude pronoun 'तू' (tūne) + vocative 'कुत्ते' (kutte)."
+    }
+  },
+  {
+    "id": "bhad_mein_ja",
+    "hindi": "भाड़ में जा",
+    "roman": "bhāṛ meñ jā",
+    "english": "go to hell",
+    "pos": "Expression",
+    "category": "Swearing & Slang",
+    "mnemonic": "[Moderate] Literally 'go into the grain-roasting furnace!' Equivalent to 'go to hell' or 'get lost'.",
+    "inflection": null,
+    "example": {
+      "hindi": "मुझे फ़र्क़ नहीं पड़ता, भाड़ में जा!",
+      "roman": "Mujhe farq nahīñ paṛtā, bhāṛ meñ jā!",
+      "english": "I don't care, go to hell!",
+      "explanation": "Uses informal imperative 'जा' (jā); 'भाड़ में जाओ' (jāo) is slightly less blunt."
+    }
+  },
+  {
+    "id": "aisi_ki_taisi",
+    "hindi": "तेरी ऐसी की तैसी",
+    "roman": "terī aisī kī taisī",
+    "english": "screw you / to hell with you",
+    "pos": "Expression",
+    "category": "Swearing & Slang",
+    "mnemonic": "[Moderate] Idiomatic euphemistic curse — literally 'such-and-such of yours!', used just like 'screw you' or 'damn it all'.",
+    "inflection": null,
+    "example": {
+      "hindi": "तेरी ऐसी की तैसी, मैं यह काम नहीं करूँगा!",
+      "roman": "Terī aisī kī taisī, maiñ yeh kām nahīñ karūñgā!",
+      "english": "Screw you, I'm not doing this work!",
+      "explanation": "Can also target things: 'इस काम की ऐसी की तैसी!' (Screw this job!)."
+    }
+  },
+  {
+    "id": "harami",
+    "hindi": "हरामी",
+    "roman": "harāmī",
+    "english": "bastard / crooked / treacherous person",
+    "pos": "Adjective",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "isInflecting": false,
+    "mnemonic": "[Moderate–Strong] From 'harām' (forbidden/unlawful). Means a devious, shameless bastard. Very common in street slang and web series.",
+    "inflection": {
+      "m_sg": "हरामी",
+      "m_pl": "हरामी",
+      "f_sg": "हरामी",
+      "f_pl": "हरामी"
+    },
+    "example": {
+      "hindi": "कितना हरामी आदमी है वह!",
+      "roman": "Kitnā harāmī ādmī hai vah!",
+      "english": "What a crooked bastard that guy is!",
+      "explanation": "Ends in -ई, so it stays 'हरामी' for all genders and numbers."
+    }
+  },
+  {
+    "id": "haramzada",
+    "hindi": "हरामज़ादा",
+    "roman": "harāmzādā",
+    "english": "bastard / son of a bitch",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "हरामज़ादे (harāmzāde)",
+    "pluralOblique": "हरामज़ादों (harāmzādoñ)",
+    "mnemonic": "[Strong] Literally 'born of the forbidden' (illegitimate). Heavy insult — never use in polite company. Feminine: हरामज़ादी (harāmzādī).",
+    "inflection": {
+      "direct_sg": "हरामज़ादा",
+      "direct_pl": "हरामज़ादे",
+      "oblique_sg": "हरामज़ादे",
+      "oblique_pl": "हरामज़ादों"
+    },
+    "example": {
+      "hindi": "उस हरामज़ादे ने मेरे पैसे चुरा लिए।",
+      "roman": "Us harāmzāde ne mere paise curā lie.",
+      "english": "That bastard stole my money.",
+      "explanation": "Oblique singular 'हरामज़ादे' before the ergative postposition 'ने' (ne)."
+    }
+  },
+  {
+    "id": "chutiya",
+    "hindi": "चूतिया",
+    "roman": "cūtiyā",
+    "english": "asshole / dumbass / fucking idiot",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "चूतिये (cūtiye)",
+    "pluralOblique": "चूतियों (cūtiyoñ)",
+    "mnemonic": "[Strong] Vulgar, NSFW, and ubiquitous in casual Indian bro-slang and memes. Means 'complete dumbass / asshole'.",
+    "inflection": {
+      "direct_sg": "चूतिया",
+      "direct_pl": "चूतिये",
+      "oblique_sg": "चूतिये",
+      "oblique_pl": "चूतियों"
+    },
+    "example": {
+      "hindi": "उस चूतिये की बात मत सुनो।",
+      "roman": "Us cūtiye kī bāt mat suno.",
+      "english": "Don't listen to that dumbass.",
+      "explanation": "Changes -आ to -ए in the oblique singular ('उस चूतिये की') before 'की'."
+    }
+  },
+  {
+    "id": "haramkhor",
+    "hindi": "हरामखोर",
+    "roman": "harāmkhor",
+    "english": "freeloader / corrupt bastard / scoundrel",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "हरामखोर (harāmkhor)",
+    "pluralOblique": "हरामखोरों (harāmkhoroñ)",
+    "mnemonic": "[Moderate–Strong] Literally 'eater of ill-gotten gains' (harām + khor). Used for lazy freeloaders, corrupt people, or shameless jerks.",
+    "inflection": {
+      "direct_sg": "हरामखोर",
+      "direct_pl": "हरामखोर",
+      "oblique_sg": "हरामखोर",
+      "oblique_pl": "हरामखोरों"
+    },
+    "example": {
+      "hindi": "वह बहुत बड़ा हरामखोर है, काम नहीं करता।",
+      "roman": "Vah bahut baṛā harāmkhor hai, kām nahīñ kartā.",
+      "english": "He's a huge freeloading bastard, he doesn't do any work.",
+      "explanation": "Consonant-ending masculine noun: singular and direct plural look the same; oblique plural adds -ओं."
+    }
+  },
+  {
+    "id": "dalla",
+    "hindi": "दल्ला",
+    "roman": "dallā",
+    "english": "pimp / sellout / sleazy middleman",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "दल्ले (dalle)",
+    "pluralOblique": "दल्लों (dalloñ)",
+    "mnemonic": "[Moderate–Strong] Literally 'broker/pimp', used as a sharp insult for someone who is a sellout, snitch, or sleazy middleman.",
+    "inflection": {
+      "direct_sg": "दल्ला",
+      "direct_pl": "दल्ले",
+      "oblique_sg": "दल्ले",
+      "oblique_pl": "दल्लों"
+    },
+    "example": {
+      "hindi": "उस दल्ले पर कभी भरोसा मत करना।",
+      "roman": "Us dalle par kabhī bharosā mat karnā.",
+      "english": "Never trust that sleazy sellout.",
+      "explanation": "Type 1 -आ noun: changes to oblique singular 'दल्ले' before postposition 'पर' (on)."
+    }
+  },
+  {
+    "id": "bakchodi",
+    "hindi": "बकचोदी",
+    "roman": "bakcodī",
+    "english": "bullshitting / talking crap / nonsense",
+    "pos": "Noun",
+    "gender": "Feminine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "बकचोदियाँ (bakcodiyāñ)",
+    "pluralOblique": "बकचोदियों (bakcodiyoñ)",
+    "mnemonic": "[Moderate–Strong] A spicier, NSFW upgrade to 'बकवास' (bakvās). Extremely common in college/friend-group slang for bullshitting or rambling.",
+    "inflection": {
+      "direct_sg": "बकचोदी",
+      "direct_pl": "बकचोदियाँ",
+      "oblique_sg": "बकचोदी",
+      "oblique_pl": "बकचोदियों"
+    },
+    "example": {
+      "hindi": "काम की बात कर, बकचोदी मत कर।",
+      "roman": "Kām kī bāt kar, bakcodī mat kar.",
+      "english": "Talk business, stop bullshitting.",
+      "explanation": "Paired with 'करना' (bakcodī karnā = to bullshit / shoot the shit)."
+    }
+  },
+  {
+    "id": "chutiyapa",
+    "hindi": "चूतियापा",
+    "roman": "cūtiyāpā",
+    "english": "fuckery / total bullshit / stupidity",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "चूतियापे (cūtiyāpe)",
+    "pluralOblique": "चूतियापों (cūtiyāpoñ)",
+    "mnemonic": "[Strong] Abstract noun derived from 'चूतिया'. Refers to absurdly stupid behavior, a mess, or total fuckery.",
+    "inflection": {
+      "direct_sg": "चूतियापा",
+      "direct_pl": "चूतियापे",
+      "oblique_sg": "चूतियापे",
+      "oblique_pl": "चूतियापों"
+    },
+    "example": {
+      "hindi": "यह क्या चूतियापा चल रहा है यहाँ?",
+      "roman": "Yeh kyā cūtiyāpā cal rahā hai yahāñ?",
+      "english": "What kind of fuckery is going on here?",
+      "explanation": "Takes masculine singular agreement ('चल रहा है')."
+    }
+  },
+  {
+    "id": "gandu",
+    "hindi": "गांडू",
+    "roman": "gāṇḍū",
+    "english": "asshole / coward / loser",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "गांडू (gāṇḍū)",
+    "pluralOblique": "गांडुओं (gāṇḍuoñ)",
+    "mnemonic": "[Strong] Derived from 'गांड' (ass). Heavy insult meaning asshole, pathetic loser, or coward.",
+    "inflection": {
+      "direct_sg": "गांडू",
+      "direct_pl": "गांडू",
+      "oblique_sg": "गांडू",
+      "oblique_pl": "गांडुओं"
+    },
+    "example": {
+      "hindi": "वह नंबर एक का गांडू है।",
+      "roman": "Vah nambar ek kā gāṇḍū hai.",
+      "english": "He's a number-one asshole.",
+      "explanation": "Ends in -ऊ, so singular and direct plural remain 'गांडू'."
+    }
+  },
+  {
+    "id": "bhosrike",
+    "hindi": "भोसड़ीके",
+    "roman": "bhosṛīke",
+    "english": "asshole / bastard / motherfucker (vocative)",
+    "pos": "Expression",
+    "category": "Swearing & Slang",
+    "mnemonic": "[Strong] Vocative form of 'भोसड़ीवाला' (vulgar anatomical insult). Famous in Indian memes, web series, and heated/joking banter.",
+    "inflection": null,
+    "example": {
+      "hindi": "अरे भोसड़ीके, कहाँ गायब था?",
+      "roman": "Are bhosṛīke, kahāñ gāyab thā?",
+      "english": "Hey asshole, where did you disappear to?",
+      "explanation": "Almost always used in the vocative ('भोसड़ीके') when calling out someone directly."
+    }
+  },
+  {
+    "id": "behenchod",
+    "hindi": "बहनचोद",
+    "roman": "behenchod",
+    "english": "sisterfucker / fuck! (versatile expletive)",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "बहनचोद (behenchod)",
+    "pluralOblique": "बहनचोदों (behenchodoñ)",
+    "mnemonic": "[Strong] Literally 'sisterfucker', but in North Indian slang it functions like 'fuck!' or 'fucker' — used for shock, anger, excitement, or punctuation.",
+    "inflection": {
+      "direct_sg": "बहनचोद",
+      "direct_pl": "बहनचोद",
+      "oblique_sg": "बहनचोद",
+      "oblique_pl": "बहनचोदों"
+    },
+    "example": {
+      "hindi": "बहनचोद, यह क्या हो गया!",
+      "roman": "Behenchod, yeh kyā ho gayā!",
+      "english": "Fuck, what just happened!",
+      "explanation": "Often abbreviated in text as 'BC'. Used both as a noun insult and a standalone exclamation."
+    }
+  },
+  {
+    "id": "madarchod",
+    "hindi": "मादरचोद",
+    "roman": "mādarchod",
+    "english": "motherfucker",
+    "pos": "Noun",
+    "gender": "Masculine",
+    "category": "Swearing & Slang",
+    "pluralDirect": "मादरचोद (mādarchod)",
+    "pluralOblique": "मादरचोदों (mādarchodoñ)",
+    "mnemonic": "[Strong] Exact equivalent of 'motherfucker' (Persian 'mādar' = mother + 'chod'). One of the heaviest Hindi swears; abbreviated as 'MC'.",
+    "inflection": {
+      "direct_sg": "मादरचोद",
+      "direct_pl": "मादरचोद",
+      "oblique_sg": "मादरचोद",
+      "oblique_pl": "मादरचोदों"
+    },
+    "example": {
+      "hindi": "उस मादरचोद ने फिर से झूठ बोला।",
+      "roman": "Us mādarchod ne phir se jhūṭh bolā.",
+      "english": "That motherfucker lied again.",
+      "explanation": "Often paired with 'BC' ('MC-BC'). Extremely offensive in formal or unfamiliar company."
+    }
+  },
+  {
+    "id": "laude_lag_gaye",
+    "hindi": "लौड़े लग गए",
+    "roman": "lauṛe lag gae",
+    "english": "we're fucked / completely screwed",
+    "pos": "Expression",
+    "category": "Swearing & Slang",
+    "mnemonic": "[Strong] From 'लौड़ा' (dick). 'लौड़े लग जाना' is the go-to Hindi idiom for 'to be totally fucked / screwed over'.",
+    "inflection": null,
+    "example": {
+      "hindi": "भाई, आज तो लौड़े लग गए!",
+      "roman": "Bhāī, āj to lauṛe lag gae!",
+      "english": "Bro, we're completely fucked today!",
+      "explanation": "Plural verb 'लग गए' (lag gae) agrees with masculine plural 'लौड़े' (lauṛe)."
+    }
+  },
+  {
+    "id": "gand_phatna",
+    "hindi": "गांड फट गई",
+    "roman": "gāṇḍ phaṭ gaī",
+    "english": "scared shitless / terrified",
+    "pos": "Expression",
+    "category": "Swearing & Slang",
+    "mnemonic": "[Strong] Literally 'ass tore apart'. Graphic, hilarious everyday slang for being scared out of your mind or overwhelmed.",
+    "inflection": null,
+    "example": {
+      "hindi": "बॉस को देखकर उसकी गांड फट गई।",
+      "roman": "Boss ko dekhkar uskī gāṇḍ phaṭ gaī.",
+      "english": "He was scared shitless when he saw the boss.",
+      "explanation": "Uses feminine possessive 'उसकी' (uskī) and feminine verb 'फट गई' because 'गांड' (gāṇḍ) is feminine."
+    }
   }
 ];
 
