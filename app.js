@@ -5477,6 +5477,32 @@ const BUILTIN_TARGETED_QUIZ_PACKS = [
       { id: "kilenc", target: "kilenc", phonetic: "ki-lents", english: "nine (9)", order: 9 },
       { id: "tiz", target: "tíz", phonetic: "teez", english: "ten (10)", order: 10 }
     ]
+  },
+  {
+    id: "swearing-slang",
+    title: "Swearing & Slang (Káromkodás)",
+    icon: "🌶️",
+    description: "Drill everyday Hungarian swear words, insults, and spicy expressions — from mild exclamations to heavy-duty profanity.",
+    items: [
+      { id: "a_fenebe", target: "a fenébe!", phonetic: "aw feh-nay-beh", english: "damn it! / drat!", hint: "[Mild] Literally 'into the abyss!' Safe everyday exclamation" },
+      { id: "hulye", target: "hülye", phonetic: "hue-yeh", english: "stupid / idiot / dumb", hint: "[Mild] Everyday word for 'stupid' or 'idiot'" },
+      { id: "barom", target: "barom", phonetic: "baw-rom", english: "moron / brute / idiot", hint: "[Mild–Moderate] Literally 'cattle / ox'" },
+      { id: "marha", target: "marha", phonetic: "mawr-haw", english: "idiot / fool (or 'bloody/super')", hint: "[Mild–Moderate] 'marha jó!' = 'bloody awesome!'" },
+      { id: "pofatlan", target: "pofátlan", phonetic: "po-faat-lawn", english: "shameless / brazen / cheeky jerk", hint: "[Mild–Moderate] Literally 'without a mug/shame'" },
+      { id: "basszus", target: "basszus!", phonetic: "baws-sush", english: "damn it! / shoot!", hint: "[Moderate] Minced oath for 'baszd meg!'" },
+      { id: "szar", target: "szar", phonetic: "sawr", english: "shit / crap / terrible", hint: "[Moderate] Exact equivalent of 'shit'" },
+      { id: "szarok_ra", target: "szarok rá", phonetic: "saw-rok raa", english: "I don't give a shit", hint: "[Moderate] Literally 'I shit onto it'" },
+      { id: "seggfej", target: "seggfej", phonetic: "shegg-fey", english: "asshole / shithead", hint: "[Moderate] Compound of 'segg' (ass) + 'fej' (head)" },
+      { id: "kurva", target: "kurva", phonetic: "kur-vaw", english: "whore / bitch (or 'fucking' intensifier)", hint: "[Strong] Very common intensifier ('kurva jó!')" },
+      { id: "kurva_eletbe", target: "a kurva életbe!", phonetic: "aw kur-vaw ay-let-beh", english: "goddammit! / fuck my life!", hint: "[Strong] Iconic Hungarian outburst" },
+      { id: "baszd_meg", target: "baszd meg!", phonetic: "bawzd meg", english: "fuck it! / fuck you!", hint: "[Strong] Imperative of 'baszik' (to fuck)" },
+      { id: "lofaszt", target: "lófaszt!", phonetic: "loh-fawst", english: "bullshit! / no way in hell!", hint: "[Strong] Literally 'horse dick!'" },
+      { id: "picsaba", target: "a picsába!", phonetic: "aw pi-chaa-baw", english: "fuck! / damn it!", hint: "[Strong] Literally 'into the cunt!'" },
+      { id: "menj_a_picsaba", target: "menj a picsába!", phonetic: "meny aw pi-chaa-baw", english: "fuck off! / go to hell!", hint: "[Strong] Definitive Hungarian 'fuck off!'" },
+      { id: "geci", target: "geci", phonetic: "geh-tsi", english: "asshole / cum / fucking (intensifier)", hint: "[Strong] Also used as intensifier ('geci jó!')" },
+      { id: "fasz", target: "fasz", phonetic: "faws", english: "dick / cock / prick", hint: "[Strong] 'mi a fasz?' = 'what the fuck?'" },
+      { id: "faszom", target: "a faszom!", phonetic: "aw faw-som", english: "fuck! / goddammit! (lit. my dick!)", hint: "[Strong] Frustrated possessive outburst" }
+    ]
   }
 ];
 

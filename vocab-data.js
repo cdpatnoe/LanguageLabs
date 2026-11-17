@@ -1160,6 +1160,377 @@ const VOCAB_CURRICULUM = [
       english: "Where are you now, and where are you going?",
       explanation: "Hungarian distinguishes location ('hol?'), destination ('hová?'), and origin ('honnan?' = from where?)."
     }
+  },
+
+  // --- 10. Swearing & Slang (Káromkodás és szleng) ---
+  {
+    id: "a_fenebe",
+    target: "a fenébe!",
+    phonetic: "aw feh-nay-beh",
+    english: "damn it! / drat!",
+    pos: "Expression",
+    nounTrait: "Front",
+    category: "Swearing & Slang",
+    mnemonic: "[Mild] Literally 'into the abyss/bottom!' Safe everyday exclamation when you drop your keys or miss a train.",
+    inflection: null,
+    example: {
+      target: "A fenébe, itthon hagytam a kulcsomat!",
+      phonetic: "aw feh-nay-beh, it-hon hawdy-tawm aw kul-cho-mawt",
+      english: "Damn it, I left my keys at home!",
+      explanation: "Uses the illative case '-be' (into) on 'fene' (front-vowel noun)."
+    }
+  },
+  {
+    id: "hulye",
+    target: "hülye",
+    phonetic: "hue-yeh",
+    english: "stupid / idiot / dumb",
+    pos: "Adjective",
+    nounTrait: "Front",
+    category: "Swearing & Slang",
+    pluralDirect: "hülyék (-ék)",
+    pluralOblique: "hülyét (acc.) • hülyének (to)",
+    mnemonic: "[Mild] Everyday word for 'stupid' or 'idiot'. Common among friends and siblings.",
+    inflection: {
+      direct_sg: "hülye",
+      direct_pl: "hülyék",
+      oblique_sg: "hülyét (acc.)",
+      oblique_pl: "hülyéknek (to/for)"
+    },
+    example: {
+      target: "Ne légy már ilyen hülye!",
+      phonetic: "neh laydy maar i-yen hue-yeh",
+      english: "Don't be so stupid!",
+      explanation: "Front-vowel word; final -e lengthens to -é before suffixes (hülyék, hülyét)."
+    }
+  },
+  {
+    id: "barom",
+    target: "barom",
+    phonetic: "baw-rom",
+    english: "moron / brute / idiot",
+    pos: "Noun",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    pluralDirect: "barmok (-ok)",
+    pluralOblique: "barmot (acc.) • baromnak (to)",
+    mnemonic: "[Mild–Moderate] Literally 'cattle / ox'. Used like 'moron' or 'jackass' when someone does something clumsy or inconsiderate.",
+    inflection: {
+      direct_sg: "barom",
+      direct_pl: "barmok",
+      oblique_sg: "barmot (acc.)",
+      oblique_pl: "barmoknak (to/for)"
+    },
+    example: {
+      target: "Micsoda barom vagy!",
+      phonetic: "mi-cho-daw baw-rom vawdy",
+      english: "What a moron you are!",
+      explanation: "Drops the internal 'o' when adding vowel-initial suffixes: barom → barmok, barmot."
+    }
+  },
+  {
+    id: "marha",
+    target: "marha",
+    phonetic: "mawr-haw",
+    english: "idiot / fool (or 'bloody/super' as slang)",
+    pos: "Noun",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    pluralDirect: "marhák (-ák)",
+    pluralOblique: "marhát (acc.) • marhának (to)",
+    mnemonic: "[Mild–Moderate] Literally 'beef/cattle'. As a noun it means 'idiot', but as an adverb ('marha jó!') it means 'bloody awesome!'",
+    inflection: {
+      direct_sg: "marha",
+      direct_pl: "marhák",
+      oblique_sg: "marhát (acc.)",
+      oblique_pl: "marháknak (to/for)"
+    },
+    example: {
+      target: "Ez a film marha jó volt!",
+      phonetic: "ez aw film mawr-haw yoh volt",
+      english: "This movie was bloody awesome!",
+      explanation: "Final -a lengthens to -á before suffixes (marhák, marhát). Used as an intensifier before adjectives."
+    }
+  },
+  {
+    id: "pofatlan",
+    target: "pofátlan",
+    phonetic: "po-faat-lawn",
+    english: "shameless / brazen / cheeky jerk",
+    pos: "Adjective",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    pluralDirect: "pofátlanok (-ok)",
+    pluralOblique: "pofátlant (acc.) • pofátlannak (to)",
+    mnemonic: "[Mild–Moderate] From 'pofa' (mug/snout) + '-tlan' (without). Describes someone with zero shame or nerve.",
+    inflection: {
+      direct_sg: "pofátlan",
+      direct_pl: "pofátlanok",
+      oblique_sg: "pofátlant (acc.)",
+      oblique_pl: "pofátlanoknak (to/for)"
+    },
+    example: {
+      target: "Milyen pofátlan ember!",
+      phonetic: "mi-yen po-faat-lawn em-ber",
+      english: "What a shameless person!",
+      explanation: "Back-vowel adjective with the privative suffix '-tlan' (-less)."
+    }
+  },
+  {
+    id: "basszus",
+    target: "basszus!",
+    phonetic: "baws-sush",
+    english: "damn it! / shoot! (minced oath)",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Moderate] Literally 'bass' (music), used as a polite-ish stand-in for 'baszd meg!' — like 'shoot!' or 'dang!'",
+    inflection: null,
+    example: {
+      target: "Basszus, lekéstem a buszt!",
+      phonetic: "baws-sush, leh-kaysh-tem aw bust",
+      english: "Damn it, I missed the bus!",
+      explanation: "Safe around most adults, though clearly a minced swear."
+    }
+  },
+  {
+    id: "szar",
+    target: "szar",
+    phonetic: "sawr",
+    english: "shit / crap / terrible",
+    pos: "Noun",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    pluralDirect: "szarok (-ok)",
+    pluralOblique: "szart (acc.) • szarban (-ban)",
+    mnemonic: "[Moderate] Exact equivalent of 'shit' (both noun and adjective). Very common in casual Hungarian.",
+    inflection: {
+      direct_sg: "szar",
+      direct_pl: "szarok",
+      oblique_sg: "szart (acc.)",
+      oblique_pl: "szarban (in)"
+    },
+    example: {
+      target: "Ez a nap teljesen szar.",
+      phonetic: "ez aw nawp tel-yeh-shen sawr",
+      english: "This day is total shit.",
+      explanation: "Back-vowel word: 'szarban vagyok' = 'I'm in deep shit'."
+    }
+  },
+  {
+    id: "szarok_ra",
+    target: "szarok rá",
+    phonetic: "saw-rok raa",
+    english: "I don't give a shit",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Moderate] Literally 'I shit onto it' ('szarik' + 'rá'). The classic Hungarian way to say 'I couldn't care less'.",
+    inflection: null,
+    example: {
+      target: "Szarok rá, mit gondolnak mások.",
+      phonetic: "saw-rok raa, mit gon-dol-nawk maa-shok",
+      english: "I don't give a shit what others think.",
+      explanation: "1st-person singular indefinite of 'szarik' (to shit) + sublative pronoun 'rá' (onto it)."
+    }
+  },
+  {
+    id: "seggfej",
+    target: "seggfej",
+    phonetic: "shegg-fey",
+    english: "asshole / shithead (lit. ass-head)",
+    pos: "Noun",
+    nounTrait: "Front",
+    category: "Swearing & Slang",
+    pluralDirect: "seggfejek (-ek)",
+    pluralOblique: "seggfejet (acc.) • seggfejnek (to)",
+    mnemonic: "[Moderate] Compound of 'segg' (ass) + 'fej' (head). Direct equivalent of 'asshole' or 'butthead'.",
+    inflection: {
+      direct_sg: "seggfej",
+      direct_pl: "seggfejek",
+      oblique_sg: "seggfejet (acc.)",
+      oblique_pl: "seggfejeknek (to/for)"
+    },
+    example: {
+      target: "Az a seggfej megint elkésett.",
+      phonetic: "awz aw shegg-fey meh-gint el-kay-shett",
+      english: "That asshole is late again.",
+      explanation: "Front-vowel compound noun: takes -ek for plural and -et for accusative."
+    }
+  },
+  {
+    id: "kurva",
+    target: "kurva",
+    phonetic: "kur-vaw",
+    english: "whore / bitch (also 'fucking' intensifier)",
+    pos: "Noun",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    pluralDirect: "kurvák (-ák)",
+    pluralOblique: "kurvát (acc.) • kurvának (to)",
+    mnemonic: "[Strong] Literally 'whore', but most often used as an adverbial intensifier meaning 'fucking / super' (e.g. 'kurva jó', 'kurva hideg').",
+    inflection: {
+      direct_sg: "kurva",
+      direct_pl: "kurvák",
+      oblique_sg: "kurvát (acc.)",
+      oblique_pl: "kurváknak (to/for)"
+    },
+    example: {
+      target: "Kurva hideg van ma!",
+      phonetic: "kur-vaw hi-deg vawn maw",
+      english: "It's fucking cold today!",
+      explanation: "Final -a lengthens to -á before suffixes (kurvák, kurvát). Extremely common in casual speech."
+    }
+  },
+  {
+    id: "kurva_eletbe",
+    target: "a kurva életbe!",
+    phonetic: "aw kur-vaw ay-let-beh",
+    english: "goddammit! / fuck my life!",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Strong] Literally 'into the whore life!' One of the most iconic Hungarian outbursts when something breaks or goes wrong.",
+    inflection: null,
+    example: {
+      target: "A kurva életbe, megint elromlott!",
+      phonetic: "aw kur-vaw ay-let-beh, meh-gint el-rom-lott",
+      english: "Goddammit, it broke again!",
+      explanation: "'élet' (life) + '-be' (into) = 'életbe'."
+    }
+  },
+  {
+    id: "baszd_meg",
+    target: "baszd meg!",
+    phonetic: "bawzd meg",
+    english: "fuck it! / fuck you!",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Strong] Imperative of 'baszik' (to fuck) + 'meg'. Used like 'fuck!' when you stub your toe, or 'fuck you!' when angry.",
+    inflection: null,
+    example: {
+      target: "Baszd meg, ezt elrontottam!",
+      phonetic: "bawzd meg, ezt el-ron-tot-tawm",
+      english: "Fuck, I messed this up!",
+      explanation: "Uses the 2nd-person definite imperative '-d' ('baszd') + verbal prefix 'meg'."
+    }
+  },
+  {
+    id: "lofaszt",
+    target: "lófaszt!",
+    phonetic: "loh-fawst",
+    english: "bullshit! / no way in hell!",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Strong] Literally 'horse dick!' (in the accusative '-t'). Classic blunt Hungarian way to say 'hell no!' or 'bullshit!'",
+    inflection: null,
+    example: {
+      target: "Lófaszt, én ezt nem hiszem el!",
+      phonetic: "loh-fawst, ayn ezt nem hi-sem el",
+      english: "Bullshit, I don't believe this!",
+      explanation: "'ló' (horse) + 'fasz' (dick) + accusative '-t'."
+    }
+  },
+  {
+    id: "picsaba",
+    target: "a picsába!",
+    phonetic: "aw pi-chaa-baw",
+    english: "fuck! / damn it!",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Strong] Literally 'into the cunt!' ('picsa' + '-ba'). Used just like 'fuck!' or 'oh shit!' when something goes wrong.",
+    inflection: null,
+    example: {
+      target: "A picsába, elfelejtettem!",
+      phonetic: "aw pi-chaa-baw, el-feh-ley-tet-tem",
+      english: "Fuck, I forgot!",
+      explanation: "Final -a in 'picsa' lengthens to -á before '-ba': picsába."
+    }
+  },
+  {
+    id: "menj_a_picsaba",
+    target: "menj a picsába!",
+    phonetic: "meny aw pi-chaa-baw",
+    english: "fuck off! / go to hell!",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Strong] Combines imperative 'menj!' (go!) + 'a picsába' (into the cunt). The definitive Hungarian 'fuck off!'",
+    inflection: null,
+    example: {
+      target: "Hagyj békén, menj a picsába!",
+      phonetic: "hawdy bay-kayn, meny aw pi-chaa-baw",
+      english: "Leave me alone, fuck off!",
+      explanation: "'menj' is the 2nd-person imperative of 'megy' (to go)."
+    }
+  },
+  {
+    id: "geci",
+    target: "geci",
+    phonetic: "geh-tsi",
+    english: "asshole / cum / fucking (intensifier)",
+    pos: "Noun",
+    nounTrait: "Front",
+    category: "Swearing & Slang",
+    pluralDirect: "gecik (-k)",
+    pluralOblique: "gecit (acc.) • gecinek (to)",
+    mnemonic: "[Strong] Literally 'cum/jizz', used everywhere in modern slang for 'asshole/bastard' OR as an intensifier ('geci jó!' = 'fucking awesome!').",
+    inflection: {
+      direct_sg: "geci",
+      direct_pl: "gecik",
+      oblique_sg: "gecit (acc.)",
+      oblique_pl: "geciknek (to/for)"
+    },
+    example: {
+      target: "Ez a geci már megint hazudik.",
+      phonetic: "ez aw geh-tsi maar meh-gint haw-zu-dik",
+      english: "This asshole is lying again.",
+      explanation: "Front-vowel noun; in slang, also placed before adjectives like 'geci nagy' (fucking huge)."
+    }
+  },
+  {
+    id: "fasz",
+    target: "fasz",
+    phonetic: "faws",
+    english: "dick / cock / prick",
+    pos: "Noun",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    pluralDirect: "faszok (-ok)",
+    pluralOblique: "faszt (acc.) • faszba (-ba)",
+    mnemonic: "[Strong] Literally 'dick/cock'. Used both anatomically and to call someone a prick.",
+    inflection: {
+      direct_sg: "fasz",
+      direct_pl: "faszok",
+      oblique_sg: "faszt (acc.)",
+      oblique_pl: "fasznak (to/for)"
+    },
+    example: {
+      target: "Ne légy már ekkora fasz!",
+      phonetic: "neh laydy maar ek-ko-raw faws",
+      english: "Stop being such a huge dick!",
+      explanation: "Back-vowel noun; 'mi a fasz?' = 'what the fuck?'"
+    }
+  },
+  {
+    id: "faszom",
+    target: "a faszom!",
+    phonetic: "aw faw-som",
+    english: "fuck! / goddammit! (lit. my dick!)",
+    pos: "Expression",
+    nounTrait: "Back",
+    category: "Swearing & Slang",
+    mnemonic: "[Strong] Possessive form of 'fasz' ('my dick!'). Classic frustrated outburst when things go sideways.",
+    inflection: null,
+    example: {
+      target: "A faszom, már megint esik az eső!",
+      phonetic: "aw faw-som, maar meh-gint eh-shik awz eh-shoe",
+      english: "Fuck, it's raining again!",
+      explanation: "Back-vowel possessive suffix '-om' (my): fasz + -om = faszom."
+    }
   }
 ];
 
