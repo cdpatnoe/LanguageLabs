@@ -13186,6 +13186,42 @@ function renderHighlightedSentence(targetText, verbForm) {
 // --- 8. WAI-ARIA Modal Dialog (Focus Trap & Escape Handling) ---
 let lastFocusedElement = null;
 
+function formatConjugationPhonetic(rawText) {
+  if (!rawText || typeof rawText !== 'string') return '';
+  const cleaned = rawText.replace(/\([^)]*\)/g, '').trim();
+  if (!cleaned || cleaned === '-' || cleaned === '—') return '';
+  return cleaned
+    .split('/')
+    .map(part => toPhoneticGuide(part.trim()))
+    .filter(Boolean)
+    .join(' / ');
+}
+
+function formatConjugationAudio(rawText) {
+  if (!rawText || typeof rawText !== 'string') return '';
+  return rawText
+    .replace(/\([^)]*\)/g, '')
+    .replace(/\s*\/\s*/g, ', ')
+    .trim();
+}
+
+function renderConjugationCell(rawText) {
+  if (!rawText || rawText === '-' || rawText === '—') {
+    return escapeHtml(rawText || '-');
+  }
+  const phonetic = formatConjugationPhonetic(rawText);
+  const audioText = formatConjugationAudio(rawText);
+  return `
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.5rem;">
+      <div>
+        <div>${escapeHtml(rawText)}</div>
+        ${phonetic ? `<div style="font-family:var(--font-sans, sans-serif); font-size:0.78rem; font-weight:600; color:var(--text-muted); margin-top:0.15rem;">${escapeHtml(phonetic)}</div>` : ''}
+      </div>
+      ${audioText ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(audioText)}" aria-label="Pronounce ${escapeHtml(audioText)}" title="Listen to ${escapeHtml(audioText)}">🔊</button>` : ''}
+    </div>
+  `;
+}
+
 function openVerbModal(verbId) {
   const verb = state.verbs.find(v => v.id === verbId);
   if (!verb) return;
@@ -13264,21 +13300,21 @@ function openVerbModal(verbId) {
           <tbody>
             <tr>
               <td><strong>Present (Indefinite / Alanyi)</strong></td>
-              <td class="hindi-cell">${verb.conjugations?.habitual?.m_sg || '-'}</td>
-              <td class="hindi-cell">${verb.conjugations?.habitual?.f_sg || '-'}</td>
-              <td class="hindi-cell">${verb.conjugations?.habitual?.m_pl || '-'}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.habitual?.m_sg)}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.habitual?.f_sg)}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.habitual?.m_pl)}</td>
             </tr>
             <tr>
               <td><strong>Present (Definite / Tárgyas)</strong></td>
-              <td class="hindi-cell">${verb.conjugations?.continuous?.m_sg || '-'}</td>
-              <td class="hindi-cell">${verb.conjugations?.continuous?.f_sg || '-'}</td>
-              <td class="hindi-cell">${verb.conjugations?.continuous?.m_pl || '-'}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.continuous?.m_sg)}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.continuous?.f_sg)}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.continuous?.m_pl)}</td>
             </tr>
             <tr>
               <td><strong>Past Tense (Múlt idő -t)</strong></td>
-              <td class="hindi-cell">${verb.conjugations?.past?.m_sg || '-'}</td>
-              <td class="hindi-cell">${verb.conjugations?.past?.f_sg || '-'}</td>
-              <td class="hindi-cell">${verb.conjugations?.past?.m_pl || '-'}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.past?.m_sg)}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.past?.f_sg)}</td>
+              <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.past?.m_pl)}</td>
             </tr>
           </tbody>
         </table>
@@ -13291,17 +13327,20 @@ function openVerbModal(verbId) {
           <div style="display:inline-flex; align-items:center; gap:0.4rem;">
             <span style="color:var(--text-muted); font-size:0.85rem;">Te (Indefinite):</span>
             <span class="devanagari" style="font-weight:700; color:var(--primary); font-size:1.15rem;">${escapeHtml(imp.tu || '-')}</span>
-            ${imp.tu && imp.tu !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(imp.tu)}" aria-label="Pronounce ${escapeHtml(imp.tu)}" title="Listen to ${escapeHtml(imp.tu)}">🔊</button>` : ''}
+            ${formatConjugationPhonetic(imp.tu) ? `<span style="color:var(--text-muted); font-size:0.8rem;">(${escapeHtml(formatConjugationPhonetic(imp.tu))})</span>` : ''}
+            ${imp.tu && imp.tu !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(formatConjugationAudio(imp.tu))}" aria-label="Pronounce ${escapeHtml(imp.tu)}" title="Listen to ${escapeHtml(imp.tu)}">🔊</button>` : ''}
           </div>
           <div style="display:inline-flex; align-items:center; gap:0.4rem;">
             <span style="color:var(--text-muted); font-size:0.85rem;">Te (Definite):</span>
             <span class="devanagari" style="font-weight:700; color:var(--primary); font-size:1.15rem;">${escapeHtml(imp.tum || '-')}</span>
-            ${imp.tum && imp.tum !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(imp.tum)}" aria-label="Pronounce ${escapeHtml(imp.tum)}" title="Listen to ${escapeHtml(imp.tum)}">🔊</button>` : ''}
+            ${formatConjugationPhonetic(imp.tum) ? `<span style="color:var(--text-muted); font-size:0.8rem;">(${escapeHtml(formatConjugationPhonetic(imp.tum))})</span>` : ''}
+            ${imp.tum && imp.tum !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(formatConjugationAudio(imp.tum))}" aria-label="Pronounce ${escapeHtml(imp.tum)}" title="Listen to ${escapeHtml(imp.tum)}">🔊</button>` : ''}
           </div>
           <div style="display:inline-flex; align-items:center; gap:0.4rem;">
             <span style="color:var(--text-muted); font-size:0.85rem;">Ön (Formal):</span>
             <span class="devanagari" style="font-weight:700; color:var(--primary); font-size:1.15rem;">${escapeHtml(imp.aap || '-')}</span>
-            ${imp.aap && imp.aap !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(imp.aap)}" aria-label="Pronounce ${escapeHtml(imp.aap)}" title="Listen to ${escapeHtml(imp.aap)}">🔊</button>` : ''}
+            ${formatConjugationPhonetic(imp.aap) ? `<span style="color:var(--text-muted); font-size:0.8rem;">(${escapeHtml(formatConjugationPhonetic(imp.aap))})</span>` : ''}
+            ${imp.aap && imp.aap !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(formatConjugationAudio(imp.aap))}" aria-label="Pronounce ${escapeHtml(imp.aap)}" title="Listen to ${escapeHtml(imp.aap)}">🔊</button>` : ''}
           </div>
         </div>
       </div>
