@@ -726,7 +726,7 @@
             </label>
             <textarea id="vocab-raw-text" class="notes-textarea" placeholder="Paste notes in any format, e.g.:
 - szoba (so-ba) - room [B]
-- könyv (koenyv) - book [F]
+- libro (LEE-broh) - book [M]
 - jó (yoh) - good [adj]
 - asztal | table | back"></textarea>
           </div>
@@ -823,10 +823,10 @@
                 <div>
                   <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Part of Speech *</label>
                   <select id="custom-vocab-pos" class="search-input" style="background:white;">
-                    <option value="Noun">Noun (Főnév)</option>
-                    <option value="Adjective">Adjective (Melléknév)</option>
-                    <option value="Postposition">Postposition (Névutó)</option>
-                    <option value="Adverb">Adverb (Határozószó)</option>
+                    <option value="Noun">Noun (Sostantivo)</option>
+                    <option value="Adjective">Adjective (Aggettivo)</option>
+                    <option value="Postposition">Preposition (Preposizione)</option>
+                    <option value="Adverb">Adverb (Avverbio)</option>
                   </select>
                 </div>
               </div>
@@ -1255,7 +1255,7 @@
               Data Cleanup &amp; Lexicon Manager
             </h2>
             <div class="modal-subtitle" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
-              Adattisztítás és Szótárkezelő • Review, edit, sanitize, or delete saved words &amp; fix imported mistakes
+              Gestione Lessico e Dati • Review, edit, sanitize, or delete saved words &amp; fix imported mistakes
             </div>
           </div>
         </div>
@@ -1281,7 +1281,7 @@
       
       <div class="launch-header">
         <h2 id="focus-modal-title">Choose Your Practice Focus</h2>
-        <p>Válaszd ki a gyakorlási területet • Master Italian conjugations, vowel harmony &amp; cases, or vowel lengths &amp; digraphs.</p>
+        <p>Scegli il tuo percorso di pratica • Master Italian verb conjugations, grammatical gender &amp; articles, or pronunciation &amp; double consonants.</p>
       </div>
 
       <div class="launch-cards-grid">
@@ -1291,16 +1291,16 @@
             <span class="launch-card-icon">⚡</span>
             <span class="launch-card-badge badge-verb-theme">Actions &amp; Conjugation</span>
             <div class="launch-card-title">Verb Lab</div>
-            <div class="launch-card-hindi">Igelabor</div>
+            <div class="launch-card-hindi">Laboratorio dei Verbi</div>
             <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
-              Master essential Italian verbs, -ik verbs, Definite (Tárgyas) vs Indefinite (Alanyi) conjugations, and Past tense.
+              Master essential Italian verbs, -are/-ere/-ire &amp; -isc- patterns, Essere vs Avere auxiliaries, and Passato Prossimo.
             </p>
             <ul class="launch-features-list">
-              <li><span class="bullet-icon">✓</span> <strong>20 Core Curriculum Verbs</strong> (van, megy, jön, eszik, olvas)</li>
-              <li><span class="bullet-icon">✓</span> <strong>3 Paradigms:</strong> Present Indefinite, Definite &amp; Past (-t)</li>
-              <li><span class="bullet-icon">✓</span> <strong>Definite vs Indefinite Rule:</strong> Object &amp; harmony drills</li>
-              <li><span class="bullet-icon">✓</span> <strong>Audio Pronunciation (it-IT)</strong> for verbs &amp; sentences</li>
-              <li><span class="bullet-icon">✓</span> <strong>Conjugation Matrix &amp; Tense Quizzes</strong></li>
+              <li><span class="bullet-icon">✓</span> <strong>20 Core Curriculum Verbs</strong> (essere, avere, andare, fare, capire)</li>
+              <li><span class="bullet-icon">✓</span> <strong>3 Paradigms:</strong> Presente, Imperfetto &amp; Passato Prossimo</li>
+              <li><span class="bullet-icon">✓</span> <strong>Essere vs Avere Rule:</strong> Auxiliary &amp; agreement drills</li>
+              <li><span class="bullet-icon">✓</span> <strong>Audio Pronunciation (it-IT)</strong> for every conjugation &amp; sentence</li>
+              <li><span class="bullet-icon">✓</span> <strong>Conjugation Matrix with Phonetics &amp; Quizzes</strong></li>
             </ul>
           </div>
           <button type="button" class="launch-cta-btn verbs-btn" id="launch-choose-verbs-btn">
@@ -1309,21 +1309,21 @@
         </div>
 
         <!-- Card 2: Vocabulary Studio -->
-        <div class="launch-card vocab-card-choice" id="launch-card-vocab" tabindex="0" role="button" aria-label="Select Vocabulary Studio: Nouns, Adjectives &amp; Vowel Harmony">
+        <div class="launch-card vocab-card-choice" id="launch-card-vocab" tabindex="0" role="button" aria-label="Select Vocabulary Studio: Nouns, Adjectives &amp; Gender">
           <div>
             <span class="launch-card-icon">📖</span>
-            <span class="launch-card-badge badge-vocab-theme">Nouns, Cases &amp; Vowel Harmony</span>
+            <span class="launch-card-badge badge-vocab-theme">Nouns, Articles &amp; Slang</span>
             <div class="launch-card-title">Vocabulary Studio</div>
-            <div class="launch-card-hindi">Szókincs</div>
+            <div class="launch-card-hindi">Vocabolario</div>
             <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
-              Build your core Italian vocabulary with Back vs Front vowel harmony, plurals (-k/-ok/-ek/-ök), and accusative (-t) cases.
+              Build your core Italian vocabulary with Masculine vs Feminine gender, definite articles (il/lo/l'/la), plurals, and 🌶️ Swearing &amp; Slang.
             </p>
             <ul class="launch-features-list">
-              <li><span class="bullet-icon">✓</span> <strong>38+ Essential Words</strong> (Home, Food, People, Places)</li>
-              <li><span class="bullet-icon">✓</span> <strong>Vowel Harmony:</strong> Back (Mély) vs Front (Magas)</li>
-              <li><span class="bullet-icon">✓</span> <strong>Plural &amp; Accusative Cases</strong> (könyv → könyvek → könyvet)</li>
-              <li><span class="bullet-icon">✓</span> <strong>Targeted Practice Packs:</strong> Days, Numbers 1–10, Questions</li>
-              <li><span class="bullet-icon">✓</span> <strong>Harmony Quizzes &amp; Speed Match</strong></li>
+              <li><span class="bullet-icon">✓</span> <strong>67 Essential Words &amp; Expressions</strong> (including 🌶️ Swearing &amp; Slang)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Grammatical Gender:</strong> Masculine (il/lo) vs Feminine (la)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Articles &amp; Plurals</strong> (l'amico → gli amici, la casa → le case)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Targeted Practice Packs:</strong> Days, Numbers 1–10, Questions, Slang</li>
+              <li><span class="bullet-icon">✓</span> <strong>Gender Quizzes &amp; Speed Match</strong></li>
             </ul>
           </div>
           <button type="button" class="launch-cta-btn vocab-btn" id="launch-choose-vocab-btn">
@@ -1332,20 +1332,20 @@
         </div>
 
         <!-- Card 3: Sounds & Pairs -->
-        <div class="launch-card matra-card-choice" id="launch-card-matra" tabindex="0" role="button" aria-label="Select Sounds &amp; Pairs: Vowels, Digraphs &amp; Minimal Pairs">
+        <div class="launch-card matra-card-choice" id="launch-card-matra" tabindex="0" role="button" aria-label="Select Sounds &amp; Pairs: Digraphs, Double Consonants &amp; Minimal Pairs">
           <div>
             <span class="launch-card-icon">🔤</span>
-            <span class="launch-card-badge badge-matra-theme">Vowels, Digraphs &amp; Minimal Pairs</span>
+            <span class="launch-card-badge badge-matra-theme">Digraphs, Doppie &amp; Minimal Pairs</span>
             <div class="launch-card-title">Sounds &amp; Pairs</div>
-            <div class="launch-card-hindi">Kiejtés és Hangok</div>
+            <div class="launch-card-hindi">Pronuncia e Doppie</div>
             <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
-              Master Italian short vs long vowels (a/á, e/é, ö/ő, ü/ű) and consonant digraphs (sz/s, cs/c, zs, gy, ny, ty, ly).
+              Master Italian soft vs hard c/g (ci/chi, gi/ghi, sci/schi), palatals (gli, gn), and double consonants (Le Doppie).
             </p>
             <ul class="launch-features-list">
-              <li><span class="bullet-icon">✓</span> <strong>30 Graduated Words</strong> across 10 Sound &amp; Digraph families</li>
-              <li><span class="bullet-icon">✓</span> <strong>20 Minimal Pairs:</strong> kor vs kór, szél vs sál, megy vs meggy</li>
-              <li><span class="bullet-icon">✓</span> <strong>Digraph &amp; Phonics Math:</strong> (gy + ű + r + ű = gyűrű)</li>
-              <li><span class="bullet-icon">✓</span> <strong>Recite &amp; Verify:</strong> Native hu-HU audio &amp; slow 0.6x mode</li>
+              <li><span class="bullet-icon">✓</span> <strong>24 Graduated Words</strong> across 6 Italian Sound &amp; Digraph families</li>
+              <li><span class="bullet-icon">✓</span> <strong>10 Minimal Pairs:</strong> capello vs cappello, pesce vs pesche, pala vs palla</li>
+              <li><span class="bullet-icon">✓</span> <strong>Digraph &amp; Phonics Math:</strong> (fa + mi + glia = famiglia)</li>
+              <li><span class="bullet-icon">✓</span> <strong>Recite &amp; Verify:</strong> Native it-IT audio &amp; slow 0.6x mode</li>
               <li><span class="bullet-icon">✓</span> <strong>Interactive Speed Match &amp; Sound Quizzes</strong></li>
             </ul>
           </div>
@@ -1407,8 +1407,8 @@
               <span style="font-size:0.75rem; color:var(--text-muted);">One pair per line: Italian, Pronunciation, English</span>
             </div>
             <textarea id="custom-quiz-words-input" class="search-input" rows="6" placeholder="hétfő, heet-foe, Monday
-kedd, kedd, Tuesday
-szerda, ser-da, Wednesday" style="width:100%; font-family:monospace; font-size:0.85rem; line-height:1.5; padding:0.6rem;"></textarea>
+martedì, mahr-teh-DEE, Tuesday
+mercoledì, mehr-koh-leh-DEE, Wednesday" style="width:100%; font-family:monospace; font-size:0.85rem; line-height:1.5; padding:0.6rem;"></textarea>
           </div>
 
           <!-- Quick Emoji Pill Selector -->

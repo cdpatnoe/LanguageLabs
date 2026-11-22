@@ -1812,7 +1812,7 @@ function getVerbTenseSentences(verb) {
   };
 
   const defaultPast = {
-    tense: "Past Tense (Múlt idő -t)",
+    tense: "Passato Prossimo",
     target: `Tegnap ${verb.conjugations?.past?.m_sg || verb.target}.`,
     phonetic: "",
     english: `Yesterday I ${verb.english.replace(/^to /, '')}ed.`,
@@ -3009,8 +3009,8 @@ function updateVerbsQuizTopicUI() {
   const descEl = document.getElementById('verbs-quiz-topic-desc');
   const descMap = {
     'mixed': "Drills for Definite vs Indefinite conjugation, irregular & -ik verbs, and past tense (-t) across all verbs.",
-    'ne-rule': "Focused drill on Transitivity and Definite Conjugation (Tárgyas ragozás with 'a/az' objects vs Indefinite Alanyi).",
-    'irregular-past': "Focused drill on the Big 4 irregulars (van, megy, jön, eszik, iszik) and past tense stems (-t / -ott / -ett / -ött).",
+    'ne-rule': "Focused drill on Passato Prossimo auxiliaries (Essere vs Avere).",
+    'irregular-past': "Focused drill on irregular verbs (essere, avere, andare, fare, prendere) and Passato Prossimo participles.",
     'continuous-agreement': "Focused drill on 1st-person singular (Én) Definite (-om/-em/-öm) vs Indefinite (-ok/-ek/-ök) conjugation."
   };
   if (descEl) {
@@ -3044,14 +3044,14 @@ function generateVerbTopicQuizQuestions(topicId) {
     state.verbs.forEach(v => {
       bank.push({
         type: "Definite vs Indefinite Rule",
-        question: `Can the verb <strong>${v.target}</strong> (${v.phonetic} - ${v.english}) take the <strong>Definite (Tárgyas)</strong> conjugation when used with a specific direct object (like <em>a könyvet</em>)?`,
+        question: `Does the verb <strong>${v.target}</strong> (${v.phonetic} - ${v.english}) take <strong>Essere</strong> as its auxiliary in Passato Prossimo?`,
         options: [
           { text: "Yes, it takes Definite conjugation (-om/-od/-ja)", isCorrect: v.hasGrammarTrait },
-          { text: "No, it is Indefinite Only (Alanyi - intransitive)", isCorrect: !v.hasGrammarTrait }
+          { text: "No, it takes Avere (e.g. ho parlato)", isCorrect: !v.hasGrammarTrait }
         ],
         explanation: v.hasGrammarTrait
           ? `Correct! <strong>${v.target}</strong> is transitive and takes Definite endings when there is a specific direct object (e.g., <em>Én ${v.conjugations?.continuous?.m_sg || v.target}</em>).`
-          : `Correct! <strong>${v.target}</strong> is intransitive and only uses Indefinite (Alanyi) endings (e.g., <em>Én ${v.conjugations?.habitual?.m_sg || v.target}</em>).`
+          : `Correct! <strong>${v.target}</strong> takes <strong>Avere</strong> in Passato Prossimo (e.g., <em>${v.conjugations?.past?.m_sg || v.target}</em>).`
       });
     });
     return bank.sort(() => Math.random() - 0.5).slice(0, 10);
@@ -3063,7 +3063,7 @@ function generateVerbTopicQuizQuestions(topicId) {
       const pastForms = v.conjugations?.past;
       if (pastForms && pastForms.m_sg) {
         bank.push({
-          type: "Past Tense (Múlt idő -t) Drill",
+          type: "Passato Prossimo Drill",
           question: `What is the 1st-person singular (Én) past tense form of <strong>${v.target}</strong> (${v.english})?`,
           options: [
             { text: pastForms.m_sg, isCorrect: true },
@@ -3086,10 +3086,10 @@ function generateVerbTopicQuizQuestions(topicId) {
       const pastForm = v.conjugations.past?.m_sg || (v.target + 'tam');
       bank.push({
         type: "Definite vs Indefinite Agreement",
-        question: `Which 1st-person singular (Én) form of <strong>${v.target}</strong> (${v.english}) is used with a <strong>definite object</strong> (e.g., <em>a könyvet / a filmet</em>)?`,
+        question: `Which form of <strong>${v.target}</strong> (${v.english}) is the <strong>Imperfetto</strong> (io/tu)?`,
         options: [
-          { text: defForm + " (Definite / Tárgyas)", isCorrect: true },
-          { text: indefForm + " (Indefinite / Alanyi)", isCorrect: false },
+          { text: defForm + " (Imperfetto)", isCorrect: true },
+          { text: indefForm + " (Presente)", isCorrect: false },
           { text: v.target + " (3rd Sg)", isCorrect: false },
           { text: pastForm + " (Past)", isCorrect: false }
         ].sort(() => Math.random() - 0.5),
@@ -3108,8 +3108,8 @@ function generateQuizBank() {
   // Question Type 1: Transitive Definite vs Indefinite rule
   state.verbs.slice(0, 15).forEach(v => {
     bank.push({
-      type: "Definite (Tárgyas) vs Indefinite (Alanyi)",
-      question: `Can the verb <strong>${v.target}</strong> (${v.phonetic} - ${v.english}) take the <strong>Definite (Tárgyas)</strong> conjugation?`,
+      type: "Passato Prossimo Auxiliary (Essere vs Avere)",
+      question: `Does <strong>${v.target}</strong> (${v.phonetic} - ${v.english}) take <strong>Essere</strong> in Passato Prossimo?`,
       options: [
         { text: "Yes, it takes Definite conjugation (-om/-od/-ja)", isCorrect: v.hasGrammarTrait },
         { text: "No, it is Takes Avere (Passato Prossimo)", isCorrect: !v.hasGrammarTrait }
@@ -3125,7 +3125,7 @@ function generateQuizBank() {
     const pastForms = v.conjugations?.past;
     if (pastForms && pastForms.m_sg) {
       bank.push({
-        type: "Past Tense (Múlt idő -t)",
+        type: "Passato Prossimo",
         question: `What is the 1st-person singular (Én) past tense form of <strong>${v.target}</strong> (${v.english})?`,
         options: [
           { text: pastForms.m_sg, isCorrect: true },
@@ -3152,7 +3152,7 @@ function generateQuizBank() {
         { text: v.target, isCorrect: false },
         { text: pastForm, isCorrect: false }
       ].sort(() => Math.random() - 0.5),
-      explanation: `A definite direct object triggers the Definite (Tárgyas) 1st-person form: <strong>${defForm}</strong> (vs Indefinite <strong>${indefForm}</strong>).`
+      explanation: `The Imperfetto form is <strong>${defForm}</strong> (vs Presente <strong>${indefForm}</strong>).`
     });
   });
 
@@ -4791,7 +4791,7 @@ function openVocabModal(wordId) {
   } else if (word.pos === 'Adjective' && word.inflection) {
     tableHtml = `
       <div style="margin-top:1.25rem;">
-        <div class="section-label">Adjective Number Agreement (Melléknév egyeztetése)</div>
+        <div class="section-label">Adjective Gender &amp; Number Agreement (Accordo degli aggettivi)</div>
         <table class="inflection-table">
           <thead>
             <tr>
@@ -5930,10 +5930,10 @@ function generateVocabQuizQuestions() {
       type: "🎵 Vowel Harmony Class (Magánhangzó-harmónia)",
       question: `Which vowel harmony class does <strong>"${w.target}"</strong> (${w.phonetic || ''} - <em>${w.english}</em>) belong to?`,
       options: [
-        { text: "🎵 Back Vowel (Mély - takes -ban / -nak / -ok)", isCorrect: isBack },
-        { text: "🎶 Front Vowel (Magas - takes -ben / -nek / -ek/-ök)", isCorrect: !isBack }
+        { text: "♂ Masculine (Maschile: il / lo)", isCorrect: isBack },
+        { text: "♀ Feminine (Femminile: la)", isCorrect: !isBack }
       ],
-      explanation: `<strong>${w.target}</strong> (${w.english}) belongs to the <strong>${w.nounTrait} Vowel (${isBack ? 'Mély' : 'Magas'})</strong> harmony class.`
+      explanation: `<strong>${w.target}</strong> (${w.english}) is <strong>${isBack ? 'Masculine (Maschile: il/lo)' : 'Feminine (Femminile: la)'}</strong>.`
     });
   });
 
@@ -6569,7 +6569,7 @@ function initVocabNotesStudio() {
   loadSampleBtn?.addEventListener('click', () => {
     rawTextArea.value = `# Semester 1 - Key Italian Nouns and Adjectives
 - szoba (so-baw) - room [Back]
-- könyv (keunyv) - book [Front]
+- libro (LEE-broh) - book [Masculine]
 - jó (yoh) - good [adj]
 - nagy (nawdj) - big [adj]
 - víz (veez) - water [Front]
