@@ -350,41 +350,58 @@ function getSyllabicSpeechText(word) {
 function findTargetVoice(options = {}) {
   const preferLocal = Boolean(options && options.preferLocal);
   if (!('speechSynthesis' in window)) return null;
-  const voices = (cachedVoices && cachedVoices.length) ? cachedVoices : window.speechSynthesis.getVoices();
+  const freshVoices = window.speechSynthesis.getVoices();
+  if (freshVoices && freshVoices.length) {
+    cachedVoices = freshVoices;
+  }
+  const voices = (freshVoices && freshVoices.length) ? freshVoices : cachedVoices;
   if (!voices || !voices.length) return null;
 
   const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
     ? window.LANGUAGE_CONFIG.speech
     : {
-        bcp47: 'hu-HU',
-        langPrefix: 'hu',
-        preferredLocalVoiceRegex: /Alice|Federica|Luca|Paola|Italian|Italiano/i
+        bcp47: 'it-IT',
+        langPrefix: 'it',
+        preferredLocalVoiceRegex: /Alice|Federica|Luca|Paola|Elsa|Cosimo|Google italiano|Italian|Italiano/i
       };
 
-  const bcp47 = speechCfg.bcp47 || 'hu-HU';
-  const bcp47Alt = bcp47.replace('-', '_');
-  const langPrefix = (speechCfg.langPrefix || 'hu').toLowerCase();
-  const voiceRegex = speechCfg.preferredLocalVoiceRegex || /Alice|Federica|Luca|Paola|Italian|Italiano/i;
+  const bcp47Lower = (speechCfg.bcp47 || 'it-IT').toLowerCase().replace('_', '-');
+  const langPrefix = (speechCfg.langPrefix || 'it').toLowerCase();
+  const voiceRegex = speechCfg.preferredLocalVoiceRegex || /Alice|Federica|Luca|Paola|Elsa|Cosimo|Google italiano|Italian|Italiano/i;
+  const noveltyRegex = /\b(Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox)\b/i;
 
-  if (preferLocal) {
-    let localVoice = voices.find(v =>
-      v.localService && (v.lang === bcp47 || v.lang === bcp47Alt || v.lang === langPrefix)
-    );
-    if (localVoice) return localVoice;
+  const isTargetLang = (v) => {
+    const l = (v.lang || '').toLowerCase().replace('_', '-');
+    return l === bcp47Lower || l === langPrefix || l.startsWith(langPrefix + '-');
+  };
 
-    localVoice = voices.find(v =>
-      v.localService && (v.lang.toLowerCase().startsWith(langPrefix) || voiceRegex.test(v.name))
-    );
-    if (localVoice) return localVoice;
-  }
+  // Strictly restrict candidates to target-language voices so an English voice is never selected
+  const langVoices = voices.filter(isTargetLang);
+  if (!langVoices.length) return null;
 
-  let voice = voices.find(v => v.lang === bcp47 || v.lang === bcp47Alt || v.lang === langPrefix);
+  const cleanVoices = langVoices.filter(v => !noveltyRegex.test(v.name || ''));
+  const pool = cleanVoices.length ? cleanVoices : langVoices;
+
+  // 1. Preferred named local voice (e.g. Alice / Federica / Luca on macOS)
+  let voice = pool.find(v => v.localService && voiceRegex.test(v.name || ''));
   if (voice) return voice;
 
-  voice = voices.find(v =>
-    v.lang.toLowerCase().startsWith(langPrefix) || voiceRegex.test(v.name)
-  );
-  return voice || null;
+  // 2. If preferLocal (slow reading), pick any local target-language voice before remote
+  if (preferLocal) {
+    voice = pool.find(v => v.localService);
+    if (voice) return voice;
+  }
+
+  // 3. Preferred named voice (local or remote, e.g. Google italiano)
+  voice = pool.find(v => voiceRegex.test(v.name || ''));
+  if (voice) return voice;
+
+  // 4. Any local target-language voice
+  voice = pool.find(v => v.localService);
+  if (voice) return voice;
+
+  // 5. Fallback to first target-language voice
+  return pool[0] || null;
 }
 
 // True on phones/tablets (no hover, coarse pointer) – used to show touch-friendly prompts
@@ -463,10 +480,10 @@ function speakTargetText(text, buttonEl = null, options = {}) {
 
           const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
             ? window.LANGUAGE_CONFIG.speech
-            : { bcp47: 'hu-HU' };
+            : { bcp47: 'it-IT' };
 
           const utterance = new SpeechSynthesisUtterance(speechText);
-          utterance.lang = speechCfg.bcp47 || 'hu-HU';
+          utterance.lang = speechCfg.bcp47 || 'it-IT';
 
           // Safe clamped rate:
           utterance.rate = (typeof rate === 'number' && rate > 0) ? Math.max(0.65, Math.min(rate, 1.5)) : 0.85;
@@ -474,6 +491,7 @@ function speakTargetText(text, buttonEl = null, options = {}) {
           const voice = findTargetVoice({ preferLocal: preferLocal });
           if (voice) {
             utterance.voice = voice;
+            if (voice.lang) utterance.lang = voice.lang;
             if (!voice.localService && rate < 0.85 && !syllabic) {
               utterance.text = getSyllabicSpeechText(text);
             }
