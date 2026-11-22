@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Hungarian Lab">
+  <meta name="apple-mobile-web-app-title" content="Italian Lab">
   <meta name="format-detection" content="telephone=no">
-  <title>Hungarian Language Lab (Magyar Nyelvi Labor) - Verbs, Vocabulary &amp; Pronunciation</title>
+  <title>Italian Language Lab (Laboratorio di Italiano) - Verbs, Vocabulary &amp; Pronunciation</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,42 +19,42 @@
   <!-- Accessibility: Dynamic Live Region Announcer for Screen Readers -->
   <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Hungarian Tricolor Accent Ribbon -->
-  <div class="top-ornament-bar" aria-hidden="true" style="background: linear-gradient(90deg, #ce2939 0%, #ce2939 33%, #ffffff 33%, #ffffff 66%, #477050 66%, #477050 100%); height: 5px; border-bottom: 1px solid var(--border);"></div>
+  <!-- Italian Tricolor Accent Ribbon -->
+  <div class="top-ornament-bar" aria-hidden="true" style="background: linear-gradient(90deg, #009246 0%, #009246 33%, #ffffff 33%, #ffffff 66%, #ce2b37 66%, #ce2b37 100%); height: 5px; border-bottom: 1px solid var(--border);"></div>
 
   <!-- App Header -->
   <header>
     <div class="header-container">
       <div class="logo-group">
-        <div class="logo-badge" aria-hidden="true">HU</div>
+        <div class="logo-badge" aria-hidden="true">IT</div>
         <div class="logo-text">
-          <h1 id="app-main-title">Hungarian Language Lab <span id="app-title-sub" style="font-weight:400; font-family:var(--font-hindi); font-size:1.15rem; color:var(--primary);">(Magyar Nyelvi Labor)</span></h1>
-          <p class="app-tagline"><span class="status-dot" aria-hidden="true"></span> 100% Offline &amp; Local • Config-Driven Language Pack Engine (hu-HU)</p>
+          <h1 id="app-main-title">Italian Language Lab <span id="app-title-sub" style="font-weight:400; font-family:var(--font-hindi); font-size:1.15rem; color:var(--primary);">(Laboratorio di Italiano)</span></h1>
+          <p class="app-tagline"><span class="status-dot" aria-hidden="true"></span> 100% Offline &amp; Local • Config-Driven Language Pack Engine (it-IT)</p>
         </div>
       </div>
 
       <!-- Module Focus Switcher -->
       <div class="header-actions">
         <div class="focus-pill-switcher" role="radiogroup" aria-label="Select Learning Module">
-          <button type="button" class="focus-pill-btn active" id="focus-verbs-btn" data-module="verbs" role="radio" aria-checked="true" aria-label="Switch to Verb Lab (Igelabor)">
+          <button type="button" class="focus-pill-btn active" id="focus-verbs-btn" data-module="verbs" role="radio" aria-checked="true" aria-label="Switch to Verb Lab (Verbi)">
             <span class="focus-pill-icon">⚡</span>
             <span class="focus-pill-text">
               <span class="focus-pill-title">Verb Lab</span><span class="focus-pill-short" aria-hidden="true">Verbs</span>
-              <span class="focus-pill-sub">Igelabor</span>
+              <span class="focus-pill-sub">Verbi</span>
             </span>
           </button>
-          <button type="button" class="focus-pill-btn" id="focus-vocab-btn" data-module="vocab" role="radio" aria-checked="false" aria-label="Switch to Vocabulary Studio (Szókincs)">
+          <button type="button" class="focus-pill-btn" id="focus-vocab-btn" data-module="vocab" role="radio" aria-checked="false" aria-label="Switch to Vocabulary Studio (Vocabolario)">
             <span class="focus-pill-icon">📖</span>
             <span class="focus-pill-text">
               <span class="focus-pill-title">Vocabulary Studio</span><span class="focus-pill-short" aria-hidden="true">Vocab</span>
-              <span class="focus-pill-sub">Szókincs</span>
+              <span class="focus-pill-sub">Vocabolario</span>
             </span>
           </button>
-          <button type="button" class="focus-pill-btn" id="focus-matra-btn" data-module="matras" role="radio" aria-checked="false" aria-label="Switch to Sounds &amp; Pairs (Kiejtés és Hangok)">
+          <button type="button" class="focus-pill-btn" id="focus-matra-btn" data-module="matras" role="radio" aria-checked="false" aria-label="Switch to Sounds &amp; Pairs (Pronuncia &amp; Doppie)">
             <span class="focus-pill-icon">🔤</span>
             <span class="focus-pill-text">
               <span class="focus-pill-title">Sounds &amp; Pairs</span><span class="focus-pill-short" aria-hidden="true">Sounds</span>
-              <span class="focus-pill-sub">Kiejtés</span>
+              <span class="focus-pill-sub">Pronuncia</span>
             </span>
           </button>
         </div>
@@ -79,7 +79,7 @@
             <span class="tab-icon" aria-hidden="true">⚡</span> <span class="tab-short" aria-hidden="true">Match</span><span class="tab-text" id="nav-text-match">Speed Match</span>
           </button>
           <button role="tab" id="tab-nav-quiz" aria-selected="false" class="nav-btn" data-tab-type="quiz">
-            <span class="tab-icon" aria-hidden="true">🎯</span> <span class="tab-short" aria-hidden="true">Quiz</span><span class="tab-text" id="nav-text-quiz">Definite &amp; Tense Quiz</span>
+            <span class="tab-icon" aria-hidden="true">🎯</span> <span class="tab-short" aria-hidden="true">Quiz</span><span class="tab-text" id="nav-text-quiz">Auxiliary &amp; Tense Quiz</span>
           </button>
           <button role="tab" id="tab-nav-notes" aria-selected="false" class="nav-btn" data-tab-type="notes">
             <span class="tab-icon" aria-hidden="true">➕</span> <span class="tab-short" aria-hidden="true">Add</span><span class="tab-text" id="nav-text-notes">Add from Notes</span>
@@ -91,7 +91,7 @@
 
   <main id="main-content">
     <!-- =====================================================================
-         MODULE 1: VERB LAB (Igelabor)
+         MODULE 1: VERB LAB (Verbi)
          ===================================================================== -->
 
     <!-- TAB 1 (VERBS): VERB EXPLORER -->
@@ -100,7 +100,7 @@
         <div class="search-row">
           <div class="search-input-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="verb-search" class="search-input" placeholder="Search Hungarian verb (e.g. olvas, eszik, megy), pronunciation, or English...">
+            <input type="text" id="verb-search" class="search-input" placeholder="Search Italian verb (e.g. essere, andare, parlare), pronunciation, or English...">
           </div>
         </div>
 
@@ -110,30 +110,28 @@
           </div>
           <div class="filter-tags">
             <button class="filter-chip active" data-cluster="all">All Clusters (20)</button>
-            <button class="filter-chip" data-cluster="The Big 4 Irregulars">The Big 4 (van, megy, jön, csinál)</button>
-            <button class="filter-chip" data-cluster="-ik Verbs &amp; Dining">-ik Verbs &amp; Dining (eszik, iszik)</button>
-            <button class="filter-chip" data-cluster="Motion &amp; Movement">Motion (Intransitive)</button>
-            <button class="filter-chip" data-cluster="Daily Essentials">Daily Living</button>
-            <button class="filter-chip" data-cluster="Study &amp; Communication">Study &amp; Speech</button>
-            <button class="filter-chip" data-cluster="Perception &amp; Mind">Cognition &amp; Senses</button>
-            <button class="filter-chip" data-cluster="Objects &amp; Actions">Objects &amp; Actions</button>
+            <button class="filter-chip" data-cluster="The Big 4 Irregulars">The Big 4 (essere, avere, andare, fare)</button>
+            <button class="filter-chip" data-cluster="Modal &amp; Essential Irregulars">Modals (potere, volere, dovere, sapere)</button>
+            <button class="filter-chip" data-cluster="-are Regular Verbs">-are Regulars</button>
+            <button class="filter-chip" data-cluster="-ere Verbs">-ere Verbs</button>
+            <button class="filter-chip" data-cluster="-ire &amp; -isc- Verbs">-ire &amp; -isc- Verbs</button>
           </div>
         </div>
 
         <div>
           <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
-            Filter by Definite (Tárgyas) vs Indefinite (Alanyi) Conjugation
+            Filter by Passato Prossimo Auxiliary (Essere vs Avere)
           </div>
           <div class="filter-tags">
             <button class="filter-chip active" data-ne="all">All Verbs</button>
-            <button class="filter-chip ne-true" data-ne="takes-ne">Takes Definite Conjugation (-om/-od/-ja • Transitive)</button>
-            <button class="filter-chip ne-false" data-ne="no-ne">Indefinite Only (Alanyi • Intransitive)</button>
+            <button class="filter-chip ne-true" data-ne="takes-ne">Takes Essere (sono andato/a • Motion / State)</button>
+            <button class="filter-chip ne-false" data-ne="no-ne">Takes Avere (ho parlato • Most Verbs)</button>
           </div>
         </div>
 
         <div class="stats-summary">
           <span id="verb-count-label">Loading verbs...</span>
-          <span style="font-size:0.8rem;">💡 Tip: Click any card for Indefinite, Definite &amp; Past conjugation matrix</span>
+          <span style="font-size:0.8rem;">💡 Tip: Click any card for Presente, Imperfetto, Passato Prossimo &amp; Imperative matrix</span>
         </div>
       </div>
 
@@ -150,7 +148,7 @@
           </div>
           <div class="flashcard-settings">
             <button id="toggle-translit-btn" class="toggle-btn" aria-label="Toggle phonetic guide display">Show Pronunciation</button>
-            <button id="toggle-direction-btn" class="toggle-btn" aria-label="Toggle prompt language direction">Prompt: Hungarian</button>
+            <button id="toggle-direction-btn" class="toggle-btn" aria-label="Toggle prompt language direction">Prompt: Italian</button>
             <button id="shuffle-cards-btn" class="toggle-btn" aria-label="Shuffle flashcards">
               <span aria-hidden="true">🔀</span> Shuffle
             </button>
@@ -187,7 +185,7 @@
           <div>
             <h2 style="font-size:1.4rem;">⚡ Verb Speed Match Drill</h2>
             <p id="match-status" style="color:var(--text-muted); font-size:0.9rem;" aria-live="polite">
-              Click a Hungarian verb, then match its English meaning.
+              Click an Italian verb, then match its English meaning.
             </p>
           </div>
           <div class="game-header-actions" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
@@ -201,7 +199,7 @@
         </div>
 
         <div class="match-grid">
-          <div class="match-column" id="match-hindi-col" role="group" aria-label="Hungarian Verbs"></div>
+          <div class="match-column" id="match-hindi-col" role="group" aria-label="Italian Verbs"></div>
           <div class="match-column" id="match-english-col" role="group" aria-label="English Meanings"></div>
         </div>
       </div>
@@ -214,7 +212,7 @@
           <div>
             <h2 style="font-size:1.35rem;">🎯 Verb Grammar: Definite vs Indefinite &amp; Past Quiz</h2>
             <p style="font-size:0.85rem; color:var(--text-muted);">
-              Drills for Definite (Tárgyas) vs Indefinite (Alanyi) conjugation, -ik verbs, and Past tense (-t/-ott/-ett).
+              Drills for Essere vs Avere auxiliaries, Presente, Imperfetto, and Passato Prossimo.
             </p>
           </div>
           <div class="quiz-stats-group">
@@ -240,14 +238,14 @@
               </label>
               <select id="verbs-quiz-topic-select" class="targeted-quiz-select" style="flex:1;" aria-label="Select Verb Quiz Topic">
                 <option value="mixed">🔄 Comprehensive: Definite vs Indefinite &amp; Past (Mixed)</option>
-                <option value="ne-rule">⚡ Transitive Definite (Tárgyas) vs Indefinite Focus</option>
+                <option value="ne-rule">⚡ Passato Prossimo Auxiliary (Essere vs Avere) Focus</option>
                 <option value="irregular-past">🔥 Past Tense (-t/-ott/-ett) &amp; Irregulars Only</option>
                 <option value="continuous-agreement">🏃 Definite Object Conjugation (-om/-od/-ja) Focus</option>
               </select>
             </div>
           </div>
           <div id="verbs-quiz-topic-desc" style="font-size:0.825rem; color:var(--text-muted); margin-top:0.45rem; line-height:1.4;">
-            Drills for Definite (Tárgyas) vs Indefinite (Alanyi) conjugation, -ik verbs, and past tense forms across all verbs.
+            Drills for Essere vs Avere auxiliaries, irregular stems, and past participles across all verbs.
           </div>
         </div>
 
@@ -274,7 +272,7 @@
             <div>
               <h2 style="font-size:1.4rem;">📥 Ingest Verb Notes</h2>
               <p style="font-size:0.9rem; color:var(--text-muted);">
-                Paste typed notes or drop a file (.rtf, .txt, .md, .csv, .json). Automatically extracts Hungarian verbs, generates phonetic guides, and detects transitivity (Definite vs Indefinite).
+                Paste typed notes or drop a file (.rtf, .txt, .md, .csv, .json). Automatically extracts Italian verbs, generates phonetic guides, and detects Essere vs Avere auxiliary.
               </p>
             </div>
             <button id="load-sample-notes-btn" class="action-btn nav-card" style="font-size:0.8rem; padding:0.4rem 0.8rem; flex:none;">
@@ -359,7 +357,7 @@
           <div style="margin-bottom:0.85rem; display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
             <div class="search-input-wrap" style="flex:1; min-width:240px; max-width:380px;">
               <span class="search-icon">🔍</span>
-              <input type="text" id="preview-search-input" class="search-input" placeholder="Search extracted verbs (Hungarian, Phonetic, English)..." style="padding-top:0.45rem; padding-bottom:0.45rem; font-size:0.88rem;">
+              <input type="text" id="preview-search-input" class="search-input" placeholder="Search extracted verbs (Italian, Phonetic, English)..." style="padding-top:0.45rem; padding-bottom:0.45rem; font-size:0.88rem;">
             </div>
             <button type="button" id="preview-search-clear-btn" class="action-btn nav-card" style="display:none; font-size:0.8rem; padding:0.45rem 0.75rem;">Clear</button>
             <span id="preview-search-status" style="font-size:0.82rem; color:var(--text-muted);"></span>
@@ -370,7 +368,7 @@
               <thead>
                 <tr>
                   <th style="width:36px;"><input type="checkbox" id="select-all-preview" checked aria-label="Select all verbs"></th>
-                  <th style="min-width:140px;">Hungarian Verb (3sg)</th>
+                  <th style="min-width:140px;">Italian Verb (Infinitive)</th>
                   <th style="min-width:130px;">Pronunciation Guide</th>
                   <th style="min-width:170px;">English Meaning</th>
                   <th style="min-width:150px;">Transitivity (Definite)</th>
@@ -395,7 +393,7 @@
             <form id="add-verb-form" style="display:flex; flex-direction:column; gap:1.2rem;">
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
                 <div>
-                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Hungarian Verb (3rd Person / Citation) *</label>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Italian Verb (Infinitive) *</label>
                   <input type="text" id="custom-hindi" class="search-input" placeholder="e.g. táncol" required style="font-family:var(--font-hindi); font-size:1.2rem;">
                 </div>
                 <div>
@@ -412,8 +410,8 @@
                 <div>
                   <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Conjugation Type (Definite / Indefinite) *</label>
                   <select id="custom-transitivity" class="search-input" style="background:white;">
-                    <option value="Intransitive">Indefinite Only (Alanyi - Intransitive)</option>
-                    <option value="Transitive">Takes Definite (Tárgyas - Transitive)</option>
+                    <option value="Intransitive">Takes Avere (Most Verbs)</option>
+                    <option value="Transitive">Takes Essere (Motion / State)</option>
                   </select>
                 </div>
               </div>
@@ -425,7 +423,7 @@
 
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
                 <div>
-                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Sentence (Hungarian)</label>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Sentence (Italian)</label>
                   <input type="text" id="custom-example-hindi" class="search-input" placeholder="e.g. Ő nagyon jól táncol.">
                 </div>
                 <div>
@@ -469,7 +467,7 @@
     </section>
 
     <!-- =====================================================================
-         MODULE 2: VOCABULARY STUDIO (Szókincs - Nouns, Adjectives &amp; Harmony)
+         MODULE 2: VOCABULARY STUDIO (Vocabolario - Nouns, Adjectives &amp; Gender)
          ===================================================================== -->
 
     <!-- TAB 1 (VOCAB): VOCABULARY EXPLORER -->
@@ -478,7 +476,7 @@
         <div class="search-row">
           <div class="search-input-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="vocab-search" class="search-input" placeholder="Search Hungarian (e.g. könyv, jó, szoba), pronunciation, or English...">
+            <input type="text" id="vocab-search" class="search-input" placeholder="Search Italian (e.g. casa, bello, amico), pronunciation, or English...">
           </div>
         </div>
 
@@ -488,24 +486,24 @@
           </div>
           <div class="filter-tags">
             <button class="filter-chip active" data-vocab-pos="all">All Words</button>
-            <button class="filter-chip" data-vocab-pos="Noun">Nouns (Főnév)</button>
-            <button class="filter-chip" data-vocab-pos="Adjective">Adjectives (Melléknév)</button>
-            <button class="filter-chip" data-vocab-pos="Pronoun">Pronouns (Névmás)</button>
-            <button class="filter-chip" data-vocab-pos="Postposition">Postpositions (Névutó)</button>
-            <button class="filter-chip" data-vocab-pos="Adverb">Adverbs (Határozószó)</button>
-            <button class="filter-chip" data-vocab-pos="Expression">Expressions (Kifejezés)</button>
+            <button class="filter-chip" data-vocab-pos="Noun">Nouns (Sostantivi)</button>
+            <button class="filter-chip" data-vocab-pos="Adjective">Adjectives (Aggettivi)</button>
+            <button class="filter-chip" data-vocab-pos="Pronoun">Pronouns (Pronomi)</button>
+            <button class="filter-chip" data-vocab-pos="Postposition">Prepositions (Preposizioni)</button>
+            <button class="filter-chip" data-vocab-pos="Adverb">Adverbs (Avverbi)</button>
+            <button class="filter-chip" data-vocab-pos="Expression">Expressions (Espressioni)</button>
           </div>
         </div>
 
         <div>
           <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
-            Filter by Vowel Harmony (Magánhangzó-harmónia)
+            Filter by Grammatical Gender (Genere)
           </div>
           <div class="filter-tags">
-            <button class="filter-chip active" data-vocab-gender="all">All Harmony Classes</button>
-            <button class="filter-chip" data-vocab-gender="Back" style="color:#1e40af;">Back Vowels (Mély: a, á, o, ó, u, ú - B)</button>
-            <button class="filter-chip" data-vocab-gender="Front" style="color:#be123c;">Front Vowels (Magas: e, é, i, í, ö, ő, ü, ű - F)</button>
-            <button class="filter-chip" data-vocab-gender="none">Invariable / Mixed</button>
+            <button class="filter-chip active" data-vocab-gender="all">All Genders</button>
+            <button class="filter-chip" data-vocab-gender="Masculine" style="color:#1e40af;">Masculine (Maschile: il / lo - M)</button>
+            <button class="filter-chip" data-vocab-gender="Feminine" style="color:#be123c;">Feminine (Femminile: la - F)</button>
+            <button class="filter-chip" data-vocab-gender="none">Invariable / None</button>
           </div>
         </div>
 
@@ -521,7 +519,7 @@
             <button class="filter-chip" data-vocab-category="Places &amp; Nature">Places &amp; Nature</button>
             <button class="filter-chip" data-vocab-category="Descriptive Adjectives">Descriptive Adjectives</button>
             <button class="filter-chip" data-vocab-category="Colors &amp; Shapes">Colors &amp; Shapes</button>
-            <button class="filter-chip" data-vocab-category="Postpositions &amp; Connectors">Postpositions &amp; Connectors</button>
+            <button class="filter-chip" data-vocab-category="Prepositions &amp; Connectors">Prepositions &amp; Connectors</button>
             <button class="filter-chip" data-vocab-category="Time &amp; Calendar">Time &amp; Calendar</button>
             <button class="filter-chip" data-vocab-category="Question Words &amp; Pronouns">Question Words &amp; Pronouns</button>
             <button class="filter-chip" data-vocab-category="Swearing &amp; Slang">🌶️ Swearing &amp; Slang</button>
@@ -530,7 +528,7 @@
 
         <div class="stats-summary">
           <span id="vocab-count-label">Loading vocabulary...</span>
-          <span style="font-size:0.8rem;">💡 Tip: Click any card for full vowel harmony, plural (-k) &amp; accusative (-t) breakdown</span>
+          <span style="font-size:0.8rem;">💡 Tip: Click any card for full gender, definite article &amp; plural breakdown</span>
         </div>
       </div>
 
@@ -547,7 +545,7 @@
           </div>
           <div class="flashcard-settings">
             <button id="vocab-toggle-translit-btn" class="toggle-btn" aria-label="Toggle phonetic guide display">Show Pronunciation</button>
-            <button id="vocab-toggle-direction-btn" class="toggle-btn" aria-label="Toggle prompt language direction">Prompt: Hungarian</button>
+            <button id="vocab-toggle-direction-btn" class="toggle-btn" aria-label="Toggle prompt language direction">Prompt: Italian</button>
             <button id="vocab-shuffle-cards-btn" class="toggle-btn" aria-label="Shuffle vocabulary flashcards">
               <span aria-hidden="true">🔀</span> Shuffle
             </button>
@@ -584,7 +582,7 @@
           <div>
             <h2 style="font-size:1.4rem;">⚡ Vocab Speed Match Drill</h2>
             <p id="vocab-match-status" style="color:var(--text-muted); font-size:0.9rem;" aria-live="polite">
-              Click a Hungarian word, then match its English meaning.
+              Click an Italian word, then match its English meaning.
             </p>
           </div>
           <div class="game-header-actions" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
@@ -598,7 +596,7 @@
         </div>
 
         <div class="match-grid">
-          <div class="match-column" id="vocab-match-hindi-col" role="group" aria-label="Hungarian Words"></div>
+          <div class="match-column" id="vocab-match-hindi-col" role="group" aria-label="Italian Words"></div>
           <div class="match-column" id="vocab-match-english-col" role="group" aria-label="English Meanings"></div>
         </div>
       </div>
@@ -611,7 +609,7 @@
           <div>
             <h2 style="font-size:1.35rem;">🎯 Vowel Harmony, Plurals &amp; Cases Quiz</h2>
             <p style="font-size:0.85rem; color:var(--text-muted);">
-              Drills for Back (Mély) vs Front (Magas) Vowel Harmony, Plural (-k/-ok/-ek/-ök), and Accusative (-t) forms.
+              Drills for Grammatical Gender (Masculine/Feminine), Definite Articles (il/lo/la), and Plurals.
             </p>
           </div>
           <div class="quiz-stats-group">
@@ -636,14 +634,14 @@
                 <span aria-hidden="true">🎯</span> Topic Drill:
               </label>
               <select id="vocab-quiz-topic-select" class="targeted-quiz-select" style="flex:1;" aria-label="Select Quiz Topic">
-                <option value="mixed">🔄 Comprehensive: Vowel Harmony, Plurals &amp; Cases (Mixed)</option>
+                <option value="mixed">🔄 Comprehensive: Gender, Articles &amp; Plurals (Mixed)</option>
                 <optgroup label="Targeted Practice Packs">
-                  <option value="days-of-week">🗓️ Days of the Week (A hét napjai)</option>
-                  <option value="question-words">❓ Question Words (Kérdőszavak)</option>
-                  <option value="time-frequency">⏰ Time &amp; Frequency (Idő és gyakoriság)</option>
-                  <option value="directions">🧭 Directions &amp; Positions (Irányok és névutók)</option>
-                  <option value="numbers-1-10">🔢 Numbers 1–10 (Számok 1–10)</option>
-                  <option value="swearing-slang">🌶️ Swearing &amp; Slang (Káromkodás)</option>
+                  <option value="days-of-week">🗓️ Days of the Week (Giorni della settimana)</option>
+                  <option value="question-words">❓ Question Words (Parole interrogative)</option>
+                  <option value="time-frequency">⏰ Time &amp; Frequency (Tempo e frequenza)</option>
+                  <option value="directions">🧭 Directions &amp; Positions (Direzioni e posizioni)</option>
+                  <option value="numbers-1-10">🔢 Numbers 1–10 (Numeri 1–10)</option>
+                  <option value="swearing-slang">🌶️ Swearing &amp; Slang (Parolacce e Slang)</option>
                 </optgroup>
                 <optgroup label="My Custom Quizzes" id="vocab-custom-quiz-optgroup">
                   <!-- Custom user quizzes will be inserted here dynamically -->
@@ -687,7 +685,7 @@
             <div>
               <h2 style="font-size:1.4rem;">📥 Ingest Vocabulary Notes</h2>
               <p style="font-size:0.9rem; color:var(--text-muted);">
-                Paste typed words or drop a file (.rtf, .txt, .md, .csv, .json). Automatically parses Hungarian nouns and adjectives, detects Vowel Harmony (Back/Front), and extracts definitions.
+                Paste typed words or drop a file (.rtf, .txt, .md, .csv, .json). Automatically parses Italian nouns and adjectives, detects Grammatical Gender (M/F), and extracts definitions.
               </p>
             </div>
             <button id="load-sample-vocab-btn" class="action-btn nav-card" style="font-size:0.8rem; padding:0.4rem 0.8rem; flex:none;">
@@ -771,7 +769,7 @@
           <div style="margin-bottom:0.85rem; display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
             <div class="search-input-wrap" style="flex:1; min-width:240px; max-width:380px;">
               <span class="search-icon">🔍</span>
-              <input type="text" id="vocab-preview-search-input" class="search-input" placeholder="Search extracted words (Hungarian, Phonetic, English)..." style="padding-top:0.45rem; padding-bottom:0.45rem; font-size:0.88rem;">
+              <input type="text" id="vocab-preview-search-input" class="search-input" placeholder="Search extracted words (Italian, Phonetic, English)..." style="padding-top:0.45rem; padding-bottom:0.45rem; font-size:0.88rem;">
             </div>
             <button type="button" id="vocab-preview-search-clear-btn" class="action-btn nav-card" style="display:none; font-size:0.8rem; padding:0.45rem 0.75rem;">Clear</button>
             <span id="vocab-preview-search-status" style="font-size:0.82rem; color:var(--text-muted);"></span>
@@ -782,7 +780,7 @@
               <thead>
                 <tr>
                   <th style="width:36px;"><input type="checkbox" id="select-all-vocab-preview" checked aria-label="Select all words"></th>
-                  <th style="min-width:140px;">Hungarian Word</th>
+                  <th style="min-width:140px;">Italian Word</th>
                   <th style="min-width:130px;">Pronunciation Guide</th>
                   <th style="min-width:170px;">English Meaning</th>
                   <th style="min-width:120px;">Part of Speech</th>
@@ -808,7 +806,7 @@
             <form id="add-vocab-form" style="display:flex; flex-direction:column; gap:1.2rem;">
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
                 <div>
-                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Hungarian Word *</label>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Italian Word *</label>
                   <input type="text" id="custom-vocab-hindi" class="search-input" placeholder="e.g. szoba" required style="font-family:var(--font-hindi); font-size:1.2rem;">
                 </div>
                 <div>
@@ -837,8 +835,8 @@
                 <div>
                   <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Vowel Harmony Class</label>
                   <select id="custom-vocab-gender" class="search-input" style="background:white;">
-                    <option value="Back">Back Vowels (Mély - B)</option>
-                    <option value="Front">Front Vowels (Magas - F)</option>
+                    <option value="Masculine">Masculine (Maschile - M)</option>
+                    <option value="Feminine">Feminine (Femminile - F)</option>
                     <option value="none">None / Invariable</option>
                   </select>
                 </div>
@@ -855,7 +853,7 @@
 
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
                 <div>
-                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Sentence (Hungarian)</label>
+                  <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Sentence (Italian)</label>
                   <input type="text" id="custom-vocab-example-hindi" class="search-input" placeholder="e.g. Ez a szoba nagy.">
                 </div>
                 <div>
@@ -899,7 +897,7 @@
     </section>
 
     <!-- =====================================================================
-         MODULE 3: SOUNDS & PAIRS (Kiejtés és Hangok)
+         MODULE 3: SOUNDS & PAIRS (Pronuncia e Doppie)
          ===================================================================== -->
 
     <!-- TAB 1 (MATRA): SOUNDS & DIGRAPHS EXPLORER -->
@@ -908,7 +906,7 @@
         <div class="search-row">
           <div class="search-input-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="matra-search" class="search-input" placeholder="Search Hungarian words, pronunciation (e.g. gyűrű, szerda), English, or sound family...">
+            <input type="text" id="matra-search" class="search-input" placeholder="Search Italian words, pronunciation (e.g. famiglia, gnocchi, cappello), English, or sound family...">
           </div>
         </div>
 
@@ -1025,7 +1023,7 @@
           <div>
             <h2 style="font-size:1.4rem;">⚡ Sounds &amp; Digraphs Speed Match</h2>
             <p id="matra-match-status" style="color:var(--text-muted); font-size:0.9rem;" aria-live="polite">
-              Click a Hungarian word, then match its sound / English meaning.
+              Click a Italian word, then match its sound / English meaning.
             </p>
           </div>
           <div class="game-header-actions" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
@@ -1054,7 +1052,7 @@
         </div>
 
         <div class="match-grid" id="matra-match-grid">
-          <div class="match-column" id="matra-match-hindi-col" role="group" aria-label="Hungarian Sound Words"></div>
+          <div class="match-column" id="matra-match-hindi-col" role="group" aria-label="Italian Sound Words"></div>
           <div class="match-column" id="matra-match-english-col" role="group" aria-label="English Meanings &amp; Phonics"></div>
         </div>
       </div>
@@ -1065,7 +1063,7 @@
       <div class="quiz-container">
         <div class="quiz-header-bar">
           <div>
-            <h2 style="font-size:1.4rem;">🎯 Hungarian Vowel Length &amp; Digraph Quiz</h2>
+            <h2 style="font-size:1.4rem;">🎯 Italian Vowel Length &amp; Digraph Quiz</h2>
             <p style="color:var(--text-muted); font-size:0.9rem;">
               Test your recognition of short vs long vowels (a/á, e/é, ö/ő, ü/ű), digraphs (sz/s, cs/c, gy/ny), and native pronunciation.
             </p>
@@ -1104,14 +1102,14 @@
           <div style="margin-bottom:1.5rem;">
             <h2 style="font-size:1.4rem; margin-bottom:0.3rem;">➕ Add Custom Pronunciation Word</h2>
             <p style="color:var(--text-muted); font-size:0.9rem;">
-              Add any new Hungarian word you encounter in your studies to practice reading, digraphs, and pronunciation.
+              Add any new Italian word you encounter in your studies to practice reading, digraphs, and pronunciation.
             </p>
           </div>
 
           <form id="add-matra-form">
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1rem;">
               <div>
-                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Hungarian Word *</label>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Italian Word *</label>
                 <input type="text" id="custom-matra-hindi" class="search-input" placeholder="e.g. pillangó" required style="font-family:var(--font-hindi); font-size:1.2rem;">
               </div>
               <div>
@@ -1145,7 +1143,7 @@
 
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
               <div>
-                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Phrase / Collocation (Hungarian)</label>
+                <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.3rem;">Example Phrase / Collocation (Italian)</label>
                 <input type="text" id="custom-matra-phrase-hindi" class="search-input" placeholder="e.g. szép pillangó" style="font-family:var(--font-hindi);">
               </div>
               <div>
@@ -1283,7 +1281,7 @@
       
       <div class="launch-header">
         <h2 id="focus-modal-title">Choose Your Practice Focus</h2>
-        <p>Válaszd ki a gyakorlási területet • Master Hungarian conjugations, vowel harmony &amp; cases, or vowel lengths &amp; digraphs.</p>
+        <p>Válaszd ki a gyakorlási területet • Master Italian conjugations, vowel harmony &amp; cases, or vowel lengths &amp; digraphs.</p>
       </div>
 
       <div class="launch-cards-grid">
@@ -1295,13 +1293,13 @@
             <div class="launch-card-title">Verb Lab</div>
             <div class="launch-card-hindi">Igelabor</div>
             <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
-              Master essential Hungarian verbs, -ik verbs, Definite (Tárgyas) vs Indefinite (Alanyi) conjugations, and Past tense.
+              Master essential Italian verbs, -ik verbs, Definite (Tárgyas) vs Indefinite (Alanyi) conjugations, and Past tense.
             </p>
             <ul class="launch-features-list">
               <li><span class="bullet-icon">✓</span> <strong>20 Core Curriculum Verbs</strong> (van, megy, jön, eszik, olvas)</li>
               <li><span class="bullet-icon">✓</span> <strong>3 Paradigms:</strong> Present Indefinite, Definite &amp; Past (-t)</li>
               <li><span class="bullet-icon">✓</span> <strong>Definite vs Indefinite Rule:</strong> Object &amp; harmony drills</li>
-              <li><span class="bullet-icon">✓</span> <strong>Audio Pronunciation (hu-HU)</strong> for verbs &amp; sentences</li>
+              <li><span class="bullet-icon">✓</span> <strong>Audio Pronunciation (it-IT)</strong> for verbs &amp; sentences</li>
               <li><span class="bullet-icon">✓</span> <strong>Conjugation Matrix &amp; Tense Quizzes</strong></li>
             </ul>
           </div>
@@ -1318,7 +1316,7 @@
             <div class="launch-card-title">Vocabulary Studio</div>
             <div class="launch-card-hindi">Szókincs</div>
             <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
-              Build your core Hungarian vocabulary with Back vs Front vowel harmony, plurals (-k/-ok/-ek/-ök), and accusative (-t) cases.
+              Build your core Italian vocabulary with Back vs Front vowel harmony, plurals (-k/-ok/-ek/-ök), and accusative (-t) cases.
             </p>
             <ul class="launch-features-list">
               <li><span class="bullet-icon">✓</span> <strong>38+ Essential Words</strong> (Home, Food, People, Places)</li>
@@ -1341,7 +1339,7 @@
             <div class="launch-card-title">Sounds &amp; Pairs</div>
             <div class="launch-card-hindi">Kiejtés és Hangok</div>
             <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.4;">
-              Master Hungarian short vs long vowels (a/á, e/é, ö/ő, ü/ű) and consonant digraphs (sz/s, cs/c, zs, gy, ny, ty, ly).
+              Master Italian short vs long vowels (a/á, e/é, ö/ő, ü/ű) and consonant digraphs (sz/s, cs/c, zs, gy, ny, ty, ly).
             </p>
             <ul class="launch-features-list">
               <li><span class="bullet-icon">✓</span> <strong>30 Graduated Words</strong> across 10 Sound &amp; Digraph families</li>
@@ -1406,7 +1404,7 @@
               <label for="custom-quiz-words-input" style="font-size:0.85rem; font-weight:700;">
                 Word Pairs <span style="color:var(--danger); font-weight:700;">*</span>
               </label>
-              <span style="font-size:0.75rem; color:var(--text-muted);">One pair per line: Hungarian, Pronunciation, English</span>
+              <span style="font-size:0.75rem; color:var(--text-muted);">One pair per line: Italian, Pronunciation, English</span>
             </div>
             <textarea id="custom-quiz-words-input" class="search-input" rows="6" placeholder="hétfő, heet-foe, Monday
 kedd, kedd, Tuesday

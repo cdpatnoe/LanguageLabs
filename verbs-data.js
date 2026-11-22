@@ -1,1937 +1,929 @@
-// Core Curated Hungarian Verb Curriculum for English Speakers (Magyar Igelabor)
-// Annotated with Indefinite (Alanyi) vs. Definite (Tárgyas) conjugation, -ik verbs, past tense (-t/-ott/-ett/-ött), imperatives (-j!), and mnemonics.
-// Field names follow the Language Lab Engine schema (target = Hungarian word, phonetic = pronunciation guide, hasGrammarTrait = takes Definite conjugation).
+// Core Curated Italian Verb Curriculum for English Speakers (Laboratorio dei Verbi)
+// Annotated with Passato Prossimo auxiliary (hasGrammarTrait: true = Essere, false = Avere),
+// Presente, Imperfetto, Passato Prossimo, Imperative (Tu / Lei / Voi), and real-world examples.
 
 const VERB_CURRICULUM = [
+  // --- 1. The Big 4 Irregulars ---
   {
-    id: "lenni",
-    target: "van (lenni)",
-    phonetic: "vawn (leh-nni)",
-    english: "to be / to exist",
+    id: "essere",
+    target: "essere",
+    phonetic: "EHS-seh-reh",
+    english: "to be",
     cluster: "The Big 4 Irregulars",
-    stem: "van / volt / lesz",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
+    stem: "son- / er- / stat-",
+    transitivity: "Intransitive (Essere)",
+    hasGrammarTrait: true,
     isIrregular: true,
-    irregularNote: "Suppletive stems: Present (vagyok, vagy, van, vagyunk, vagytok, vannak), Past (volt-), Future (lesz-). Omitted in 3rd-person 'he is tall' statements!",
-    mnemonic: "Think of a 'VAN' — 'There IS a van outside' (van).",
+    irregularNote: "Completely irregular: sono, sei, è, siamo, siete, sono. Takes itself (essere) in Passato Prossimo: sono stato/a!",
+    mnemonic: "Think of 'ESSENCE' — to exist, to BE.",
     conjugations: {
-      habitual: {
-        m_sg: "vagyok / vagy / van",
-        f_sg: "van (ő)",
-        m_pl: "vagyunk / vagytok / vannak",
-        f_pl: "vannak (ők)"
-      },
-      continuous: {
-        m_sg: "leszek / leszel / lesz",
-        f_sg: "lesz (will be)",
-        m_pl: "leszünk / lesztek / lesznek",
-        f_pl: "lesznek"
-      },
-      past: {
-        m_sg: "voltam / voltál / volt",
-        m_pl: "voltunk / voltatok / voltak",
-        f_sg: "volt (ő)",
-        f_pl: "voltak (ők)"
-      },
-      imperative: {
-        tu: "légy!",
-        tum: "legyél!",
-        aap: "legyen!"
-      }
+      habitual: { m_sg: "sono / sei", f_sg: "è", m_pl: "siamo / siete / sono" },
+      continuous: { m_sg: "ero / eri", f_sg: "era", m_pl: "eravamo / eravate / erano" },
+      past: { m_sg: "sono stato / sei stato", f_sg: "è stato/a", m_pl: "siamo stati / siete stati / sono stati" },
+      imperative: { tu: "sii!", tum: "sia!", aap: "siate!" }
     },
-    example: {
-      target: "Budapesten vagyok.",
-      phonetic: "bu-daw-pesh-ten vaw-dyok",
-      english: "I am in Budapest."
-    },
+    example: { target: "Sono a Roma.", phonetic: "SOH-noh ah ROH-mah", english: "I am in Rome." },
     examples: {
       present: {
-        tense: "Present (Indefinite)",
-        target: "Én tanár vagyok, ő pedig diák.",
-        phonetic: "ayn taw-naar vaw-dyok, oe peh-dig dee-aak",
-        english: "I am a teacher, and he/she is a student.",
-        verbForm: "vagyok",
-        explanation: "vagyok (I am) — 3rd person 'van' is dropped when stating identity/adjectives!"
+        tense: "Presente",
+        target: "Io sono stanco, ma tu sei pronto.",
+        phonetic: "EE-oh SOH-noh STAHN-koh, mah too SAY PROHN-toh",
+        english: "I am tired, but you are ready.",
+        verbForm: "sono",
+        explanation: "sono = I am / they are; context makes the subject clear."
       },
       current: {
-        tense: "Future (lesz)",
-        target: "Holnap otthon leszek.",
-        phonetic: "hol-nawp ott-hon leh-sek",
-        english: "Tomorrow I will be at home.",
-        verbForm: "leszek",
-        explanation: "Uses the 'lesz-' stem for future 'will be'"
+        tense: "Imperfetto",
+        target: "Ieri sera ero molto felice.",
+        phonetic: "YEH-ree SEH-rah EH-roh MOHL-toh feh-LEE-cheh",
+        english: "Last night I was very happy.",
+        verbForm: "ero",
+        explanation: "Imperfetto describes ongoing states or feelings in the past."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Tegnap jó idő volt.",
-        phonetic: "teg-nawp yoh ee-doe volt",
-        english: "Yesterday the weather was good.",
-        verbForm: "volt",
-        explanation: "Past stem is 'volt-' (voltam, voltál, volt)"
+        tense: "Passato Prossimo",
+        target: "Siamo stati a Firenze l'estate scorsa.",
+        phonetic: "SYAH-moh STAH-tee ah fee-REHN-tseh lehs-TAH-teh SKOHR-sah",
+        english: "We were in Florence last summer.",
+        verbForm: "Siamo stati",
+        explanation: "Essere uses itself as auxiliary and agrees in gender/number (stato/stata/stati/state)."
       }
     }
   },
   {
-    id: "menni",
-    target: "megy (menni)",
-    phonetic: "medy (men-ni)",
+    id: "avere",
+    target: "avere",
+    phonetic: "ah-VEH-reh",
+    english: "to have",
+    cluster: "The Big 4 Irregulars",
+    stem: "ho / av- / avut-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "Silent 'h' in ho, hai, ha, hanno (distinguishes them from o, ai, a, anno). Used for age ('ho 30 anni') and hunger ('ho fame')!",
+    mnemonic: "Think of 'HAVE' — drop the H sound, and 'avere' means to have.",
+    conjugations: {
+      habitual: { m_sg: "ho / hai", f_sg: "ha", m_pl: "abbiamo / avete / hanno" },
+      continuous: { m_sg: "avevo / avevi", f_sg: "aveva", m_pl: "avevamo / avevate / avevano" },
+      past: { m_sg: "ho avuto / hai avuto", f_sg: "ha avuto", m_pl: "abbiamo avuto / avete avuto / hanno avuto" },
+      imperative: { tu: "abbi!", tum: "abbia!", aap: "abbiate!" }
+    },
+    example: { target: "Ho molta fame!", phonetic: "oh MOHL-tah FAH-meh", english: "I am very hungry! (lit. I have much hunger)" },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Hai tempo per un caffè?",
+        phonetic: "eye TEHM-poh pehr oon kahf-FEH",
+        english: "Do you have time for a coffee?",
+        verbForm: "Hai",
+        explanation: "The 'h' in hai is completely silent — pronounced like English 'eye'."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "Da bambino avevo un cane.",
+        phonetic: "dah bahm-BEE-noh ah-VEH-voh oon KAH-neh",
+        english: "As a child I had a dog.",
+        verbForm: "avevo",
+        explanation: "Regular imperfetto stem av- + -evo, -evi, -eva."
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Abbiamo avuto una bella giornata.",
+        phonetic: "ahb-BYAH-moh ah-VOO-toh OO-nah BEHL-lah johr-NAH-tah",
+        english: "We had a lovely day.",
+        verbForm: "Abbiamo avuto",
+        explanation: "Avere takes itself as auxiliary: ho avuto, hai avuto, ha avuto."
+      }
+    }
+  },
+  {
+    id: "andare",
+    target: "andare",
+    phonetic: "ahn-DAH-reh",
     english: "to go",
     cluster: "The Big 4 Irregulars",
-    stem: "megy- / ment-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
+    stem: "vad- / and-",
+    transitivity: "Intransitive (Essere)",
+    hasGrammarTrait: true,
     isIrregular: true,
-    irregularNote: "Present uses megy-/mé-: megyek, mész, megy, megyünk, mentek, mennek. Past uses ment-.",
-    mnemonic: "'Megy' sounds like 'medj' — imagine marching on a pilgrimage.",
+    irregularNote: "Boot-verb irregularity: vado, vai, va, vanno (but noi andiamo, voi andate). Takes ESSERE in Passato Prossimo!",
+    mnemonic: "'Andare' → 'Vado!' (I'm off / I go!).",
     conjugations: {
-      habitual: {
-        m_sg: "megyek / mész / megy",
-        f_sg: "megy (ő)",
-        m_pl: "megyünk / mentek / mennek",
-        f_pl: "mennek"
-      },
-      continuous: {
-        m_sg: "menni fogok (will go)",
-        f_sg: "menni fog",
-        m_pl: "menni fogunk",
-        f_pl: "menni fognak"
-      },
-      past: {
-        m_sg: "mentem / mentél / ment",
-        m_pl: "mentünk / mentetek / mentek",
-        f_sg: "ment",
-        f_pl: "mentek"
-      },
-      imperative: {
-        tu: "menj!",
-        tum: "menjél!",
-        aap: "menjen!"
-      }
+      habitual: { m_sg: "vado / vai", f_sg: "va", m_pl: "andiamo / andate / vanno" },
+      continuous: { m_sg: "andavo / andavi", f_sg: "andava", m_pl: "andavamo / andavate / andavano" },
+      past: { m_sg: "sono andato / sei andato", f_sg: "è andato/a", m_pl: "siamo andati / siete andati / sono andati" },
+      imperative: { tu: "va'! / vai!", tum: "vada!", aap: "andate!" }
     },
-    example: {
-      target: "Most hazamegyek.",
-      phonetic: "mosht haw-zaw-meh-dyek",
-      english: "I am going home now."
-    },
+    example: { target: "Andiamo al mare!", phonetic: "ahn-DYAH-moh ahl MAH-reh", english: "Let's go to the beach!" },
     examples: {
       present: {
-        tense: "Present (Indefinite)",
-        target: "Reggel munkába megyek.",
-        phonetic: "reg-gel mun-kaa-baw meh-dyek",
-        english: "In the morning I go to work.",
-        verbForm: "megyek",
-        explanation: "Intransitive motion verb (only has Indefinite forms)"
+        tense: "Presente",
+        target: "Vado al lavoro in treno.",
+        phonetic: "VAH-doh ahl lah-VOH-roh een TREH-noh",
+        english: "I go to work by train.",
+        verbForm: "Vado",
+        explanation: "Irregular present stem vad- for io/tu/lui/loro."
       },
       current: {
-        tense: "Imperative / Subjunctive",
-        target: "Menjünk együtt kávézni!",
-        phonetic: "men-yuenk eh-dyuett kaa-vayz-ni",
-        english: "Let's go get coffee together!",
-        verbForm: "Menjünk",
-        explanation: "1st person plural imperative (-jünk)"
+        tense: "Imperfetto",
+        target: "Ogni domenica andavamo dalla nonna.",
+        phonetic: "OH-nyee doh-MEH-nee-kah ahn-dah-VAH-moh DAHL-lah NOHN-nah",
+        english: "Every Sunday we used to go to grandma's.",
+        verbForm: "andavamo",
+        explanation: "Imperfetto is regular on the stem and-."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Tegnap moziba mentünk.",
-        phonetic: "teg-nawp mo-zi-baw men-tuenk",
-        english: "Yesterday we went to the cinema.",
-        verbForm: "mentünk",
-        explanation: "Past tense built on stem 'ment-'"
+        tense: "Passato Prossimo",
+        target: "Giulia è andata a Milano ieri.",
+        phonetic: "JOO-lyah eh ahn-DAH-tah ah mee-LAH-noh YEH-ree",
+        english: "Giulia went to Milan yesterday.",
+        verbForm: "è andata",
+        explanation: "Motion verb → takes ESSERE, so 'andata' agrees with feminine Giulia."
       }
     }
   },
   {
-    id: "jonni",
-    target: "jön (jönni)",
-    phonetic: "yoen (yoen-ni)",
-    english: "to come",
-    cluster: "The Big 4 Irregulars",
-    stem: "jön- / jött-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
-    isIrregular: true,
-    irregularNote: "Present: jövök, jössz, jön, jövünk, jöttök, jönnek. Imperative is colloquial 'gyere!' (or formal 'jöjjön!').",
-    mnemonic: "'Jön' sounds like 'yawn' — you COME home tired and yawn.",
-    conjugations: {
-      habitual: {
-        m_sg: "jövök / jössz / jön",
-        f_sg: "jön (ő)",
-        m_pl: "jövünk / jöttök / jönnek",
-        f_pl: "jönnek"
-      },
-      continuous: {
-        m_sg: "gyere! / gyertek! (come!)",
-        f_sg: "jöjjön! (formal)",
-        m_pl: "gyerünk! (let's go!)",
-        f_pl: "jöjjenek!"
-      },
-      past: {
-        m_sg: "jöttem / jöttél / jött",
-        m_pl: "jöttünk / jöttetek / jöttek",
-        f_sg: "jött",
-        f_pl: "jöttek"
-      },
-      imperative: {
-        tu: "gyere!",
-        tum: "gyertek! (pl)",
-        aap: "jöjjön!"
-      }
-    },
-    example: {
-      target: "Mindjárt jövök!",
-      phonetic: "mind-yaart yoe-voek",
-      english: "I'm coming right away!"
-    },
-    examples: {
-      present: {
-        tense: "Present (Indefinite)",
-        target: "Mikor jössz haza?",
-        phonetic: "mi-kor yoess haw-zaw",
-        english: "When are you coming home?",
-        verbForm: "jössz",
-        explanation: "2nd person singular irregular 'jössz'"
-      },
-      current: {
-        tense: "Everyday Imperative",
-        target: "Gyere ide, kérlek!",
-        phonetic: "dyeh-reh ee-deh kayr-lek",
-        english: "Come here, please!",
-        verbForm: "Gyere",
-        explanation: "'Gyere!' is the universal everyday imperative for 'come!'"
-      },
-      past: {
-        tense: "Past Tense (-t)",
-        target: "A vonat pontosan jött.",
-        phonetic: "aw vo-nawt pon-to-shawn yoett",
-        english: "The train came on time.",
-        verbForm: "jött",
-        explanation: "Past stem doubles the t: 'jött'"
-      }
-    }
-  },
-  {
-    id: "csinal",
-    target: "csinál",
-    phonetic: "chi-naal",
+    id: "fare",
+    target: "fare",
+    phonetic: "FAH-reh",
     english: "to do / to make",
     cluster: "The Big 4 Irregulars",
-    stem: "csinál-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Regular back-vowel verb. Takes Definite (-om/-od/-ja) with specific objects ('a kávét'), Indefinite (-ok/-sz) with 'mit?' or 'valamit'.",
-    mnemonic: "Sounds like 'china' — MAKING fine china porcelain.",
-    conjugations: {
-      habitual: {
-        m_sg: "csinálok / csinálsz / csinál",
-        f_sg: "csinál (Indef.)",
-        m_pl: "csinálunk / csináltok / csinálnak",
-        f_pl: "csinálnak"
-      },
-      continuous: {
-        m_sg: "csinálom / csinálod / csinálja",
-        f_sg: "csinálja (Def.)",
-        m_pl: "csináljuk / csináljátok / csinálják",
-        f_pl: "csinálják"
-      },
-      past: {
-        m_sg: "csináltam / csinált (Indef)",
-        m_pl: "csináltam / csinálta (Def)",
-        f_sg: "csinálta (Def.)",
-        f_pl: "csinálták (Def.)"
-      },
-      imperative: {
-        tu: "csinálj! (Indef)",
-        tum: "csináld! (Def)",
-        aap: "csinálja! (Formal)"
-      }
-    },
-    example: {
-      target: "Mit csinálsz most?",
-      phonetic: "mit chi-naals mosht",
-      english: "What are you doing now?"
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Reggelit csinálok.",
-        phonetic: "reg-geh-lit chi-naa-lok",
-        english: "I am making breakfast (unspecified).",
-        verbForm: "csinálok",
-        explanation: "Indefinite object ('reggelit' without 'a') → Indefinite ending -ok"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "Megcsinálom a leckét.",
-        phonetic: "meg-chi-naa-lom aw lets-kayt",
-        english: "I am doing the homework (specific).",
-        verbForm: "Megcsinálom",
-        explanation: "Definite object ('a leckét' with 'a') → Definite ending -om"
-      },
-      past: {
-        tense: "Past Tense (-t)",
-        target: "Tegnap mit csináltál?",
-        phonetic: "teg-nawp mit chi-naal-taal",
-        english: "What did you do yesterday?",
-        verbForm: "csináltál",
-        explanation: "'Mit?' (what?) is always Indefinite in Hungarian!"
-      }
-    }
-  },
-  {
-    id: "eszik",
-    target: "eszik",
-    phonetic: "eh-sik",
-    english: "to eat (-ik verb)",
-    cluster: "-ik Verbs & Dining",
-    stem: "esz- / ev- / ett-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: true,
-    irregularNote: "Irregular -ik verb! Indefinite 1st sg ends in -em ('eszem' or colloquial 'eszek'), Definite 1st sg is 'eszem' (I eat it), 3rd sg Definite is 'eszi'. Past is 'ettem / megette'.",
-    mnemonic: "Think of 'ESZpresszó' & a snack — 'eszik' = eats.",
-    conjugations: {
-      habitual: {
-        m_sg: "eszem (eszek) / eszel / eszik",
-        f_sg: "eszik (Indef.)",
-        m_pl: "eszünk / esztek / esznek",
-        f_pl: "esznek"
-      },
-      continuous: {
-        m_sg: "eszem / eszed / eszi",
-        f_sg: "eszi (Def.)",
-        m_pl: "esszük / eszitek / eszik",
-        f_pl: "eszik (Def.)"
-      },
-      past: {
-        m_sg: "ettem / ettél / evett (Indef)",
-        m_pl: "ettem / etted / ette (Def)",
-        f_sg: "evett (Indef) / ette (Def)",
-        f_pl: "ettek / ették"
-      },
-      imperative: {
-        tu: "egyél! (Indef)",
-        tum: "edd meg! (Def)",
-        aap: "egyen! (Formal)"
-      }
-    },
-    example: {
-      target: "Minden reggel almát eszem.",
-      phonetic: "min-den reg-gel awl-maat eh-sem",
-      english: "Every morning I eat an apple."
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Gulyást eszünk az étteremben.",
-        phonetic: "gu-yaasht eh-suenk awz ayt-teh-rem-ben",
-        english: "We are eating goulash in the restaurant.",
-        verbForm: "eszünk",
-        explanation: "Unspecified 'gulyást' (no 'a') uses Indefinite 'eszünk'"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "Megettük a levest, most esszük a tortát.",
-        phonetic: "meg-et-tuek aw leh-vesht, mosht es-suek aw tor-taat",
-        english: "We ate the soup, now we are eating the cake.",
-        verbForm: "esszük",
-        explanation: "'a tortát' is definite → Definite 1st plural 'esszük'"
-      },
-      past: {
-        tense: "Past Tense (-t)",
-        target: "Tegnap finom lángost ettem.",
-        phonetic: "teg-nawp fi-nom laan-gosht et-tem",
-        english: "Yesterday I ate a delicious lángos.",
-        verbForm: "ettem",
-        explanation: "Irregular past stem 'ett-' (ettem, ettél, evett)"
-      }
-    }
-  },
-  {
-    id: "iszik",
-    target: "iszik",
-    phonetic: "i-sik",
-    english: "to drink (-ik verb)",
-    cluster: "-ik Verbs & Dining",
-    stem: "isz- / iv- / itt-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: true,
-    irregularNote: "Back-vowel partner of 'eszik'! Indefinite: iszom/iszol/iszik; Definite: iszom/iszod/issza. Past: ittam / ivott (Indef), itta (Def).",
-    mnemonic: "'Iszik' sounds like 'ice-sip' — sipping an iced drink.",
-    conjugations: {
-      habitual: {
-        m_sg: "iszom (iszok) / iszol / iszik",
-        f_sg: "iszik (Indef.)",
-        m_pl: "iszunk / isztok / isznak",
-        f_pl: "isznak"
-      },
-      continuous: {
-        m_sg: "iszom / iszod / issza",
-        f_sg: "issza (Def.)",
-        m_pl: "isszuk / isszátok / isszák",
-        f_pl: "isszák (Def.)"
-      },
-      past: {
-        m_sg: "ittam / ittál / ivott (Indef)",
-        m_pl: "ittam / ittad / itta (Def)",
-        f_sg: "ivott (Indef) / itta (Def)",
-        f_pl: "ittak / itták"
-      },
-      imperative: {
-        tu: "igyál! (Indef)",
-        tum: "idd meg! (Def)",
-        aap: "igyon! (Formal)"
-      }
-    },
-    example: {
-      target: "Reggel kávét iszom.",
-      phonetic: "reg-gel kaa-vayt i-som",
-      english: "In the morning I drink coffee."
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Egy pohár vizet iszol?",
-        phonetic: "edy po-haar vi-zet i-sol",
-        english: "Are you drinking a glass of water?",
-        verbForm: "iszol",
-        explanation: "'Egy pohár vizet' (a glass of water) is Indefinite → iszol"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "Ő már megissza a teát.",
-        phonetic: "oe maar meg-is-saw aw teh-aat",
-        english: "He/she is already drinking up the tea.",
-        verbForm: "megissza",
-        explanation: "'a teát' (the tea) is Definite → 3rd sg Definite 'issza'"
-      },
-      past: {
-        tense: "Past Tense (-t)",
-        target: "Este vörösbort ittunk.",
-        phonetic: "esh-teh voe-roesh-bort it-tunk",
-        english: "In the evening we drank red wine.",
-        verbForm: "ittunk",
-        explanation: "Past stem is 'itt-' (ittam, ittál, ivott, ittunk)"
-      }
-    }
-  },
-  {
-    id: "alszik",
-    target: "alszik",
-    phonetic: "awl-sik",
-    english: "to sleep (-ik verb)",
-    cluster: "-ik Verbs & Dining",
-    stem: "alsz- / alud-",
-    transitivity: "Intransitive",
+    stem: "facc- / fac- / fatt-",
+    transitivity: "Transitive (Avere)",
     hasGrammarTrait: false,
     isIrregular: true,
-    irregularNote: "Present uses 'alsz-': alszom, alszol, alszik, alszunk, alszotok, alszanak. Past uses 'aludt-': aludtam, aludt.",
-    mnemonic: "'Alszik' → 'All sick' people need to SLEEP to recover.",
+    irregularNote: "Derived from Latin 'facere': faccio, fai, fa, facciamo, fate, fanno. Imperfetto uses fac- (facevo). Past participle: fatto.",
+    mnemonic: "'Fare' → 'Fatto!' ('Done!' / 'Fact!').",
     conjugations: {
-      habitual: {
-        m_sg: "alszom / alszol / alszik",
-        f_sg: "alszik",
-        m_pl: "alszunk / alszotok / alszanak",
-        f_pl: "alszanak"
-      },
-      continuous: {
-        m_sg: "aludni fogok (will sleep)",
-        f_sg: "aludni fog",
-        m_pl: "aludni fogunk",
-        f_pl: "aludni fognak"
-      },
-      past: {
-        m_sg: "aludtam / aludtál / aludt",
-        m_pl: "aludtunk / aludtatok / aludtak",
-        f_sg: "aludt",
-        f_pl: "aludtak"
-      },
-      imperative: {
-        tu: "aludj!",
-        tum: "aludjatok! (pl)",
-        aap: "aludjon!"
-      }
+      habitual: { m_sg: "faccio / fai", f_sg: "fa", m_pl: "facciamo / fate / fanno" },
+      continuous: { m_sg: "facevo / facevi", f_sg: "faceva", m_pl: "facevamo / facevate / facevano" },
+      past: { m_sg: "ho fatto / hai fatto", f_sg: "ha fatto", m_pl: "abbiamo fatto / avete fatto / hanno fatto" },
+      imperative: { tu: "fa'! / fai!", tum: "faccia!", aap: "fate!" }
     },
-    example: {
-      target: "A macska a kanapén alszik.",
-      phonetic: "aw mawch-kaw aw kaw-naw-payn awl-sik",
-      english: "The cat is sleeping on the sofa."
-    },
+    example: { target: "Che cosa fai stasera?", phonetic: "keh KOH-zah FAH-ee stah-SEH-rah", english: "What are you doing tonight?" },
     examples: {
       present: {
-        tense: "Present (-ik verb)",
-        target: "Nyolc órát alszom minden éjjel.",
-        phonetic: "nyolts oh-raat awl-som min-den ay-yel",
-        english: "I sleep eight hours every night.",
-        verbForm: "alszom",
-        explanation: "-ik verb: 1st person singular ends in -om (alszom)"
+        tense: "Presente",
+        target: "Faccio colazione alle otto.",
+        phonetic: "FAHT-choh koh-lah-TSYOH-neh AHL-leh OHT-toh",
+        english: "I have breakfast at eight.",
+        verbForm: "Faccio",
+        explanation: "'Fare colazione' = to have breakfast; 'fare una passeggiata' = to take a walk."
       },
       current: {
-        tense: "Imperative",
-        target: "Aludj jól!",
-        phonetic: "aw-ludy yohl",
-        english: "Sleep well!",
-        verbForm: "Aludj",
-        explanation: "Very common bedtime phrase: Aludj jól!"
+        tense: "Imperfetto",
+        target: "Faceva molto caldo in agosto.",
+        phonetic: "fah-CHEH-vah MOHL-toh KAHL-doh een ah-GOHS-toh",
+        english: "It was very hot in August.",
+        verbForm: "Faceva",
+        explanation: "Used for weather: fa caldo (it's hot), faceva caldo (it was hot)."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Jól aludtál az éjjel?",
-        phonetic: "yohl aw-lud-taal awz ay-yel",
-        english: "Did you sleep well last night?",
-        verbForm: "aludtál",
-        explanation: "Past tense uses stem 'aludt-'"
+        tense: "Passato Prossimo",
+        target: "Ho fatto una torta per te.",
+        phonetic: "oh FAHT-toh OO-nah TOHR-tah pehr teh",
+        english: "I made a cake for you.",
+        verbForm: "Ho fatto",
+        explanation: "Irregular past participle 'fatto' with auxiliary avere."
+      }
+    }
+  },
+
+  // --- 2. Modal & Essential Irregulars ---
+  {
+    id: "potere",
+    target: "potere",
+    phonetic: "poh-TEH-reh",
+    english: "can / to be able to",
+    cluster: "Modal & Essential Irregulars",
+    stem: "poss- / puo- / pot-",
+    transitivity: "Modal (Avere / Essere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "posso, puoi, può, possiamo, potete, possono. Followed directly by an infinitive ('Posso entrare?').",
+    mnemonic: "Think of 'POTENT' / 'POSSIBLE' — having the power to do something.",
+    conjugations: {
+      habitual: { m_sg: "posso / puoi", f_sg: "può", m_pl: "possiamo / potete / possono" },
+      continuous: { m_sg: "potevo / potevi", f_sg: "poteva", m_pl: "potevamo / potevate / potevano" },
+      past: { m_sg: "ho potuto / hai potuto", f_sg: "ha potuto", m_pl: "abbiamo potuto / avete potuto / hanno potuto" },
+      imperative: { tu: "—", tum: "—", aap: "—" }
+    },
+    example: { target: "Posso pagare con la carta?", phonetic: "POHS-soh pah-GAH-reh kohn lah KAHR-tah", english: "Can I pay by card?" },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Puoi ripetere, per favore?",
+        phonetic: "PWOH-ee ree-PEH-teh-reh, pehr fah-VOH-reh",
+        english: "Can you repeat that, please?",
+        verbForm: "Puoi",
+        explanation: "Modal verb + infinitive with no preposition in between."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "Non potevo dormire ieri notte.",
+        phonetic: "nohn poh-TEH-voh dohr-MEE-reh YEH-ree NOHT-teh",
+        english: "I couldn't sleep last night.",
+        verbForm: "potevo",
+        explanation: "Imperfetto expresses an ongoing inability in the past."
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Non ho potuto finire il libro.",
+        phonetic: "nohn oh poh-TOO-toh fee-NEE-reh eel LEE-broh",
+        english: "I wasn't able to finish the book.",
+        verbForm: "ho potuto",
+        explanation: "Uses avere (or essere if the following infinitive takes essere, e.g. sono potuto andare)."
       }
     }
   },
   {
-    id: "lat",
-    target: "lát",
-    phonetic: "laat",
-    english: "to see",
-    cluster: "Perception & Mind",
-    stem: "lát-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Classic showcase of Indefinite vs. Definite! 'Látok egy kutyát' (I see a dog) vs 'Látom a kutyát' (I see the dog). Also has -lak/-lek ('Látlak' = I see you).",
-    mnemonic: "You SEE 'a LOT' (lát) with your eyes.",
+    id: "volere",
+    target: "volere",
+    phonetic: "voh-LEH-reh",
+    english: "to want",
+    cluster: "Modal & Essential Irregulars",
+    stem: "vogl- / vuo- / vol-",
+    transitivity: "Modal (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "voglio, vuoi, vuole, vogliamo, volete, vogliono. Use conditional 'vorrei' (I would like) to be polite!",
+    mnemonic: "Think of 'VOLITION' — willpower and wanting.",
     conjugations: {
-      habitual: {
-        m_sg: "látok / látsz / lát",
-        f_sg: "lát (Indef.)",
-        m_pl: "látunk / láttok / látnak",
-        f_pl: "látnak"
-      },
-      continuous: {
-        m_sg: "látom / látod / látja",
-        f_sg: "látja (Def.)",
-        m_pl: "látjuk / látjátok / látják",
-        f_pl: "látják (Def.)"
-      },
-      past: {
-        m_sg: "láttam / látott (Indef)",
-        m_pl: "láttam / látta (Def)",
-        f_sg: "látta (Def.)",
-        f_pl: "látták (Def.)"
-      },
-      imperative: {
-        tu: "láss! (Indef)",
-        tum: "lásd! (Def)",
-        aap: "lássa! (Formal)"
-      }
+      habitual: { m_sg: "voglio / vuoi", f_sg: "vuole", m_pl: "vogliamo / volete / vogliono" },
+      continuous: { m_sg: "volevo / volevi", f_sg: "voleva", m_pl: "volevamo / volevate / volevano" },
+      past: { m_sg: "ho voluto / hai voluto", f_sg: "ha voluto", m_pl: "abbiamo voluto / avete voluto / hanno voluto" },
+      imperative: { tu: "vogli!", tum: "voglia!", aap: "vogliate!" }
     },
-    example: {
-      target: "Látom a Parlamentet.",
-      phonetic: "laa-tom aw pawr-law-men-tet",
-      english: "I see the Parliament."
-    },
+    example: { target: "Voglio imparare l'italiano.", phonetic: "VOH-lyoh eem-pah-RAH-reh lee-tah-LYAH-noh", english: "I want to learn Italian." },
     examples: {
       present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Látok egy szép madarat.",
-        phonetic: "laa-tok edy sayp maw-daw-rawt",
-        english: "I see a beautiful bird.",
-        verbForm: "Látok",
-        explanation: "'egy ... madarat' (a bird) is indefinite → Látok (-ok)"
+        tense: "Presente",
+        target: "Vuoi venire con noi stasera?",
+        phonetic: "VWOH-ee veh-NEE-reh kohn NOY stah-SEH-rah",
+        english: "Do you want to come with us tonight?",
+        verbForm: "Vuoi",
+        explanation: "Tip: in cafés/restaurants, say 'Vorrei un caffè' (I would like) instead of 'Voglio'."
       },
       current: {
-        tense: "Definite (Tárgyas)",
-        target: "Látod azt a magas épületet?",
-        phonetic: "laa-tod awzt aw maw-gawsh ay-pue-leh-tet",
-        english: "Do you see that tall building?",
-        verbForm: "Látod",
-        explanation: "'azt a ...' (that ...) is definite → Látod (-od)"
+        tense: "Imperfetto",
+        target: "Volevo solo dirti ciao.",
+        phonetic: "voh-LEH-voh SOH-loh DEER-tee CHAH-oh",
+        english: "I just wanted to say hi to you.",
+        verbForm: "Volevo",
+        explanation: "Polite/softening use of the imperfetto ('I wanted to...')."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Már láttam ezt a filmet.",
-        phonetic: "maar laat-tawm ezt aw fil-met",
-        english: "I have already seen this movie.",
-        verbForm: "láttam",
-        explanation: "Past 1st sg is 'láttam' in both Indefinite and Definite!"
+        tense: "Passato Prossimo",
+        target: "Ha voluto pagare tutto lui.",
+        phonetic: "ah voh-LOO-toh pah-GAH-reh TOOT-toh LOO-ee",
+        english: "He insisted on paying for everything.",
+        verbForm: "Ha voluto",
+        explanation: "In Passato Prossimo, 'volere' often implies 'insisted on / decided to'."
       }
     }
   },
   {
-    id: "ker",
-    target: "kér",
-    phonetic: "kayr",
-    english: "to ask for / to request / please",
-    cluster: "Daily Essentials",
-    stem: "kér-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Front-vowel transitive verb. 'Kérek egy kávét' (I'd like a coffee - Indef), 'Kérem a számlát' (I'd like the bill - Def), 'Kérlek' (Please, informal).",
-    mnemonic: "When you CARE (kér), you ask politely: 'Egy kávét kérek!'",
+    id: "dovere",
+    target: "dovere",
+    phonetic: "doh-VEH-reh",
+    english: "must / to have to / to owe",
+    cluster: "Modal & Essential Irregulars",
+    stem: "dev- / dobb- / dov-",
+    transitivity: "Modal (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "devo, devi, deve, dobbiamo, dovete, devono. Conditional 'dovrei' = 'I should'.",
+    mnemonic: "Think of 'DUTY' / 'DEBT' — what you MUST do or owe.",
     conjugations: {
-      habitual: {
-        m_sg: "kérek / kérsz / kér",
-        f_sg: "kér (Indef.)",
-        m_pl: "kérünk / kértek / kérnek",
-        f_pl: "kérnek"
-      },
-      continuous: {
-        m_sg: "kérem / kéred / kéri",
-        f_sg: "kéri (Def.)",
-        m_pl: "kérjük / kéritek / kérik",
-        f_pl: "kérik (Def.)"
-      },
-      past: {
-        m_sg: "kértem / kért (Indef)",
-        m_pl: "kértem / kérte (Def)",
-        f_sg: "kérte (Def.)",
-        f_pl: "kérték (Def.)"
-      },
-      imperative: {
-        tu: "kérj! (Indef)",
-        tum: "kérd! (Def)",
-        aap: "kérje! (Formal)"
-      }
+      habitual: { m_sg: "devo / devi", f_sg: "deve", m_pl: "dobbiamo / dovete / devono" },
+      continuous: { m_sg: "dovevo / dovevi", f_sg: "doveva", m_pl: "dovevamo / dovevate / dovevano" },
+      past: { m_sg: "ho dovuto / hai dovuto", f_sg: "ha dovuto", m_pl: "abbiamo dovuto / avete dovuto / hanno dovuto" },
+      imperative: { tu: "—", tum: "—", aap: "—" }
     },
-    example: {
-      target: "Egy kávét kérek szépen.",
-      phonetic: "edy kaa-vayt kay-rek say-pen",
-      english: "I would like a coffee, please."
-    },
+    example: { target: "Devo andare adesso.", phonetic: "DEH-voh ahn-DAH-reh ah-DEHS-soh", english: "I have to go now." },
     examples: {
       present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Egy pohár vizet kérek.",
-        phonetic: "edy po-haar vi-zet kay-rek",
-        english: "I'd like a glass of water.",
-        verbForm: "kérek",
-        explanation: "Ordering 'a' something uses Indefinite 'kérek'"
+        tense: "Presente",
+        target: "Dobbiamo studiare di più.",
+        phonetic: "dohb-BYAH-moh stoo-DYAH-reh dee PYOO",
+        english: "We have to study more.",
+        verbForm: "Dobbiamo",
+        explanation: "Notice the double 'bb' in noi dobbiamo!"
       },
       current: {
-        tense: "Definite (Tárgyas)",
-        target: "Kérem a számlát!",
-        phonetic: "kay-rem aw saam-laat",
-        english: "The bill, please! (I request the bill)",
-        verbForm: "Kérem",
-        explanation: "'a számlát' (the bill) is specific → Definite 'kérem'"
+        tense: "Imperfetto",
+        target: "Dovevo chiamare mia madre.",
+        phonetic: "doh-VEH-voh kyah-MAH-reh MEE-ah MAH-dreh",
+        english: "I was supposed to call my mother.",
+        verbForm: "Dovevo",
+        explanation: "Imperfetto of dovere = 'was supposed to / had to'."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Segítséget kért tőlem.",
-        phonetic: "sheh-geet-shay-get kayrt toe-lem",
-        english: "He/she asked me for help.",
-        verbForm: "kért",
-        explanation: "3rd sg Indefinite past: kért"
+        tense: "Passato Prossimo",
+        target: "Abbiamo dovuto aspettare un'ora.",
+        phonetic: "ahb-BYAH-moh doh-VOO-toh ahs-peht-TAH-reh oo-NOH-rah",
+        english: "We had to wait an hour.",
+        verbForm: "Abbiamo dovuto",
+        explanation: "Regular past participle 'dovuto'."
       }
     }
   },
   {
-    id: "szeret",
-    target: "szeret",
-    phonetic: "seh-ret",
-    english: "to love / to like",
-    cluster: "Perception & Mind",
-    stem: "szeret-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "'Szeretek úszni' (I like to swim - Indef, before infinitives!) vs 'Szeretem a zenét' (I love the music - Def). 'Szeretlek' = I love you!",
-    mnemonic: "'Szeret' sounds like 'serenade' — you serenade someone you LOVE.",
-    conjugations: {
-      habitual: {
-        m_sg: "szeretek / szeretsz / szeret",
-        f_sg: "szeret (Indef.)",
-        m_pl: "szeretünk / szerettek / szeretnek",
-        f_pl: "szeretnek"
-      },
-      continuous: {
-        m_sg: "szeretem / szereted / szereti",
-        f_sg: "szereti (Def.)",
-        m_pl: "szeretjük / szeretitek / szeretik",
-        f_pl: "szeretik (Def.)"
-      },
-      past: {
-        m_sg: "szerettem / szeretett (Indef)",
-        m_pl: "szerettem / szerette (Def)",
-        f_sg: "szerette (Def.)",
-        f_pl: "szerették (Def.)"
-      },
-      imperative: {
-        tu: "szeress! (Indef)",
-        tum: "szeresd! (Def)",
-        aap: "szeresse! (Formal)"
-      }
-    },
-    example: {
-      target: "Nagyon szeretem a magyar konyhát.",
-      phonetic: "naw-dyon seh-reh-tem aw maw-dyawr kony-haat",
-      english: "I really love Hungarian cuisine."
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Before Infinitive)",
-        target: "Szeretek olvasni és utazni.",
-        phonetic: "seh-reh-tek ol-vawsh-ni aysh u-tawz-ni",
-        english: "I like to read and travel.",
-        verbForm: "Szeretek",
-        explanation: "Before an infinitive (-ni), 'szeret' takes Indefinite conjugation!"
-      },
-      current: {
-        tense: "Definite (Specific Noun)",
-        target: "Szereted a csokoládét?",
-        phonetic: "seh-reh-ted aw cho-ko-laa-dayt",
-        english: "Do you like chocolate?",
-        verbForm: "Szereted",
-        explanation: "In Hungarian, general nouns use the definite article ('a csokoládét') → Definite 'szereted'"
-      },
-      past: {
-        tense: "Conditional (Polite 'Would Like')",
-        target: "Szeretnék rendelni.",
-        phonetic: "seh-ret-nayk ren-del-ni",
-        english: "I would like to order.",
-        verbForm: "Szeretnék",
-        explanation: "'Szeretnék' (conditional) is the most polite way to say 'I would like'"
-      }
-    }
-  },
-  {
-    id: "tud",
-    target: "tud",
-    phonetic: "tud",
+    id: "sapere",
+    target: "sapere",
+    phonetic: "sah-PEH-reh",
     english: "to know (a fact / how to)",
-    cluster: "Perception & Mind",
-    stem: "tud-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Used for knowing facts ('Tudom' = I know it) or knowing how to do something ('Tudok magyarul' = I know Hungarian, Indefinite).",
-    mnemonic: "A 'TUDor' tutor KNOWS everything.",
+    cluster: "Modal & Essential Irregulars",
+    stem: "so / sai / sap-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "so, sai, sa, sappiamo, sapete, sanno. Use 'sapere' for facts/skills, and 'conoscere' for people/places!",
+    mnemonic: "Think of 'SAPIEN' (Homo sapiens) — wise, KNOWING.",
     conjugations: {
-      habitual: {
-        m_sg: "tudok / tudsz / tud",
-        f_sg: "tud (Indef.)",
-        m_pl: "tudunk / tudtok / tudnak",
-        f_pl: "tudnak"
-      },
-      continuous: {
-        m_sg: "tudom / tudod / tudja",
-        f_sg: "tudja (Def.)",
-        m_pl: "tudjuk / tudjátok / tudják",
-        f_pl: "tudják (Def.)"
-      },
-      past: {
-        m_sg: "tudtam / tudott (Indef)",
-        m_pl: "tudtam / tudta (Def)",
-        f_sg: "tudta (Def.)",
-        f_pl: "tudták (Def.)"
-      },
-      imperative: {
-        tu: "tudj! (Indef)",
-        tum: "tudd! (Def)",
-        aap: "tudja! (Formal)"
-      }
+      habitual: { m_sg: "so / sai", f_sg: "sa", m_pl: "sappiamo / sapete / sanno" },
+      continuous: { m_sg: "sapevo / sapevi", f_sg: "sapeva", m_pl: "sapevamo / sapevate / sapevano" },
+      past: { m_sg: "ho saputo / hai saputo", f_sg: "ha saputo", m_pl: "abbiamo saputo / avete saputo / hanno saputo" },
+      imperative: { tu: "sappi!", tum: "sappia!", aap: "sappiate!" }
     },
-    example: {
-      target: "Nem tudom, hol van a kulcs.",
-      phonetic: "nem tu-dom, hol vawn aw kulch",
-      english: "I don't know where the key is."
-    },
+    example: { target: "Non lo so!", phonetic: "nohn loh soh", english: "I don't know!" },
     examples: {
       present: {
-        tense: "Indefinite (Ability / -ni)",
-        target: "Tudsz úszni?",
-        phonetic: "tuds oos-ni",
-        english: "Do you know how to swim?",
-        verbForm: "Tudsz",
-        explanation: "Before an infinitive ('úszni'), 'tud' takes Indefinite conjugation"
+        tense: "Presente",
+        target: "Sai cucinare la pasta?",
+        phonetic: "sah-ee koo-chee-NAH-reh lah PAHS-tah",
+        english: "Do you know how to cook pasta?",
+        verbForm: "Sai",
+        explanation: "Sapere + infinitive means 'to know how to...'."
       },
       current: {
-        tense: "Definite (That-clause / It)",
-        target: "Tudom a választ!",
-        phonetic: "tu-dom aw vaa-lawst",
-        english: "I know the answer!",
-        verbForm: "Tudom",
-        explanation: "Knowing a specific fact or 'that...' clause always uses Definite ('tudom')"
+        tense: "Imperfetto",
+        target: "Non sapevo che fossi qui!",
+        phonetic: "nohn sah-PEH-voh keh FOHS-see kwee",
+        english: "I didn't know you were here!",
+        verbForm: "sapevo",
+        explanation: "Imperfetto = 'I knew / didn't know' (state of knowledge)."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Ezt nem tudtam!",
-        phonetic: "ezt nem tud-tawm",
-        english: "I didn't know that!",
-        verbForm: "tudtam",
-        explanation: "'Ezt' (this) is definite → 'Nem tudtam'"
+        tense: "Passato Prossimo",
+        target: "Ho saputo la notizia stamattina.",
+        phonetic: "oh sah-POO-toh lah noh-TEE-tsyah stah-maht-TEE-nah",
+        english: "I found out the news this morning.",
+        verbForm: "Ho saputo",
+        explanation: "In Passato Prossimo, 'sapere' means 'found out / learned'!"
       }
     }
   },
+
+  // --- 3. -are Regular Verbs ---
   {
-    id: "beszel",
-    target: "beszél",
-    phonetic: "beh-sayl",
+    id: "parlare",
+    target: "parlare",
+    phonetic: "pahr-LAH-reh",
     english: "to speak / to talk",
-    cluster: "Study & Communication",
-    stem: "beszél-",
-    transitivity: "Intransitive",
+    cluster: "-are Regular Verbs",
+    stem: "parl-",
+    transitivity: "Transitive / Intransitive (Avere)",
     hasGrammarTrait: false,
     isIrregular: false,
-    irregularNote: "Usually Intransitive! Languages take the adverbial suffix -ul/-ül ('magyarul beszélek' = I speak in-Hungarian), NOT a direct object.",
-    mnemonic: "Don't 'BE SILent' (beszél) — SPEAK up!",
+    mnemonic: "Think of 'PARLEY' or 'PARLIAMENT' — a place to SPEAK.",
     conjugations: {
-      habitual: {
-        m_sg: "beszélek / beszélsz / beszél",
-        f_sg: "beszél",
-        m_pl: "beszélünk / beszéltek / beszélnek",
-        f_pl: "beszélnek"
-      },
-      continuous: {
-        m_sg: "beszélem / beszéled / beszéli",
-        f_sg: "beszéli (rare Def.)",
-        m_pl: "beszéljük / beszélitek / beszélik",
-        f_pl: "beszélik"
-      },
-      past: {
-        m_sg: "beszéltem / beszéltél / beszélt",
-        m_pl: "beszéltünk / beszéltetek / beszéltek",
-        f_sg: "beszélt",
-        f_pl: "beszéltek"
-      },
-      imperative: {
-        tu: "beszélj!",
-        tum: "beszéljetek! (pl)",
-        aap: "beszéljen! (Formal)"
-      }
+      habitual: { m_sg: "parlo / parli", f_sg: "parla", m_pl: "parliamo / parlate / parlano" },
+      continuous: { m_sg: "parlavo / parlavi", f_sg: "parlava", m_pl: "parlavamo / parlavate / parlavano" },
+      past: { m_sg: "ho parlato / hai parlato", f_sg: "ha parlato", m_pl: "abbiamo parlato / avete parlato / hanno parlato" },
+      imperative: { tu: "parla!", tum: "parli!", aap: "parlate!" }
     },
-    example: {
-      target: "Egy kicsit beszélek magyarul.",
-      phonetic: "edy ki-chit beh-say-lek maw-dyaw-rul",
-      english: "I speak a little Hungarian."
-    },
+    example: { target: "Parlo un po' d'italiano.", phonetic: "PAHR-loh oon poh dee-tah-LYAH-noh", english: "I speak a little Italian." },
     examples: {
       present: {
-        tense: "Present (Indefinite)",
-        target: "Beszélsz angolul?",
-        phonetic: "beh-sayls awn-go-lul",
-        english: "Do you speak English?",
-        verbForm: "Beszélsz",
-        explanation: "Languages use -ul/-ül (adverbial), so 'beszél' stays Indefinite"
+        tense: "Presente",
+        target: "Parli inglese o italiano?",
+        phonetic: "PAHR-lee een-GLEH-zeh oh ee-tah-LYAH-noh",
+        english: "Do you speak English or Italian?",
+        verbForm: "Parli",
+        explanation: "Model regular -are endings: -o, -i, -a, -iamo, -ate, -ano."
       },
       current: {
-        tense: "Imperative",
-        target: "Beszélj lassabban, kérlek!",
-        phonetic: "beh-sayly lawsh-shawb-bawn, kayr-lek",
-        english: "Speak more slowly, please!",
-        verbForm: "Beszélj",
-        explanation: "Imperative adds -j to the stem: beszélj!"
+        tense: "Imperfetto",
+        target: "Parlavamo sempre al telefono.",
+        phonetic: "pahr-lah-VAH-moh SEHM-preh ahl teh-LEH-foh-noh",
+        english: "We always used to talk on the phone.",
+        verbForm: "Parlavamo",
+        explanation: "Regular -are imperfetto: -avo, -avi, -ava, -avamo, -avate, -avano."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Tegnap beszéltem vele telefonon.",
-        phonetic: "teg-nawp beh-sayl-tem veh-leh teh-leh-fo-non",
-        english: "Yesterday I spoke with him/her on the phone.",
-        verbForm: "beszéltem",
-        explanation: "Front-vowel past tense: beszéltem"
+        tense: "Passato Prossimo",
+        target: "Ho parlato con Marco stamattina.",
+        phonetic: "oh pahr-LAH-toh kohn MAHR-koh stah-maht-TEE-nah",
+        english: "I spoke with Marco this morning.",
+        verbForm: "Ho parlato",
+        explanation: "-are verbs form regular past participles in -ato (parlato)."
       }
     }
   },
   {
-    id: "ert",
-    target: "ért",
-    phonetic: "ayrt",
-    english: "to understand",
-    cluster: "Study & Communication",
-    stem: "ért-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
+    id: "mangiare",
+    target: "mangiare",
+    phonetic: "mahn-JAH-reh",
+    english: "to eat",
+    cluster: "-are Regular Verbs",
+    stem: "mangi-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
     isIrregular: false,
-    irregularNote: "Stem ends in -rt (two consonants), so 3rd sg past adds linking vowel -ett: 'értett'. 'Értem!' = I understand (it)! 'Nem értek magyarul' = I don't understand Hungarian.",
-    mnemonic: "When you HEAR IT ('ért'), you UNDERSTAND it.",
+    mnemonic: "Think of 'MANGER' or 'Mangia!' — eat up!",
     conjugations: {
-      habitual: {
-        m_sg: "értek / értesz / ért",
-        f_sg: "ért (Indef.)",
-        m_pl: "értünk / értetek / értenek",
-        f_pl: "értenek"
-      },
-      continuous: {
-        m_sg: "értem / érted / érti",
-        f_sg: "érti (Def.)",
-        m_pl: "értjük / értitek / értik",
-        f_pl: "értik (Def.)"
-      },
-      past: {
-        m_sg: "értettem / értett (Indef)",
-        m_pl: "értettem / értette (Def)",
-        f_sg: "értette (Def.)",
-        f_pl: "értették (Def.)"
-      },
-      imperative: {
-        tu: "érts! (Indef)",
-        tum: "értsd meg! (Def)",
-        aap: "értse! (Formal)"
-      }
+      habitual: { m_sg: "mangio / mangi", f_sg: "mangia", m_pl: "mangiamo / mangiate / mangiano" },
+      continuous: { m_sg: "mangiavo / mangiavi", f_sg: "mangiava", m_pl: "mangiavamo / mangiavate / mangiavano" },
+      past: { m_sg: "ho mangiato / hai mangiato", f_sg: "ha mangiato", m_pl: "abbiamo mangiato / avete mangiato / hanno mangiato" },
+      imperative: { tu: "mangia!", tum: "mangi!", aap: "mangiate!" }
     },
-    example: {
-      target: "Mindent értek, köszönöm!",
-      phonetic: "min-dent ayr-tek, koe-soe-noem",
-      english: "I understand everything, thank you!"
-    },
+    example: { target: "Mangiamo la pizza stasera!", phonetic: "mahn-JAH-moh lah PEET-tsah stah-SEH-rah", english: "Let's eat pizza tonight!" },
     examples: {
       present: {
-        tense: "Indefinite ('Mindent')",
-        target: "Mindent értesz?",
-        phonetic: "min-dent ayr-tes",
-        english: "Do you understand everything?",
-        verbForm: "értesz",
-        explanation: "'Mindent' (everything) counts as Indefinite in Hungarian!"
+        tense: "Presente",
+        target: "Cosa mangi a pranzo?",
+        phonetic: "KOH-zah MAHN-jee ah PRAHN-tsoh",
+        english: "What are you eating for lunch?",
+        verbForm: "mangi",
+        explanation: "Drops the extra 'i' before -i and -iamo (mangi, mangiamo)."
       },
       current: {
-        tense: "Definite ('It / The question')",
-        target: "Igen, értem a kérdést.",
-        phonetic: "i-gen, ayr-tem aw kayr-daysht",
-        english: "Yes, I understand the question.",
-        verbForm: "értem",
-        explanation: "Standalone 'Értem!' ('I understand it') is always Definite"
+        tense: "Imperfetto",
+        target: "Mangiavamo spesso gelato in estate.",
+        phonetic: "mahn-jah-VAH-moh SPEHS-soh jeh-LAH-toh een ehs-TAH-teh",
+        english: "We often used to eat gelato in summer.",
+        verbForm: "Mangiavamo",
+        explanation: "Regular -are imperfetto describing a past habit."
       },
       past: {
-        tense: "Past Tense (-ett)",
-        target: "Nem értettem, amit mondott.",
-        phonetic: "nem ayr-tet-tem, aw-mit mon-dott",
-        english: "I didn't understand what he/she said.",
-        verbForm: "értettem",
-        explanation: "Because 'ért' ends in -rt, past tense inserts -ett-: értettem"
+        tense: "Passato Prossimo",
+        target: "Ho mangiato troppo!",
+        phonetic: "oh mahn-JAH-toh TROHP-poh",
+        english: "I ate too much!",
+        verbForm: "Ho mangiato",
+        explanation: "Regular -ato participle with avere."
       }
     }
   },
   {
-    id: "tanul",
-    target: "tanul",
-    phonetic: "taw-nul",
-    english: "to study / to learn",
-    cluster: "Study & Communication",
-    stem: "tanul-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
+    id: "lavorare",
+    target: "lavorare",
+    phonetic: "lah-voh-RAH-reh",
+    english: "to work",
+    cluster: "-are Regular Verbs",
+    stem: "lavor-",
+    transitivity: "Intransitive (Avere)",
+    hasGrammarTrait: false,
     isIrregular: false,
-    irregularNote: "Regular back-vowel verb. 'Magyarul tanulok' (I am learning Hungarian - Indef) vs 'Tanulom a szavakat' (I am studying the words - Def).",
-    mnemonic: "Going through a 'TUNNEL' (tanul) of books to STUDY.",
+    mnemonic: "Think of 'LABOR' — lavorare = to work.",
     conjugations: {
-      habitual: {
-        m_sg: "tanulok / tanulsz / tanul",
-        f_sg: "tanul (Indef.)",
-        m_pl: "tanulunk / tanultok / tanulnak",
-        f_pl: "tanulnak"
-      },
-      continuous: {
-        m_sg: "tanulom / tanulod / tanulja",
-        f_sg: "tanulja (Def.)",
-        m_pl: "tanuljuk / tanuljátok / tanulják",
-        f_pl: "tanulják (Def.)"
-      },
-      past: {
-        m_sg: "tanultam / tanult (Indef)",
-        m_pl: "tanultam / tanulta (Def)",
-        f_sg: "tanulta (Def.)",
-        f_pl: "tanulták (Def.)"
-      },
-      imperative: {
-        tu: "tanulj! (Indef)",
-        tum: "tanuld meg! (Def)",
-        aap: "tanuljon! (Formal)"
-      }
+      habitual: { m_sg: "lavoro / lavori", f_sg: "lavora", m_pl: "lavoriamo / lavorate / lavorano" },
+      continuous: { m_sg: "lavoravo / lavoravi", f_sg: "lavorava", m_pl: "lavoravamo / lavoravate / lavoravano" },
+      past: { m_sg: "ho lavorato / hai lavorato", f_sg: "ha lavorato", m_pl: "abbiamo lavorato / avete lavorato / hanno lavorato" },
+      imperative: { tu: "lavora!", tum: "lavori!", aap: "lavorate!" }
     },
-    example: {
-      target: "Minden nap magyarul tanulok.",
-      phonetic: "min-den nawp maw-dyaw-rul taw-nu-lok",
-      english: "Every day I study Hungarian."
-    },
+    example: { target: "Lavoro da casa oggi.", phonetic: "lah-VOH-roh dah KAH-zah OHJ-jee", english: "I'm working from home today." },
     examples: {
       present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Hol tanulsz magyarul?",
-        phonetic: "hol taw-nuls maw-dyaw-rul",
-        english: "Where do you study Hungarian?",
-        verbForm: "tanulsz",
-        explanation: "General activity / adverbial 'magyarul' → Indefinite 'tanulsz'"
+        tense: "Presente",
+        target: "Dove lavori?",
+        phonetic: "DOH-veh lah-VOH-ree",
+        english: "Where do you work?",
+        verbForm: "lavori",
+        explanation: "Regular -are verb; takes avere in Passato Prossimo even though it's intransitive."
       },
       current: {
-        tense: "Definite (Tárgyas)",
-        target: "Most tanuljuk az igéket.",
-        phonetic: "mosht taw-nul-yuk awz i-gay-ket",
-        english: "Now we are studying the verbs.",
-        verbForm: "tanuljuk",
-        explanation: "'az igéket' (the verbs) is definite → 'tanuljuk'"
+        tense: "Imperfetto",
+        target: "Lavoravo in centro due anni fa.",
+        phonetic: "lah-voh-RAH-voh een CHEHN-troh DOO-eh AHN-nee fah",
+        english: "I used to work downtown two years ago.",
+        verbForm: "Lavoravo",
+        explanation: "Imperfetto describes ongoing work in the past."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Sokat tanultam a vizsgára.",
-        phonetic: "sho-kawt taw-nul-tawm aw vizh-gaa-raw",
-        english: "I studied a lot for the exam.",
-        verbForm: "tanultam",
-        explanation: "Back-vowel past: tanul + tam"
+        tense: "Passato Prossimo",
+        target: "Oggi ho lavorato dieci ore.",
+        phonetic: "OHJ-jee oh lah-voh-RAH-toh DYEH-chee OH-reh",
+        english: "Today I worked ten hours.",
+        verbForm: "ho lavorato",
+        explanation: "Completed action with specific duration → Passato Prossimo."
       }
     }
   },
   {
-    id: "olvas",
-    target: "olvas",
-    phonetic: "ol-vawsh",
+    id: "amare",
+    target: "amare",
+    phonetic: "ah-MAH-reh",
+    english: "to love",
+    cluster: "-are Regular Verbs",
+    stem: "am-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: false,
+    mnemonic: "Think of 'AMOROUS' / 'Amore' — to love.",
+    conjugations: {
+      habitual: { m_sg: "amo / ami", f_sg: "ama", m_pl: "amiamo / amate / amano" },
+      continuous: { m_sg: "amavo / amavi", f_sg: "amava", m_pl: "amavamo / amavate / amavano" },
+      past: { m_sg: "ho amato / hai amato", f_sg: "ha amato", m_pl: "abbiamo amato / avete amato / hanno amato" },
+      imperative: { tu: "ama!", tum: "ami!", aap: "amate!" }
+    },
+    example: { target: "Ti amo!", phonetic: "tee AH-moh", english: "I love you!" },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Amo la cucina italiana.",
+        phonetic: "AH-moh lah koo-CHEE-nah ee-tah-LYAH-nah",
+        english: "I love Italian cuisine.",
+        verbForm: "Amo",
+        explanation: "For friends/family, Italians often say 'Ti voglio bene' instead of 'Ti amo' (which is romantic)."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "Amava leggere prima di dormire.",
+        phonetic: "ah-MAH-vah LEHJ-jeh-reh PREE-mah dee dohr-MEE-reh",
+        english: "He/she loved reading before sleeping.",
+        verbForm: "Amava",
+        explanation: "Regular -are imperfetto."
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Ho amato quel film!",
+        phonetic: "oh ah-MAH-toh kwehl feelm",
+        english: "I loved that movie!",
+        verbForm: "Ho amato",
+        explanation: "Regular past participle 'amato' with avere."
+      }
+    }
+  },
+
+  // --- 4. -ere Verbs ---
+  {
+    id: "prendere",
+    target: "prendere",
+    phonetic: "PREHN-deh-reh",
+    english: "to take / to get / to order (food)",
+    cluster: "-ere Verbs",
+    stem: "prend- / pres-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "Regular in Present and Imperfetto, but irregular past participle: PRESO ('ho preso').",
+    mnemonic: "Think of 'APPREHEND' — to grab or TAKE (and used for ordering coffee/food!).",
+    conjugations: {
+      habitual: { m_sg: "prendo / prendi", f_sg: "prende", m_pl: "prendiamo / prendete / prendono" },
+      continuous: { m_sg: "prendevo / prendevi", f_sg: "prendeva", m_pl: "prendevamo / prendevate / prendevano" },
+      past: { m_sg: "ho preso / hai preso", f_sg: "ha preso", m_pl: "abbiamo preso / avete preso / hanno preso" },
+      imperative: { tu: "prendi!", tum: "prenda!", aap: "prendete!" }
+    },
+    example: { target: "Prendo un espresso.", phonetic: "PREHN-doh oon ehs-PREHS-soh", english: "I'll have an espresso." },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Prendiamo il treno delle nove.",
+        phonetic: "prehn-DYAH-moh eel TREH-noh DEHL-leh NOH-veh",
+        english: "We're taking the nine o'clock train.",
+        verbForm: "Prendiamo",
+        explanation: "Standard -ere endings: -o, -i, -e, -iamo, -ete, -ono."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "Prendevo sempre l'autobus.",
+        phonetic: "prehn-DEH-voh SEHM-preh LOW-toh-boos",
+        english: "I always used to take the bus.",
+        verbForm: "Prendevo",
+        explanation: "Regular -ere imperfetto (-evo, -evi, -eva)."
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Hai preso l'ombrello?",
+        phonetic: "eye PREH-zoh lohm-BREHL-loh",
+        english: "Did you take the umbrella?",
+        verbForm: "Hai preso",
+        explanation: "Irregular past participle 'preso' (not *prenduto)."
+      }
+    }
+  },
+  {
+    id: "leggere",
+    target: "leggere",
+    phonetic: "LEHJ-jeh-reh",
     english: "to read",
-    cluster: "Study & Communication",
-    stem: "olvas-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Sibilant stem ending in -s! In 2nd sg Indefinite, takes -ol instead of -sz ('olvasol'). In Definite -j- assimilates to -ss-: 'olvassa', 'olvassuk'.",
-    mnemonic: "'Olvas' → reading 'ALL VERSE' in a poetry book.",
+    cluster: "-ere Verbs",
+    stem: "legg- / lett-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "Pronunciation shift: hard 'gg' in leggo/leggono, soft 'jj' in leggi/legge/leggiamo/leggete! Past participle: LETTO.",
+    mnemonic: "Think of 'LEGIBLE' — able to be READ.",
     conjugations: {
-      habitual: {
-        m_sg: "olvasok / olvasol / olvas",
-        f_sg: "olvas (Indef.)",
-        m_pl: "olvasunk / olvastok / olvasnak",
-        f_pl: "olvasnak"
-      },
-      continuous: {
-        m_sg: "olvasom / olvasod / olvassa",
-        f_sg: "olvassa (Def.)",
-        m_pl: "olvassuk / olvassátok / olvassák",
-        f_pl: "olvassák (Def.)"
-      },
-      past: {
-        m_sg: "olvastam / olvasott (Indef)",
-        m_pl: "olvastam / olvasta (Def)",
-        f_sg: "olvasta (Def.)",
-        f_pl: "olvasták (Def.)"
-      },
-      imperative: {
-        tu: "olvass! (Indef)",
-        tum: "olvasd el! (Def)",
-        aap: "olvassa! (Formal)"
-      }
+      habitual: { m_sg: "leggo / leggi", f_sg: "legge", m_pl: "leggiamo / leggete / leggono" },
+      continuous: { m_sg: "leggevo / leggevi", f_sg: "leggeva", m_pl: "leggevamo / leggevate / leggevano" },
+      past: { m_sg: "ho letto / hai letto", f_sg: "ha letto", m_pl: "abbiamo letto / avete letto / hanno letto" },
+      imperative: { tu: "leggi!", tum: "legga!", aap: "leggete!" }
     },
-    example: {
-      target: "Este könyvet olvasok.",
-      phonetic: "esh-teh koeny-vet ol-vaw-shok",
-      english: "In the evening I read a book."
-    },
+    example: { target: "Leggo il giornale ogni mattina.", phonetic: "LEHG-goh eel johr-NAH-leh OH-nyee maht-TEE-nah", english: "I read the newspaper every morning." },
     examples: {
       present: {
-        tense: "Indefinite (Sibilant -ol)",
-        target: "Milyen könyvet olvasol?",
-        phonetic: "mi-yen koeny-vet ol-vaw-shol",
-        english: "What kind of book are you reading?",
-        verbForm: "olvasol",
-        explanation: "Because 'olvas' ends in sibilant -s, 2nd sg is 'olvasol' (not *olvassz)"
+        tense: "Presente",
+        target: "Che libro stai leggendo? / Che libro leggi?",
+        phonetic: "keh LEE-broh LEHJ-jee",
+        english: "What book are you reading?",
+        verbForm: "leggi",
+        explanation: "Notice soft 'gg' before 'i'/'e' (LEHJ-jee) vs hard 'gg' before 'o' (LEHG-goh)."
       },
       current: {
-        tense: "Definite (-j- assimilation)",
-        target: "Ő olvassa az újságot.",
-        phonetic: "oe ol-vawsh-shaw awz ooy-shaa-got",
-        english: "He/she is reading the newspaper.",
-        verbForm: "olvassa",
-        explanation: "olvas + ja assimilates to 'olvassa'!"
+        tense: "Imperfetto",
+        target: "Mentre leggevo, è suonato il telefono.",
+        phonetic: "MEHN-treh lehj-JEH-voh, eh swoh-NAH-toh eel teh-LEH-foh-noh",
+        english: "While I was reading, the phone rang.",
+        verbForm: "leggevo",
+        explanation: "Classic Imperfetto (background action) + Passato Prossimo (interruption)."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Elolvastam a levelet.",
-        phonetic: "el-ol-vawsh-tawm aw leh-veh-let",
-        english: "I read (finished reading) the letter.",
-        verbForm: "Elolvastam",
-        explanation: "Prefix 'el-' marks completion (read the whole thing)"
+        tense: "Passato Prossimo",
+        target: "Ho letto quel romanzo in due giorni.",
+        phonetic: "oh LEHT-toh kwehl roh-MAHN-dzoh een DOO-eh JOHR-nee",
+        english: "I read that novel in two days.",
+        verbForm: "Ho letto",
+        explanation: "Irregular past participle 'letto' (same spelling as 'bed'!)."
       }
     }
   },
   {
-    id: "ir",
-    target: "ír",
-    phonetic: "eer",
+    id: "scrivere",
+    target: "scrivere",
+    phonetic: "SKREE-veh-reh",
     english: "to write",
-    cluster: "Study & Communication",
-    stem: "ír-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Even though 'í' looks like a front vowel, 'ír' is a historic BACK-VOWEL verb! So it takes back-vowel endings: írok, írom, írtam, írja.",
-    mnemonic: "You WRITE in 'ink' with a quill by your 'EAR' (ír) — and remember it takes back vowels!",
+    cluster: "-ere Verbs",
+    stem: "scriv- / scritt-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "Regular Present & Imperfetto, irregular past participle: SCRITTO.",
+    mnemonic: "Think of 'SCRIBE' / 'SCRIPT' — to WRITE.",
     conjugations: {
-      habitual: {
-        m_sg: "írok / írsz / ír",
-        f_sg: "ír (Indef.)",
-        m_pl: "írunk / írtok / írnak",
-        f_pl: "írnak"
-      },
-      continuous: {
-        m_sg: "írom / írod / írja",
-        f_sg: "írja (Def.)",
-        m_pl: "írjuk / írjátok / írják",
-        f_pl: "írják (Def.)"
-      },
-      past: {
-        m_sg: "írtam / írt (Indef)",
-        m_pl: "írtam / írta (Def)",
-        f_sg: "írta (Def.)",
-        f_pl: "írták (Def.)"
-      },
-      imperative: {
-        tu: "írj! (Indef)",
-        tum: "írd le! (Def)",
-        aap: "írjon! (Formal)"
-      }
+      habitual: { m_sg: "scrivo / scrivi", f_sg: "scrive", m_pl: "scriviamo / scrivete / scrivono" },
+      continuous: { m_sg: "scrivevo / scrivevi", f_sg: "scriveva", m_pl: "scrivevamo / scrivevate / scrivevano" },
+      past: { m_sg: "ho scritto / hai scritto", f_sg: "ha scritto", m_pl: "abbiamo scritto / avete scritto / hanno scritto" },
+      imperative: { tu: "scrivi!", tum: "scriva!", aap: "scrivete!" }
     },
-    example: {
-      target: "Egy e-mailt írok a barátomnak.",
-      phonetic: "edy e-mailt ee-rok aw baw-raa-tom-nawk",
-      english: "I am writing an email to my friend."
-    },
+    example: { target: "Ti scrivo un messaggio dopo.", phonetic: "tee SKREE-voh oon mehs-SAHJ-joh DOH-poh", english: "I'll text you later." },
     examples: {
       present: {
-        tense: "Indefinite (Back-vowel 'í'!)",
-        target: "Mit írsz a füzetbe?",
-        phonetic: "mit eers aw fue-zet-beh",
-        english: "What are you writing in the notebook?",
-        verbForm: "írsz",
-        explanation: "'ír' takes back-vowel suffixes: írok, írunk, írtam"
+        tense: "Presente",
+        target: "Scrivo una lettera agli amici.",
+        phonetic: "SKREE-voh OO-nah LEHT-teh-rah AH-lyee ah-MEE-chee",
+        english: "I'm writing a letter to friends.",
+        verbForm: "Scrivo",
+        explanation: "Regular -ere present endings."
       },
       current: {
-        tense: "Definite (Tárgyas)",
-        target: "Aláírom a szerződést.",
-        phonetic: "aw-laa-ee-rom aw ser-zoe-daysht",
-        english: "I am signing the contract.",
-        verbForm: "Aláírom",
-        explanation: "'a szerződést' is definite → Definite back-vowel '-om'"
+        tense: "Imperfetto",
+        target: "Scriveva poesie da giovane.",
+        phonetic: "skree-VEH-vah poh-eh-ZEE-eh dah JOH-vah-neh",
+        english: "He/she used to write poems when young.",
+        verbForm: "Scriveva",
+        explanation: "Habitual past action → Imperfetto."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Ki írta ezt a könyvet?",
-        phonetic: "ki eer-taw ezt aw koeny-vet",
-        english: "Who wrote this book?",
-        verbForm: "írta",
-        explanation: "'ezt a könyvet' (this book) is definite → 3rd sg Definite 'írta'"
+        tense: "Passato Prossimo",
+        target: "Chi ha scritto questo messaggio?",
+        phonetic: "kee ah SKREET-toh KWEHS-toh mehs-SAHJ-joh",
+        english: "Who wrote this message?",
+        verbForm: "ha scritto",
+        explanation: "Irregular past participle 'scritto' (like 'script')."
       }
     }
   },
   {
-    id: "vesz",
-    target: "vesz",
-    phonetic: "ves",
-    english: "to buy / to take",
-    cluster: "Objects & Actions",
-    stem: "vesz- / vev- / vett-",
-    transitivity: "Transitive",
+    id: "vedere",
+    target: "vedere",
+    phonetic: "veh-DEH-reh",
+    english: "to see",
+    cluster: "-ere Verbs",
+    stem: "ved- / vist-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "Regular Present & Imperfetto; irregular past participle: VISTO (also veduto).",
+    mnemonic: "Think of 'VIDEO' / 'VISTA' — to SEE.",
+    conjugations: {
+      habitual: { m_sg: "vedo / vedi", f_sg: "vede", m_pl: "vediamo / vedete / vedono" },
+      continuous: { m_sg: "vedevo / vedevi", f_sg: "vedeva", m_pl: "vedevamo / vedevate / vedevano" },
+      past: { m_sg: "ho visto / hai visto", f_sg: "ha visto", m_pl: "abbiamo visto / avete visto / hanno visto" },
+      imperative: { tu: "vedi!", tum: "veda!", aap: "vedete!" }
+    },
+    example: { target: "Ci vediamo domani!", phonetic: "chee veh-DYAH-moh doh-MAH-nee", english: "See you tomorrow!" },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Non vedo bene senza occhiali.",
+        phonetic: "nohn VEH-doh BEH-neh SEHN-tsah ohk-KYAH-lee",
+        english: "I can't see well without glasses.",
+        verbForm: "vedo",
+        explanation: "Reflexive 'ci vediamo' literally means 'we see each other' = 'see you!'."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "Dalla finestra si vedeva il mare.",
+        phonetic: "DAHL-lah fee-NEHS-trah see veh-DEH-vah eel MAH-reh",
+        english: "From the window you could see the sea.",
+        verbForm: "vedeva",
+        explanation: "Descriptive past scene → Imperfetto."
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Hai visto le mie chiavi?",
+        phonetic: "eye VEES-toh leh MEE-eh KYAH-vee",
+        english: "Have you seen my keys?",
+        verbForm: "Hai visto",
+        explanation: "Irregular past participle 'visto'."
+      }
+    }
+  },
+
+  // --- 5. -ire & -isc- Verbs ---
+  {
+    id: "dormire",
+    target: "dormire",
+    phonetic: "dohr-MEE-reh",
+    english: "to sleep",
+    cluster: "-ire & -isc- Verbs",
+    stem: "dorm-",
+    transitivity: "Intransitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: false,
+    mnemonic: "Think of 'DORM' / 'DORMANT' — a place to SLEEP.",
+    conjugations: {
+      habitual: { m_sg: "dormo / dormi", f_sg: "dorme", m_pl: "dormiamo / dormite / dormono" },
+      continuous: { m_sg: "dormivo / dormivi", f_sg: "dormiva", m_pl: "dormivamo / dormivate / dormivano" },
+      past: { m_sg: "ho dormito / hai dormito", f_sg: "ha dormito", m_pl: "abbiamo dormito / avete dormito / hanno dormito" },
+      imperative: { tu: "dormi!", tum: "dorma!", aap: "dormite!" }
+    },
+    example: { target: "Dormo otto ore a notte.", phonetic: "DOHR-moh OHT-toh OH-reh ah NOHT-teh", english: "I sleep eight hours a night." },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Il gatto dorme sul divano.",
+        phonetic: "eel GAHT-toh DOHR-meh sool dee-VAH-noh",
+        english: "The cat is sleeping on the couch.",
+        verbForm: "dorme",
+        explanation: "Model regular -ire verb (no -isc- infix)."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "Quando sei arrivato, dormivo già.",
+        phonetic: "KWAHN-doh say ahr-ree-VAH-toh, dohr-MEE-voh jah",
+        english: "When you arrived, I was already sleeping.",
+        verbForm: "dormivo",
+        explanation: "Regular -ire imperfetto (-ivo, -ivi, -iva)."
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Hai dormito bene?",
+        phonetic: "eye dohr-MEE-toh BEH-neh",
+        english: "Did you sleep well?",
+        verbForm: "Hai dormito",
+        explanation: "Regular -ire past participle in -ito (dormito)."
+      }
+    }
+  },
+  {
+    id: "capire",
+    target: "capire",
+    phonetic: "kah-PEE-reh",
+    english: "to understand",
+    cluster: "-ire & -isc- Verbs",
+    stem: "capisc- / cap-",
+    transitivity: "Transitive (Avere)",
+    hasGrammarTrait: false,
+    isIrregular: true,
+    irregularNote: "Model -ISC- verb! Inserts -isc- in io/tu/lui/loro: capisco, capisci, capisce, capiscono (but noi capiamo, voi capite).",
+    mnemonic: "'Capisce?' — famous Italian-American movie line meaning 'Do you understand?'",
+    conjugations: {
+      habitual: { m_sg: "capisco / capisci", f_sg: "capisce", m_pl: "capiamo / capite / capiscono" },
+      continuous: { m_sg: "capivo / capivi", f_sg: "capiva", m_pl: "capivamo / capivate / capivano" },
+      past: { m_sg: "ho capito / hai capito", f_sg: "ha capito", m_pl: "abbiamo capito / avete capito / hanno capito" },
+      imperative: { tu: "capisci!", tum: "capisca!", aap: "capite!" }
+    },
+    example: { target: "Non capisco, puoi parlare più piano?", phonetic: "nohn kah-PEES-koh, pwoh-ee pahr-LAH-reh pyoo PYAH-noh", english: "I don't understand, can you speak more slowly?" },
+    examples: {
+      present: {
+        tense: "Presente",
+        target: "Capisci tutto quello che dice?",
+        phonetic: "kah-PEE-shee TOOT-toh KWEHL-loh keh DEE-cheh",
+        english: "Do you understand everything he/she says?",
+        verbForm: "Capisci",
+        explanation: "Like finire (finisco) and preferire (preferisco), inserts -isc- inside the boot."
+      },
+      current: {
+        tense: "Imperfetto",
+        target: "All'inizio non capivo niente.",
+        phonetic: "ahl-lee-NEE-tsyoh nohn kah-PEE-voh NYEHN-teh",
+        english: "At the beginning I didn't understand anything.",
+        verbForm: "capivo",
+        explanation: "No -isc- in Imperfetto — completely regular!"
+      },
+      past: {
+        tense: "Passato Prossimo",
+        target: "Ah, adesso ho capito!",
+        phonetic: "ah, ah-DEHS-soh oh kah-PEE-toh",
+        english: "Ah, now I get it! (lit. I have understood)",
+        verbForm: "ho capito",
+        explanation: "'Ho capito!' is the standard way to say 'Got it!'."
+      }
+    }
+  },
+  {
+    id: "venire",
+    target: "venire",
+    phonetic: "veh-NEE-reh",
+    english: "to come",
+    cluster: "-ire & -isc- Verbs",
+    stem: "veng- / vien- / venut-",
+    transitivity: "Intransitive (Essere)",
     hasGrammarTrait: true,
     isIrregular: true,
-    irregularNote: "Irregular front-vowel verb (same pattern as 'tesz' and 'visz'). Present: veszek/veszel/vesz (Indef), veszem/veszed/veszi (Def). Past: vettem/vett/vette.",
-    mnemonic: "You BUY a new 'VESt' (vesz) at the market.",
+    irregularNote: "Irregular present: vengo, vieni, viene, veniamo, venite, vengono. Takes ESSERE + past participle 'venuto/a'!",
+    mnemonic: "Think of 'VENUE' or 'Veni, vidi, vici' ('I CAME, I saw, I conquered').",
     conjugations: {
-      habitual: {
-        m_sg: "veszek / veszel / vesz",
-        f_sg: "vesz (Indef.)",
-        m_pl: "veszünk / vesztek / vesznek",
-        f_pl: "vesznek"
-      },
-      continuous: {
-        m_sg: "veszem / veszed / veszi",
-        f_sg: "veszi (Def.)",
-        m_pl: "vesszük / veszitek / veszik",
-        f_pl: "veszik (Def.)"
-      },
-      past: {
-        m_sg: "vettem / vett (Indef)",
-        m_pl: "vettem / vette (Def)",
-        f_sg: "vette (Def.)",
-        f_pl: "vették (Def.)"
-      },
-      imperative: {
-        tu: "vegyél! (Indef)",
-        tum: "vedd meg! (Def)",
-        aap: "vegyen! (Formal)"
-      }
+      habitual: { m_sg: "vengo / vieni", f_sg: "viene", m_pl: "veniamo / venite / vengono" },
+      continuous: { m_sg: "venivo / venivi", f_sg: "veniva", m_pl: "venivamo / venivate / venivano" },
+      past: { m_sg: "sono venuto / sei venuto", f_sg: "è venuto/a", m_pl: "siamo venuti / siete venuti / sono venuti" },
+      imperative: { tu: "vieni!", tum: "venga!", aap: "venite!" }
     },
-    example: {
-      target: "Kenyeret veszek a boltban.",
-      phonetic: "keh-nyeh-ret veh-sek aw bolt-bawn",
-      english: "I am buying bread at the shop."
-    },
+    example: { target: "Vieni con me!", phonetic: "VYEH-nee kohn meh", english: "Come with me!" },
     examples: {
       present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Veszel egy jegyet?",
-        phonetic: "veh-sel edy yeh-dyet",
-        english: "Are you buying a ticket?",
-        verbForm: "Veszel",
-        explanation: "'egy jegyet' (a ticket) is indefinite → veszel"
+        tense: "Presente",
+        target: "Da dove vieni?",
+        phonetic: "dah DOH-veh VYEH-nee",
+        english: "Where do you come from?",
+        verbForm: "vieni",
+        explanation: "Stem changes to veng- (io/loro) and vien- (tu/lui)."
       },
       current: {
-        tense: "Definite (Tárgyas)",
-        target: "Megveszem ezt a kabátot.",
-        phonetic: "meg-veh-sem ezt aw kaw-baa-tot",
-        english: "I'm buying this coat.",
-        verbForm: "Megveszem",
-        explanation: "'ezt a kabátot' (this coat) is definite → megveszem"
+        tense: "Imperfetto",
+        target: "Veniva spesso a trovarci.",
+        phonetic: "veh-NEE-vah SPEHS-soh ah troh-VAHR-chee",
+        english: "He/she often used to come visit us.",
+        verbForm: "Veniva",
+        explanation: "Regular -ire imperfetto on stem ven-."
       },
       past: {
-        tense: "Past Tense (-t)",
-        target: "Hol vetted ezt a táskát?",
-        phonetic: "hol vet-ted ezt aw taash-kaat",
-        english: "Where did you buy this bag?",
-        verbForm: "vetted",
-        explanation: "Past stem is 'vett-' (2nd sg Definite: vetted)"
+        tense: "Passato Prossimo",
+        target: "Maria è venuta alla festa.",
+        phonetic: "mah-REE-ah eh veh-NOO-tah AHL-lah FEHS-tah",
+        english: "Maria came to the party.",
+        verbForm: "è venuta",
+        explanation: "Motion verb → takes ESSERE, and 'venuta' agrees with feminine Maria."
       }
     }
   },
   {
-    id: "ad",
-    target: "ad",
-    phonetic: "awd",
-    english: "to give",
-    cluster: "Objects & Actions",
-    stem: "ad-",
-    transitivity: "Transitive",
+    id: "uscire",
+    target: "uscire",
+    phonetic: "oo-SHEE-reh",
+    english: "to go out / to exit",
+    cluster: "-ire & -isc- Verbs",
+    stem: "esc- / usc-",
+    transitivity: "Intransitive (Essere)",
     hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Regular back-vowel verb. Past 3rd sg Indefinite uses linking vowel: 'adott', Definite: 'adta'.",
-    mnemonic: "You GIVE an 'AD' (ad) to the newspaper.",
+    isIrregular: true,
+    irregularNote: "Boot-verb stem change u→e: esco, esci, esce, escono (noi usciamo, voi uscite). Takes ESSERE in Passato Prossimo!",
+    mnemonic: "Think of 'USHER' — showing someone OUT (uscita = exit).",
     conjugations: {
-      habitual: {
-        m_sg: "adok / adsz / ad",
-        f_sg: "ad (Indef.)",
-        m_pl: "adunk / adtok / adnak",
-        f_pl: "adnak"
-      },
-      continuous: {
-        m_sg: "adom / adod / adja",
-        f_sg: "adja (Def.)",
-        m_pl: "adjuk / adjátok / adják",
-        f_pl: "adják (Def.)"
-      },
-      past: {
-        m_sg: "adtam / adott (Indef)",
-        m_pl: "adtam / adta (Def)",
-        f_sg: "adta (Def.)",
-        f_pl: "adták (Def.)"
-      },
-      imperative: {
-        tu: "adj! (Indef)",
-        tum: "add ide! (Def)",
-        aap: "adjon! (Formal)"
-      }
+      habitual: { m_sg: "esco / esci", f_sg: "esce", m_pl: "usciamo / uscite / escono" },
+      continuous: { m_sg: "uscivo / uscivi", f_sg: "usciva", m_pl: "uscivamo / uscivate / uscivano" },
+      past: { m_sg: "sono uscito / sei uscito", f_sg: "è uscito/a", m_pl: "siamo usciti / siete usciti / sono usciti" },
+      imperative: { tu: "esci!", tum: "esca!", aap: "uscite!" }
     },
-    example: {
-      target: " Odaadom neked a könyvet.",
-      phonetic: "o-daw-aw-dom neh-ked aw koeny-vet",
-      english: "I give the book to you."
-    },
+    example: { target: "Usciamo stasera?", phonetic: "oo-SHAH-moh stah-SEH-rah", english: "Shall we go out tonight?" },
     examples: {
       present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Adsz egy kis vizet?",
-        phonetic: "awds edy kish vi-zet",
-        english: "Will you give me a little water?",
-        verbForm: "Adsz",
-        explanation: "'egy kis vizet' (a little water) is indefinite → adsz"
+        tense: "Presente",
+        target: "Esco di casa alle sette.",
+        phonetic: "EHS-koh dee KAH-zah AHL-leh SEHT-teh",
+        english: "I leave the house at seven.",
+        verbForm: "Esco",
+        explanation: "Notice hard 'sc' (EHS-koh) vs soft 'sc' (EH-shee, EH-sheh)!"
       },
       current: {
-        tense: "Definite (Tárgyas)",
-        target: "Átadom az üzenetet.",
-        phonetic: "aat-aw-dom awz ue-zeh-neh-tet",
-        english: "I'll pass on the message.",
-        verbForm: "Átadom",
-        explanation: "'az üzenetet' (the message) is definite → átadom"
+        tense: "Imperfetto",
+        target: "Da studente uscivo ogni venerdì.",
+        phonetic: "dah stoo-DEHN-teh oo-SHEE-voh OH-nyee veh-nehr-DEE",
+        english: "As a student I used to go out every Friday.",
+        verbForm: "uscivo",
+        explanation: "Regular imperfetto on stem usc-."
       },
       past: {
-        tense: "Past Tense (-ott)",
-        target: "A pincér odaadta az étlapot.",
-        phonetic: "aw pin-tsayr o-daw-awd-taw awz ayt-law-pot",
-        english: "The waiter handed over the menu.",
-        verbForm: "odaadta",
-        explanation: "3rd sg Definite past: adta"
-      }
-    }
-  },
-  {
-    id: "keres",
-    target: "keres",
-    phonetic: "keh-resh",
-    english: "to look for / to search / to earn",
-    cluster: "Objects & Actions",
-    stem: "keres-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Front-vowel sibilant verb (-s): 2nd sg Indefinite is 'keresel'. Definite 1st pl assimilates -j- → 'keressük'.",
-    mnemonic: "When you 'CAress' (keres) your pockets, you are LOOKING FOR your keys.",
-    conjugations: {
-      habitual: {
-        m_sg: "keresek / keresel / keres",
-        f_sg: "keres (Indef.)",
-        m_pl: "keresünk / kerestek / keresnek",
-        f_pl: "keresnek"
-      },
-      continuous: {
-        m_sg: "keresem / keresed / keresi",
-        f_sg: "keresi (Def.)",
-        m_pl: "keressük / keresitek / keresik",
-        f_pl: "keresik (Def.)"
-      },
-      past: {
-        m_sg: "kerestem / keresett (Indef)",
-        m_pl: "kerestem / kereste (Def)",
-        f_sg: "kereste (Def.)",
-        f_pl: "keresték (Def.)"
-      },
-      imperative: {
-        tu: "keress! (Indef)",
-        tum: "keresd meg! (Def)",
-        aap: "keresse! (Formal)"
-      }
-    },
-    example: {
-      target: "Keresem a szemüvegemet.",
-      phonetic: "keh-reh-shem aw seh-mue-veh-geh-met",
-      english: "I am looking for my glasses."
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Mit keresel?",
-        phonetic: "mit keh-reh-shel",
-        english: "What are you looking for?",
-        verbForm: "keresel",
-        explanation: "'Mit?' is indefinite; sibilant -s takes '-el' in 2nd person"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "A pályaudvart keressük.",
-        phonetic: "aw paa-yaw-ud-vawrt keh-resh-shuek",
-        english: "We are looking for the train station.",
-        verbForm: "keressük",
-        explanation: "'A pályaudvart' is definite; keres + jük → keressük"
-      },
-      past: {
-        tense: "Past Tense (-ett)",
-        target: "Mindenhol kerestem a kulcsot.",
-        phonetic: "min-den-hol keh-resh-tem aw kul-chot",
-        english: "I looked for the key everywhere.",
-        verbForm: "kerestem",
-        explanation: "1st sg past: kerestem"
-      }
-    }
-  },
-  {
-    id: "var",
-    target: "vár",
-    phonetic: "vaar",
-    english: "to wait / to expect",
-    cluster: "Daily Essentials",
-    stem: "vár-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "'Várok a buszra' (I wait for the bus - Indef with -ra/-re) vs 'Várom a buszt' (I am awaiting the bus - Def with accusative -t).",
-    mnemonic: "Waiting at the train car ('vár') for the train to arrive.",
-    conjugations: {
-      habitual: {
-        m_sg: "várok / vársz / vár",
-        f_sg: "vár (Indef.)",
-        m_pl: "várunk / vártok / várnak",
-        f_pl: "várnak"
-      },
-      continuous: {
-        m_sg: "várom / várod / várja",
-        f_sg: "várja (Def.)",
-        m_pl: "várjuk / várjátok / várják",
-        f_pl: "várják (Def.)"
-      },
-      past: {
-        m_sg: "vártam / várt (Indef)",
-        m_pl: "vártam / várta (Def)",
-        f_sg: "várta (Def.)",
-        f_pl: "várták (Def.)"
-      },
-      imperative: {
-        tu: "várj! (Indef)",
-        tum: "várd meg! (Def)",
-        aap: "várjon! (Formal)"
-      }
-    },
-    example: {
-      target: "Várj egy percet, kérlek!",
-      phonetic: "vaary edy per-tset, kayr-lek",
-      english: "Wait a minute, please!"
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Kire vársz?",
-        phonetic: "ki-reh vaars",
-        english: "Who are you waiting for?",
-        verbForm: "vársz",
-        explanation: "Waiting FOR someone ('kire') uses Indefinite 'vársz'"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "Nagyon várom a nyarat!",
-        phonetic: "naw-dyon vaa-rom aw nyaw-rawt",
-        english: "I am really looking forward to the summer!",
-        verbForm: "várom",
-        explanation: "'a nyarat' (the summer, accusative) takes Definite 'várom'"
-      },
-      past: {
-        tense: "Past Tense (-t)",
-        target: "Fél órát vártunk a buszra.",
-        phonetic: "fayl oh-raat vaar-tunk aw bus-raw",
-        english: "We waited half an hour for the bus.",
-        verbForm: "vártunk",
-        explanation: "1st pl past Indefinite: vártunk"
-      }
-    }
-  },
-  {
-    id: "fizet",
-    target: "fizet",
-    phonetic: "fi-zet",
-    english: "to pay",
-    cluster: "Daily Essentials",
-    stem: "fizet-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Stem ends in Vowel + -t, so 3rd sg past adds -ett ('fizetett'). Imperative -t + -j becomes -ss-: 'fizess!' / 'fizesd ki!'.",
-    mnemonic: "Paying a 'FEE' (fizet) at the café.",
-    conjugations: {
-      habitual: {
-        m_sg: "fizetek / fizetsz / fizet",
-        f_sg: "fizet (Indef.)",
-        m_pl: "fizetünk / fizettek / fizetnek",
-        f_pl: "fizetnek"
-      },
-      continuous: {
-        m_sg: "fizetem / fizeted / fizeti",
-        f_sg: "fizeti (Def.)",
-        m_pl: "fizetjük / fizetitek / fizetik",
-        f_pl: "fizetik (Def.)"
-      },
-      past: {
-        m_sg: "fizettem / fizetett (Indef)",
-        m_pl: "fizettem / fizette (Def)",
-        f_sg: "fizette (Def.)",
-        f_pl: "fizették (Def.)"
-      },
-      imperative: {
-        tu: "fizess! (Indef)",
-        tum: "fizesd ki! (Def)",
-        aap: "fizessen! (Formal)"
-      }
-    },
-    example: {
-      target: "Kártyával vagy készpénzzel fizetsz?",
-      phonetic: "kaar-tyaa-vawl vawdy kays-paynz-zel fi-zets",
-      english: "Are you paying by card or cash?"
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Alanyi)",
-        target: "Szeretnék fizetni, legyen szíves!",
-        phonetic: "seh-ret-nayk fi-zet-ni, leh-dyen see-vesh",
-        english: "I would like to pay, please!",
-        verbForm: "fizetni",
-        explanation: "Essential restaurant phrase: Szeretnék fizetni!"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "Ma én fizetem a vacsorát.",
-        phonetic: "maw ayn fi-zeh-tem aw vaw-cho-raat",
-        english: "Today I am paying for the dinner.",
-        verbForm: "fizetem",
-        explanation: "'a vacsorát' (the dinner) is definite → fizetem"
-      },
-      past: {
-        tense: "Past Tense (-ett)",
-        target: "Már kifizettem a számlát.",
-        phonetic: "maar ki-fi-zet-tem aw saam-laat",
-        english: "I already paid the bill.",
-        verbForm: "kifizettem",
-        explanation: "Prefix 'ki-' + fizet = pay off in full"
-      }
-    }
-  },
-  {
-    id: "lakik",
-    target: "lakik",
-    phonetic: "law-kik",
-    english: "to live / to reside (-ik verb)",
-    cluster: "Daily Essentials",
-    stem: "lak-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
-    isIrregular: false,
-    irregularNote: "Back-vowel -ik verb: lakom (or lakok), laksz, lakik, lakunk, laktok, laknak.",
-    mnemonic: "You LIVE behind a 'LOCK' (lakik) in your apartment (lakás).",
-    conjugations: {
-      habitual: {
-        m_sg: "lakom (lakok) / laksz / lakik",
-        f_sg: "lakik",
-        m_pl: "lakunk / laktok / laknak",
-        f_pl: "laknak"
-      },
-      continuous: {
-        m_sg: "itt lakom (I live here)",
-        f_sg: "ott lakik (lives there)",
-        m_pl: "együtt lakunk",
-        f_pl: "Budapesten laknak"
-      },
-      past: {
-        m_sg: "laktam / laktál / lakott",
-        m_pl: "laktunk / laktatok / laktak",
-        f_sg: "lakott",
-        f_pl: "laktak"
-      },
-      imperative: {
-        tu: "lakj!",
-        tum: "lakjatok! (pl)",
-        aap: "lakjon! (Formal)"
-      }
-    },
-    example: {
-      target: "Hol laksz?",
-      phonetic: "hol lawks",
-      english: "Where do you live?"
-    },
-    examples: {
-      present: {
-        tense: "Present (-ik verb)",
-        target: "A belvárosban lakom.",
-        phonetic: "aw bel-vaa-rosh-bawn law-kom",
-        english: "I live downtown.",
-        verbForm: "lakom",
-        explanation: "Intransitive -ik verb: 1st sg is 'lakom' (or 'lakok')"
-      },
-      current: {
-        tense: "3rd Person (-ik)",
-        target: "A bátyám Pécsen lakik.",
-        phonetic: "aw baa-tyaam pay-chen law-kik",
-        english: "My older brother lives in Pécs.",
-        verbForm: "lakik",
-        explanation: "3rd person singular keeps the '-ik' ending"
-      },
-      past: {
-        tense: "Past Tense (-ott)",
-        target: "Két évig Magyarországon laktunk.",
-        phonetic: "kayt ay-vig maw-dyawr-or-saa-gon lawk-tunk",
-        english: "We lived in Hungary for two years.",
-        verbForm: "laktunk",
-        explanation: "Past 1st plural: laktunk"
-      }
-    }
-  },
-  {
-    id: "dolgozik",
-    target: "dolgozik",
-    phonetic: "dol-go-zik",
-    english: "to work (-ik verb)",
-    cluster: "Daily Essentials",
-    stem: "dolgoz-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
-    isIrregular: false,
-    irregularNote: "Back-vowel sibilant -ik verb (-z): 1st sg 'dolgozom' (or 'dolgozok'), 2nd sg 'dolgozol' (uses -ol because stem ends in -z!).",
-    mnemonic: "Working hard all day makes you feel 'DULL-GO-Zzz' (dolgozik).",
-    conjugations: {
-      habitual: {
-        m_sg: "dolgozom / dolgozol / dolgozik",
-        f_sg: "dolgozik",
-        m_pl: "dolgozunk / dolgoztok / dolgoznak",
-        f_pl: "dolgoznak"
-      },
-      continuous: {
-        m_sg: "dolgozni fogok (will work)",
-        f_sg: "dolgozni fog",
-        m_pl: "dolgozni fogunk",
-        f_pl: "dolgozni fognak"
-      },
-      past: {
-        m_sg: "dolgoztam / dolgoztál / dolgozott",
-        m_pl: "dolgoztunk / dolgoztatok / dolgoztak",
-        f_sg: "dolgozott",
-        f_pl: "dolgoztak"
-      },
-      imperative: {
-        tu: "dolgozz!",
-        tum: "dolgozzatok! (pl)",
-        aap: "dolgozzon! (Formal)"
-      }
-    },
-    example: {
-      target: "Ma otthonról dolgozom.",
-      phonetic: "maw ott-hon-rohl dol-go-zom",
-      english: "Today I am working from home."
-    },
-    examples: {
-      present: {
-        tense: "Present (-ik verb)",
-        target: "Hol dolgozol?",
-        phonetic: "hol dol-go-zol",
-        english: "Where do you work?",
-        verbForm: "dolgozol",
-        explanation: "Because stem ends in sibilant -z, 2nd sg is 'dolgozol'"
-      },
-      current: {
-        tense: "Plural",
-        target: "Egy irodában dolgozunk.",
-        phonetic: "edy i-ro-daa-bawn dol-go-zunk",
-        english: "We work in an office.",
-        verbForm: "dolgozunk",
-        explanation: "1st plural back-vowel ending: -unk"
-      },
-      past: {
-        tense: "Past Tense (-ott)",
-        target: "Tegnap későig dolgozott.",
-        phonetic: "teg-nawp kay-shoe-ig dol-go-zott",
-        english: "Yesterday he/she worked until late.",
-        verbForm: "dolgozott",
-        explanation: "3rd sg past adds -ott: dolgozott"
-      }
-    }
-  },
-  {
-    id: "utazik",
-    target: "utazik",
-    phonetic: "u-taw-zik",
-    english: "to travel (-ik verb)",
-    cluster: "Motion & Movement",
-    stem: "utaz-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
-    isIrregular: false,
-    irregularNote: "Built on 'út' (road/way). Back-vowel -ik verb ending in -z: utazom, utazol, utazik, utazunk.",
-    mnemonic: "From 'út' (road) — hitting the road to TRAVEL.",
-    conjugations: {
-      habitual: {
-        m_sg: "utazom / utazol / utazik",
-        f_sg: "utazik",
-        m_pl: "utazunk / utaztok / utaznak",
-        f_pl: "utaznak"
-      },
-      continuous: {
-        m_sg: "utazni fogok",
-        f_sg: "utazni fog",
-        m_pl: "utazni fogunk",
-        f_pl: "utazni fognak"
-      },
-      past: {
-        m_sg: "utaztam / utaztál / utazott",
-        m_pl: "utaztunk / utaztatok / utaztak",
-        f_sg: "utazott",
-        f_pl: "utaztak"
-      },
-      imperative: {
-        tu: "utazz!",
-        tum: "utazzatok! (pl)",
-        aap: "utazzon! (Formal)"
-      }
-    },
-    example: {
-      target: "Nyáron a Balatonra utazunk.",
-      phonetic: "nyaa-ron aw baw-law-ton-raw u-taw-zunk",
-      english: "In the summer we travel to Lake Balaton."
-    },
-    examples: {
-      present: {
-        tense: "Present (-ik verb)",
-        target: "Vonattal utazol?",
-        phonetic: "vo-nawt-tawl u-taw-zol",
-        english: "Are you traveling by train?",
-        verbForm: "utazol",
-        explanation: "'Vonattal' = with/by train (-val/-vel instrumental case)"
-      },
-      current: {
-        tense: "1st Person",
-        target: "Holnap Bécsbe utazom.",
-        phonetic: "hol-nawp baych-beh u-taw-zom",
-        english: "Tomorrow I am traveling to Vienna.",
-        verbForm: "utazom",
-        explanation: "Present tense with 'holnap' expresses planned future!"
-      },
-      past: {
-        tense: "Past Tense (-ott)",
-        target: "Tavaly repülővel utaztunk.",
-        phonetic: "taw-vawy reh-pue-loe-vel u-tawz-tunk",
-        english: "Last year we traveled by plane.",
-        verbForm: "utaztunk",
-        explanation: "1st pl past: utaztunk"
-      }
-    }
-  },
-  {
-    id: "indul",
-    target: "indul",
-    phonetic: "in-dul",
-    english: "to depart / to leave / to start off",
-    cluster: "Motion & Movement",
-    stem: "indul-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
-    isIrregular: false,
-    irregularNote: "Back-vowel verb (mixed 'i' + 'u' = back vowel harmony!). Essential for trains, buses, and leaving home.",
-    mnemonic: "Don't 'IN-DULL' around — it's time to DEPART!",
-    conjugations: {
-      habitual: {
-        m_sg: "indulok / indulsz / indul",
-        f_sg: "indul",
-        m_pl: "indulunk / indultok / indulnak",
-        f_pl: "indulnak"
-      },
-      continuous: {
-        m_sg: "mindjárt indulok",
-        f_sg: "mikor indul?",
-        m_pl: "indulunk!",
-        f_pl: "indulnak"
-      },
-      past: {
-        m_sg: "indultam / indultál / indult",
-        m_pl: "indultunk / indultatok / indultak",
-        f_sg: "indult",
-        f_pl: "indultak"
-      },
-      imperative: {
-        tu: "indulj!",
-        tum: "induljunk! (let's go!)",
-        aap: "induljon!"
-      }
-    },
-    example: {
-      target: "Mikor indul a vonat?",
-      phonetic: "mi-kor in-dul aw vo-nawt",
-      english: "When does the train depart?"
-    },
-    examples: {
-      present: {
-        tense: "Present (Indefinite)",
-        target: "A busz tíz perc múlva indul.",
-        phonetic: "aw bus teez perts mool-vaw in-dul",
-        english: "The bus departs in ten minutes.",
-        verbForm: "indul",
-        explanation: "Intransitive motion verb: 3rd sg has zero ending ('indul')"
-      },
-      current: {
-        tense: "1st Plural",
-        target: "Indulunk, kész vagy?",
-        phonetic: "in-du-lunk, kays vawdy",
-        english: "We're heading out, are you ready?",
-        verbForm: "Indulunk",
-        explanation: "'Indulunk!' = We're leaving / setting off!"
-      },
-      past: {
-        tense: "Past Tense (-t)",
-        target: "Korán reggel indultunk.",
-        phonetic: "ko-raan reg-gel in-dul-tunk",
-        english: "We left early in the morning.",
-        verbForm: "indultunk",
-        explanation: "Past tense: indultunk"
-      }
-    }
-  },
-  {
-    id: "erkezik",
-    target: "érkezik",
-    phonetic: "ayr-keh-zik",
-    english: "to arrive (-ik verb)",
-    cluster: "Motion & Movement",
-    stem: "érkez-",
-    transitivity: "Intransitive",
-    hasGrammarTrait: false,
-    isIrregular: false,
-    irregularNote: "Front-vowel sibilant -ik verb: érkezem, érkezel, érkezik, érkezünk. Often paired with prefix 'meg-' (megérkezik).",
-    mnemonic: "When the plane 'AIR-kisses' (érkezik) the runway, it ARRIVES.",
-    conjugations: {
-      habitual: {
-        m_sg: "érkezem / érkezel / érkezik",
-        f_sg: "érkezik",
-        m_pl: "érkezünk / érkeztek / érkeznek",
-        f_pl: "érkeznek"
-      },
-      continuous: {
-        m_sg: "megérkezem",
-        f_sg: "megérkezik",
-        m_pl: "megérkezünk",
-        f_pl: "megérkeznek"
-      },
-      past: {
-        m_sg: "érkeztem / érkeztél / érkezett",
-        m_pl: "érkeztünk / érkeztetek / érkeztek",
-        f_sg: "megérkezett",
-        f_pl: "megérkeztek"
-      },
-      imperative: {
-        tu: "érkezz!",
-        tum: "érkezzetek!",
-        aap: "érkezzen!"
-      }
-    },
-    example: {
-      target: "Mikor érkezik a gép?",
-      phonetic: "mi-kor ayr-keh-zik aw gayp",
-      english: "When does the plane arrive?"
-    },
-    examples: {
-      present: {
-        tense: "Present (-ik verb)",
-        target: "A vonat az első vágányra érkezik.",
-        phonetic: "aw vo-nawt awz el-shoe vaa-gaany-raw ayr-keh-zik",
-        english: "The train is arriving on platform 1.",
-        verbForm: "érkezik",
-        explanation: "Classic train station announcement verb!"
-      },
-      current: {
-        tense: "1st Person",
-        target: "Este nyolckor érkezem.",
-        phonetic: "esh-teh nyolts-kor ayr-keh-zem",
-        english: "I arrive at eight in the evening.",
-        verbForm: "érkezem",
-        explanation: "Front-vowel -ik verb: érkezem"
-      },
-      past: {
-        tense: "Past Tense (-ett)",
-        target: "Épségben megérkeztünk!",
-        phonetic: "ayp-shayg-ben meg-ayr-kez-tuenk",
-        english: "We arrived safely!",
-        verbForm: "megérkeztünk",
-        explanation: "Prefix 'meg-' shows completed arrival"
-      }
-    }
-  },
-  {
-    id: "nyit",
-    target: "nyit",
-    phonetic: "nyit",
-    english: "to open",
-    cluster: "Objects & Actions",
-    stem: "nyit-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Front-vowel verb ending in vowel + -t, so 3rd sg Indefinite past is 'nyitott', and Imperative assimilates -t + -j → 'nyiss!' / 'nyisd ki!'.",
-    mnemonic: "You OPEN your 'KNIT' (nyit) sweater.",
-    conjugations: {
-      habitual: {
-        m_sg: "nyitok / nyitsz / nyit",
-        f_sg: "nyit (Indef.)",
-        m_pl: "nyitunk / nyittok / nyitnak",
-        f_pl: "nyitnak"
-      },
-      continuous: {
-        m_sg: "nyitom / nyitod / nyitja",
-        f_sg: "kinyitja (Def.)",
-        m_pl: "nyitjuk / nyitjátok / nyitják",
-        f_pl: "kinyitják (Def.)"
-      },
-      past: {
-        m_sg: "nyitottam / nyitott (Indef)",
-        m_pl: "kinyitottam / kinyitotta (Def)",
-        f_sg: "kinyitotta (Def.)",
-        f_pl: "kinyitották (Def.)"
-      },
-      imperative: {
-        tu: "nyiss! (Indef)",
-        tum: "nyisd ki! (Def)",
-        aap: "nyissa ki! (Formal)"
-      }
-    },
-    example: {
-      target: "Kinyitom az ablakot, mert meleg van.",
-      phonetic: "ki-nyi-tom awz awb-law-kot, mert meh-leg vawn",
-      english: "I'm opening the window because it is warm."
-    },
-    examples: {
-      present: {
-        tense: "Indefinite (Shop hours)",
-        target: "A bolt reggel nyolckor nyit.",
-        phonetic: "aw bolt reg-gel nyolts-kor nyit",
-        english: "The shop opens at eight in the morning.",
-        verbForm: "nyit",
-        explanation: "'nyit' is a historic back-vowel verb despite the letter 'i'!"
-      },
-      current: {
-        tense: "Definite (Tárgyas)",
-        target: "Kinyitod az ajtót, kérlek?",
-        phonetic: "ki-nyi-tod awz awy-toht, kayr-lek",
-        english: "Will you open the door, please?",
-        verbForm: "Kinyitod",
-        explanation: "'az ajtót' (the door) is definite → kinyitod"
-      },
-      past: {
-        tense: "Imperative (-t + -j → -ss-)",
-        target: "Nyisd ki a könyvet!",
-        phonetic: "nyishd ki aw koeny-vet",
-        english: "Open the book!",
-        verbForm: "Nyisd ki",
-        explanation: "Definite imperative of kinyit: Nyisd ki!"
-      }
-    }
-  },
-  {
-    id: "mond",
-    target: "mond",
-    phonetic: "mond",
-    english: "to say / to tell",
-    cluster: "Study & Communication",
-    stem: "mond-",
-    transitivity: "Transitive",
-    hasGrammarTrait: true,
-    isIrregular: false,
-    irregularNote: "Ends in two consonants (-nd), so 2nd sg Indefinite adds linking vowel ('mondasz') and 3rd sg Indefinite past is 'mondott'.",
-    mnemonic: "Think of 'leMONDe' newspaper — telling the news.",
-    conjugations: {
-      habitual: {
-        m_sg: "mondok / mondasz / mond",
-        f_sg: "mond (Indef.)",
-        m_pl: "mondunk / mondotok / mondanak",
-        f_pl: "mondanak"
-      },
-      continuous: {
-        m_sg: "mondom / mondod / mondja",
-        f_sg: "mondja (Def.)",
-        m_pl: "mondjuk / mondjátok / mondják",
-        f_pl: "mondják (Def.)"
-      },
-      past: {
-        m_sg: "mondtam / mondott (Indef)",
-        m_pl: "mondtam / mondta (Def)",
-        f_sg: "mondta (Def.)",
-        f_pl: "mondták (Def.)"
-      },
-      imperative: {
-        tu: "mondj! (Indef)",
-        tum: "mondd el! (Def)",
-        aap: "mondja! (Formal)"
-      }
-    },
-    example: {
-      target: "Hogy mondják ezt magyarul?",
-      phonetic: "hody mond-yaak ezt maw-dyaw-rul",
-      english: "How do they say this in Hungarian?"
-    },
-    examples: {
-      present: {
-        tense: "Indefinite ('Mit mondasz?')",
-        target: "Mit mondasz?",
-        phonetic: "mit mon-daws",
-        english: "What are you saying?",
-        verbForm: "mondasz",
-        explanation: "'Mit?' is indefinite; -nd cluster requires linking vowel '-asz'"
-      },
-      current: {
-        tense: "Definite ('Ezt')",
-        target: "Komolyan mondom!",
-        phonetic: "ko-mo-yawn mon-dom",
-        english: "I mean it seriously! (I say it seriously)",
-        verbForm: "mondom",
-        explanation: "Implied 'it' uses Definite 'mondom'"
-      },
-      past: {
-        tense: "Past Tense (-ott / -ta)",
-        target: "Ő mondta, hogy holnap jön.",
-        phonetic: "oe mond-taw, hody hol-nawp yoen",
-        english: "He/she said that he/she is coming tomorrow.",
-        verbForm: "mondta",
-        explanation: "A 'hogy...' (that...) clause always triggers Definite conjugation ('mondta')!"
+        tense: "Passato Prossimo",
+        target: "Siamo usciti con gli amici.",
+        phonetic: "SYAH-moh oo-SHEE-tee kohn lyee ah-MEE-chee",
+        english: "We went out with friends.",
+        verbForm: "Siamo usciti",
+        explanation: "Takes ESSERE in Passato Prossimo and agrees in gender/number."
       }
     }
   }

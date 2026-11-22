@@ -358,13 +358,13 @@ function findTargetVoice(options = {}) {
     : {
         bcp47: 'hu-HU',
         langPrefix: 'hu',
-        preferredLocalVoiceRegex: /Mariska|Szabolcs|Tünde|Hungarian|Magyar/i
+        preferredLocalVoiceRegex: /Alice|Federica|Luca|Paola|Italian|Italiano/i
       };
 
   const bcp47 = speechCfg.bcp47 || 'hu-HU';
   const bcp47Alt = bcp47.replace('-', '_');
   const langPrefix = (speechCfg.langPrefix || 'hu').toLowerCase();
-  const voiceRegex = speechCfg.preferredLocalVoiceRegex || /Mariska|Szabolcs|Tünde|Hungarian|Magyar/i;
+  const voiceRegex = speechCfg.preferredLocalVoiceRegex || /Alice|Federica|Luca|Paola|Italian|Italiano/i;
 
   if (preferLocal) {
     let localVoice = voices.find(v =>
@@ -483,8 +483,8 @@ function speakTargetText(text, buttonEl = null, options = {}) {
               speechVoiceWarningShown = true;
               const isWindows = /Win/i.test(navigator.platform || navigator.userAgent);
               const advice = isWindows 
-                ? (speechCfg.fallbackNoticeWindows || "No Hungarian speech voice installed on this Windows PC. Go to Windows Settings → Time & Language → Speech → Add voices → Select 'Hungarian'.")
-                : (speechCfg.fallbackNoticeMac || "No Hungarian speech voice found on your system. In macOS System Settings → Accessibility → Spoken Content → System Voice, enable 'Mariska (Hungarian)'.");
+                ? (speechCfg.fallbackNoticeWindows || "No Italian speech voice installed on this Windows PC. Go to Windows Settings → Time & Language → Speech → Add voices → Select 'Italian'.")
+                : (speechCfg.fallbackNoticeMac || "No Italian speech voice found on your system. In macOS System Settings → Accessibility → Spoken Content → System Voice, enable 'Alice (Italian)'.");
               showToast(advice, "info", 8000);
             }
           }
@@ -1582,11 +1582,11 @@ function switchLearningModule(moduleName, savePreference = true, showNotificatio
   const titleSub = document.getElementById('app-title-sub');
   if (titleSub) {
     if (moduleName === 'verbs') {
-      titleSub.textContent = '(Magyar Igelabor • Verb Lab)';
+      titleSub.textContent = '(Laboratorio dei Verbi • Verb Lab)';
     } else if (moduleName === 'vocab') {
-      titleSub.textContent = '(Magyar Szókincs • Vocabulary Studio)';
+      titleSub.textContent = '(Vocabolario • Vocabulary Studio)';
     } else {
-      titleSub.textContent = '(Kiejtés és Hangok • Sounds & Pairs)';
+      titleSub.textContent = '(Pronuncia & Doppie • Sounds & Pairs)';
     }
   }
 
@@ -1607,9 +1607,9 @@ function switchLearningModule(moduleName, savePreference = true, showNotificatio
   closeFocusModal();
 
   if (showNotification) {
-    let friendlyName = 'Verb Lab (Magyar Igelabor)';
-    if (moduleName === 'vocab') friendlyName = 'Vocabulary Studio (Szókincs)';
-    if (moduleName === 'matras') friendlyName = 'Sounds & Minimal Pairs (Kiejtés)';
+    let friendlyName = 'Verb Lab (Verbi)';
+    if (moduleName === 'vocab') friendlyName = 'Vocabulary Studio (Vocabolario)';
+    if (moduleName === 'matras') friendlyName = 'Sounds & Minimal Pairs (Pronuncia)';
     announce(`Switched to ${friendlyName}`);
     showToast(`Active Practice: ${friendlyName}`, 'info', 3000);
   }
@@ -1743,7 +1743,7 @@ function renderVerbGrid() {
               ${v.transitivity || 'Transitive'}
             </span>
             <span class="badge ${v.hasGrammarTrait ? 'badge-ne' : 'badge-no-ne'}">
-              ${v.hasGrammarTrait ? 'Takes Definite (-om/-od)' : 'Indefinite Only (Alanyi)'}
+              ${v.hasGrammarTrait ? 'Takes Essere (Passato Prossimo)' : 'Takes Avere (Passato Prossimo)'}
             </span>
             ${v.isIrregular ? '<span class="badge badge-irreg">Irregular / -ik</span>' : ''}
             ${isMastered ? '<span class="badge" style="background:#dcfce7;color:#166534">✓ Mastered</span>' : ''}
@@ -1783,14 +1783,14 @@ function getVerbTenseSentences(verb) {
     return verb.examples;
   }
   const defaultPresent = verb.example ? {
-    tense: "Present Indefinite (Alanyi)",
+    tense: "Presente Indicativo",
     target: verb.example.target,
     phonetic: verb.example.phonetic || "",
     english: verb.example.english,
     verbForm: verb.conjugations?.habitual?.m_sg || verb.target,
     explanation: "Indefinite conjugation (general action or 'egy' object)"
   } : {
-    tense: "Present Indefinite (Alanyi)",
+    tense: "Presente Indicativo",
     target: `Minden nap ${verb.conjugations?.habitual?.m_sg || verb.target}.`,
     phonetic: "",
     english: `Every day I ${verb.english.replace(/^to /, '')}.`,
@@ -1799,7 +1799,7 @@ function getVerbTenseSentences(verb) {
   };
 
   const defaultCurrent = {
-    tense: "Present Definite (Tárgyas)",
+    tense: "Imperfetto",
     target: verb.hasGrammarTrait
       ? `Most ${verb.conjugations?.continuous?.m_sg || verb.target} a feladatot.`
       : `Ő most ${verb.target}.`,
@@ -1817,7 +1817,7 @@ function getVerbTenseSentences(verb) {
     phonetic: "",
     english: `Yesterday I ${verb.english.replace(/^to /, '')}ed.`,
     verbForm: verb.conjugations?.past?.m_sg || verb.target,
-    explanation: "Hungarian past tense (-t / -ott / -ett / -ött)"
+    explanation: "Passato Prossimo (essere / avere + participle)"
   };
 
   return {
@@ -1941,32 +1941,32 @@ function openVerbModal(verbId) {
 
     <!-- Conjugation Matrix -->
     <div>
-      <div class="section-label">Conjugation Matrix (Én / Te / Ő &amp; Ők)</div>
+      <div class="section-label">Conjugation Matrix (Io/Tu • Lui/Lei • Noi/Voi/Loro)</div>
       <div style="overflow-x:auto; border-radius:10px; border:1px solid var(--border); margin-top:0.6rem;">
         <table class="conjugation-table" style="margin-top:0; border:none;">
           <thead>
             <tr>
               <th>Conjugation / Tense</th>
-              <th>1st Sg (Én)</th>
-              <th>2nd Sg (Te)</th>
-              <th>3rd Sg (Ő) / Pl (Ők)</th>
+              <th>Io / Tu</th>
+              <th>Lui / Lei</th>
+              <th>Noi / Voi / Loro</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Present (Indefinite / Alanyi)</strong></td>
+              <td><strong>Presente Indicativo</strong></td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.habitual?.m_sg)}</td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.habitual?.f_sg)}</td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.habitual?.m_pl)}</td>
             </tr>
             <tr>
-              <td><strong>Present (Definite / Tárgyas)</strong></td>
+              <td><strong>Imperfetto</strong></td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.continuous?.m_sg)}</td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.continuous?.f_sg)}</td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.continuous?.m_pl)}</td>
             </tr>
             <tr>
-              <td><strong>Past Tense (Múlt idő -t)</strong></td>
+              <td><strong>Passato Prossimo</strong></td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.past?.m_sg)}</td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.past?.f_sg)}</td>
               <td class="hindi-cell">${renderConjugationCell(verb.conjugations?.past?.m_pl)}</td>
@@ -1977,22 +1977,22 @@ function openVerbModal(verbId) {
 
       <!-- Imperative Forms -->
       <div style="margin-top:1rem; background:#fffdf5; border:1px solid #fed7aa; padding:0.9rem 1.25rem; border-radius:10px;">
-        <span style="font-size:0.825rem; font-weight:700; color:#9a3412; text-transform:uppercase; letter-spacing:0.04em;">Imperative / Subjunctive (-j):</span>
+        <span style="font-size:0.825rem; font-weight:700; color:#9a3412; text-transform:uppercase; letter-spacing:0.04em;">Imperative (Imperativo):</span>
         <div style="display:flex; gap:1.75rem; margin-top:0.45rem; font-size:0.9rem; flex-wrap:wrap; align-items:center;">
           <div style="display:inline-flex; align-items:center; gap:0.4rem;">
-            <span style="color:var(--text-muted); font-size:0.85rem;">Te (Indefinite):</span>
+            <span style="color:var(--text-muted); font-size:0.85rem;">Tu (Informal):</span>
             <span class="devanagari" style="font-weight:700; color:var(--primary); font-size:1.15rem;">${escapeHtml(imp.tu || '-')}</span>
             ${formatConjugationPhonetic(imp.tu) ? `<span style="color:var(--text-muted); font-size:0.8rem;">(${escapeHtml(formatConjugationPhonetic(imp.tu))})</span>` : ''}
             ${imp.tu && imp.tu !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(formatConjugationAudio(imp.tu))}" aria-label="Pronounce ${escapeHtml(imp.tu)}" title="Listen to ${escapeHtml(imp.tu)}">🔊</button>` : ''}
           </div>
           <div style="display:inline-flex; align-items:center; gap:0.4rem;">
-            <span style="color:var(--text-muted); font-size:0.85rem;">Te (Definite):</span>
+            <span style="color:var(--text-muted); font-size:0.85rem;">Lei (Formal):</span>
             <span class="devanagari" style="font-weight:700; color:var(--primary); font-size:1.15rem;">${escapeHtml(imp.tum || '-')}</span>
             ${formatConjugationPhonetic(imp.tum) ? `<span style="color:var(--text-muted); font-size:0.8rem;">(${escapeHtml(formatConjugationPhonetic(imp.tum))})</span>` : ''}
             ${imp.tum && imp.tum !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(formatConjugationAudio(imp.tum))}" aria-label="Pronounce ${escapeHtml(imp.tum)}" title="Listen to ${escapeHtml(imp.tum)}">🔊</button>` : ''}
           </div>
           <div style="display:inline-flex; align-items:center; gap:0.4rem;">
-            <span style="color:var(--text-muted); font-size:0.85rem;">Ön (Formal):</span>
+            <span style="color:var(--text-muted); font-size:0.85rem;">Voi (Plural):</span>
             <span class="devanagari" style="font-weight:700; color:var(--primary); font-size:1.15rem;">${escapeHtml(imp.aap || '-')}</span>
             ${formatConjugationPhonetic(imp.aap) ? `<span style="color:var(--text-muted); font-size:0.8rem;">(${escapeHtml(formatConjugationPhonetic(imp.aap))})</span>` : ''}
             ${imp.aap && imp.aap !== '—' ? `<button type="button" class="audio-btn mini-imp-audio modal-imp-audio" data-audio="${escapeHtml(formatConjugationAudio(imp.aap))}" aria-label="Pronounce ${escapeHtml(imp.aap)}" title="Listen to ${escapeHtml(imp.aap)}">🔊</button>` : ''}
@@ -2003,14 +2003,14 @@ function openVerbModal(verbId) {
 
     <!-- Real-World Usage Examples in All 3 Forms -->
     <div>
-      <div class="section-label">Real-World Usage Examples (Indefinite, Definite &amp; Past)</div>
+      <div class="section-label">Real-World Usage Examples (Presente, Imperfetto &amp; Passato Prossimo)</div>
       <div class="modal-examples-grid">
         <!-- Present Indefinite -->
         <div class="modal-example-card tense-present">
           <div style="flex:1;">
             <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
-              <span class="sentence-badge badge-tense-present">⏳ Present Indefinite</span>
-              <span class="sentence-aspect-note">${escapeHtml(ex.present.explanation || 'Indefinite conjugation (Alanyi)')}</span>
+              <span class="sentence-badge badge-tense-present">⏳ Presente Indicativo</span>
+              <span class="sentence-aspect-note">${escapeHtml(ex.present.explanation || 'Presente Indicativo')}</span>
             </div>
             <div style="font-family:var(--font-hindi); font-size:1.25rem; font-weight:700; color:var(--text-main); line-height:1.35;">
               ${renderHighlightedSentence(ex.present.target, ex.present.verbForm)}
@@ -2030,7 +2030,7 @@ function openVerbModal(verbId) {
           <div style="flex:1;">
             <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
               <span class="sentence-badge badge-tense-current">⚡ Present Definite</span>
-              <span class="sentence-aspect-note">${escapeHtml(ex.current.explanation || 'Definite conjugation (Tárgyas)')}</span>
+              <span class="sentence-aspect-note">${escapeHtml(ex.current.explanation || 'Imperfetto')}</span>
             </div>
             <div style="font-family:var(--font-hindi); font-size:1.25rem; font-weight:700; color:var(--text-main); line-height:1.35;">
               ${renderHighlightedSentence(ex.current.target, ex.current.verbForm)}
@@ -2049,8 +2049,8 @@ function openVerbModal(verbId) {
         <div class="modal-example-card tense-past">
           <div style="flex:1;">
             <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
-              <span class="sentence-badge badge-tense-past">📜 Past Tense (-t)</span>
-              <span class="sentence-aspect-note">${escapeHtml(ex.past.explanation || 'Past tense (Múlt idő)')}</span>
+              <span class="sentence-badge badge-tense-past">📜 Passato Prossimo</span>
+              <span class="sentence-aspect-note">${escapeHtml(ex.past.explanation || 'Passato Prossimo')}</span>
             </div>
             <div style="font-family:var(--font-hindi); font-size:1.25rem; font-weight:700; color:var(--text-main); line-height:1.35;">
               ${renderHighlightedSentence(ex.past.target, ex.past.verbForm)}
@@ -2408,9 +2408,9 @@ function advanceFlashcard() {
 
 function renderSentenceCardMarkup(sentence, tenseKey, translitDisplay) {
   const badgeLabels = {
-    present: '⏳ Present Indefinite',
+    present: '⏳ Presente Indicativo',
     current: '⚡ Present Definite',
-    past: '📜 Past Tense (-t)'
+    past: '📜 Passato Prossimo'
   };
   return `
     <div class="flash-sentence-card tense-${tenseKey}">
@@ -2484,7 +2484,7 @@ function renderFlashcard() {
   `;
 
   if (!state.showEnglishFirst) {
-    // Front: Hungarian -> Back: English
+    // Front: Italian -> Back: English
     frontContent.innerHTML = `
       <div class="flash-hindi">${verb.target}</div>
       <div class="flash-roman" style="${translitDisplay}">${verb.phonetic}</div>
@@ -2525,10 +2525,10 @@ function renderFlashcard() {
       ${sentencesHtml}
     `;
   } else {
-    // Front: English -> Back: Hungarian
+    // Front: English -> Back: Italian
     frontContent.innerHTML = `
       <div class="flash-english">${escapeHtml(verb.english)}</div>
-      <div class="flash-prompt">What is the Hungarian verb (3rd Sg)? (Click or Space to flip)</div>
+      <div class="flash-prompt">What is the Italian verb (Infinitive)? (Click or Space to flip)</div>
     `;
 
     const imperativesHtml = `
@@ -3093,7 +3093,7 @@ function generateVerbTopicQuizQuestions(topicId) {
           { text: v.target + " (3rd Sg)", isCorrect: false },
           { text: pastForm + " (Past)", isCorrect: false }
         ].sort(() => Math.random() - 0.5),
-        explanation: `With a definite object (<em>a/az ...-t</em>), Hungarian uses the Definite 1st-person singular form: <strong>${defForm}</strong> (whereas general/indefinite uses <strong>${indefForm}</strong>).`
+        explanation: `With a definite object (<em>a/az ...-t</em>), Italian uses the Definite 1st-person singular form: <strong>${defForm}</strong> (whereas general/indefinite uses <strong>${indefForm}</strong>).`
       });
     });
     return bank.sort(() => Math.random() - 0.5).slice(0, 10);
@@ -3112,7 +3112,7 @@ function generateQuizBank() {
       question: `Can the verb <strong>${v.target}</strong> (${v.phonetic} - ${v.english}) take the <strong>Definite (Tárgyas)</strong> conjugation?`,
       options: [
         { text: "Yes, it takes Definite conjugation (-om/-od/-ja)", isCorrect: v.hasGrammarTrait },
-        { text: "No, it is Indefinite Only (Alanyi)", isCorrect: !v.hasGrammarTrait }
+        { text: "No, it is Takes Avere (Passato Prossimo)", isCorrect: !v.hasGrammarTrait }
       ],
       explanation: v.hasGrammarTrait 
         ? `Correct! <strong>${v.target}</strong> is transitive and takes Definite endings when there is a specific direct object (e.g., <em>Én ${v.conjugations?.continuous?.m_sg || v.target}</em>).`
@@ -3303,7 +3303,7 @@ function initCustomVerbForm() {
 
     const cleanPhonetic = phoneticGuide || toPhoneticGuide(targetWord);
 
-    // Auto extract stem and vowel harmony for Hungarian
+    // Auto extract stem and vowel harmony for Italian
     const stem = targetWord.endsWith('ik') && targetWord.length > 3 ? targetWord.slice(0, -2) : targetWord;
     const isFront = /[eéiíöőüű]/i.test(stem) && !/[aáoóuú]/i.test(stem);
     const hasGrammarTrait = transitivity === 'Transitive';
@@ -3977,7 +3977,7 @@ function initNotesIngestionStudio() {
   window.convertRtfToPlainText = convertRtfToPlainText;
 
   loadSampleBtn?.addEventListener('click', () => {
-    const sample = `# Hungarian Semester 1 & 2 - Class Verb Review Notes
+    const sample = `# Italian Semester 1 & 2 - Class Verb Review Notes
 - táncol ([tahn-tsol]) - to dance (Intr)
 - énekel ([ay-ne-kel]) - to sing
 - úszik ([oo-sik]): to swim (Intr)
@@ -3988,7 +3988,7 @@ function initNotesIngestionStudio() {
 * küld ([kueld]) - to send`;
 
     rawTextArea.value = sample;
-    runAnalysis(sample, "Sample Hungarian Verb Notes");
+    runAnalysis(sample, "Sample Italian Verb Notes");
   });
 
   analyzeBtn?.addEventListener('click', () => {
@@ -4695,7 +4695,7 @@ function renderVocabGrid() {
     const isBack = w.nounTrait === 'Back' || w.nounTrait === 'Masculine';
     const isFront = w.nounTrait === 'Front' || w.nounTrait === 'Feminine';
     const traitClass = isBack ? 'badge-masc' : (isFront ? 'badge-fem' : 'badge-neut');
-    const traitLabel = isBack ? '🎵 Back (Mély)' : (isFront ? '🎶 Front (Magas)' : 'Invariable');
+    const traitLabel = isBack ? '♂ Masculine (il/lo)' : (isFront ? '♀ Feminine (la)' : 'Invariable');
 
     let inflectionTag = '';
     if (w.pos === 'Noun' && w.pluralDirect) {
@@ -4814,7 +4814,7 @@ function openVocabModal(wordId) {
           </tbody>
         </table>
         <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.4rem;">
-          💡 In Hungarian, adjectives <strong>do not change</strong> before a plural noun (<em>nagy házak</em>), but take plural <strong>-k/-ak/-ek</strong> when standing as the predicate (<em>A házak nagyok</em>).
+          💡 In Italian, adjectives <strong>do not change</strong> before a plural noun (<em>nagy házak</em>), but take plural <strong>-k/-ak/-ek</strong> when standing as the predicate (<em>A házak nagyok</em>).
         </p>
       </div>
     `;
@@ -4851,7 +4851,7 @@ function openVocabModal(wordId) {
         <div>
           <span style="font-size:0.8rem; color:var(--text-muted); display:block; font-weight:600;">Vowel Harmony Class</span>
           <strong style="color:${isBack ? '#1e40af' : (isFront ? '#be123c' : '#475569')};">
-            ${isBack ? '🎵 Back Vowel (Mély - -ban/-nak)' : (isFront ? '🎶 Front Vowel (Magas - -ben/-nek)' : 'Invariable')}
+            ${isBack ? '♂ Masculine (Maschile: il / lo)' : (isFront ? '♀ Feminine (Femminile: la)' : 'Invariable')}
           </strong>
         </div>
         <div>
@@ -5131,7 +5131,7 @@ function initVocabFlashcards() {
   toggleTransBtn?.addEventListener('click', () => {
     state.vocabHideTransliteration = !state.vocabHideTransliteration;
     toggleTransBtn.classList.toggle('active', state.vocabHideTransliteration);
-    toggleTransBtn.textContent = state.vocabHideTransliteration ? "Hungarian Only (Hard)" : "Show Phonetics";
+    toggleTransBtn.textContent = state.vocabHideTransliteration ? "Italian Only (Hard)" : "Show Phonetics";
     renderVocabFlashcard();
     announce(state.vocabHideTransliteration ? "Phonetics hidden" : "Phonetics visible");
   });
@@ -5139,10 +5139,10 @@ function initVocabFlashcards() {
   toggleDirBtn?.addEventListener('click', () => {
     state.vocabShowEnglishFirst = !state.vocabShowEnglishFirst;
     toggleDirBtn.classList.toggle('active', state.vocabShowEnglishFirst);
-    toggleDirBtn.textContent = state.vocabShowEnglishFirst ? "Prompt: English" : "Prompt: Hungarian";
+    toggleDirBtn.textContent = state.vocabShowEnglishFirst ? "Prompt: English" : "Prompt: Italian";
     resetVocabCardFlip();
     renderVocabFlashcard();
-    announce(state.vocabShowEnglishFirst ? "Prompt set to English" : "Prompt set to Hungarian");
+    announce(state.vocabShowEnglishFirst ? "Prompt set to English" : "Prompt set to Italian");
   });
 
   shuffleBtn?.addEventListener('click', shuffleVocabCards);
@@ -5185,7 +5185,7 @@ function renderVocabFlashcard() {
   const isFront = word.nounTrait === 'Front' || word.nounTrait === 'Feminine';
   const traitBadge = word.nounTrait ? `
     <span class="badge ${isBack ? 'badge-masc' : 'badge-fem'}" style="font-size:0.8rem;">
-      ${isBack ? '🎵 Back (Mély)' : '🎶 Front (Magas)'}
+      ${isBack ? '♂ Masculine (il/lo)' : '♀ Feminine (la)'}
     </span>
   ` : '';
 
@@ -5219,7 +5219,7 @@ function renderVocabFlashcard() {
   ` : '';
 
   if (!state.vocabShowEnglishFirst) {
-    // Front: Hungarian -> Back: English
+    // Front: Italian -> Back: English
     front.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;">
         <span class="badge ${word.pos === 'Noun' ? 'badge-pos-noun' : 'badge-pos-adj'}">${word.pos}</span>
@@ -5254,7 +5254,7 @@ function renderVocabFlashcard() {
       <div style="font-size:0.8rem; color:var(--text-muted);">1: Review &bull; 2: Mastered</div>
     `;
   } else {
-    // Front: English -> Back: Hungarian
+    // Front: English -> Back: Italian
     front.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;">
         <span class="badge ${word.pos === 'Noun' ? 'badge-pos-noun' : 'badge-pos-adj'}">${word.pos}</span>
@@ -5265,7 +5265,7 @@ function renderVocabFlashcard() {
         </div>
         <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.5rem;">Category: ${word.category || 'General'}</div>
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted);">${IS_TOUCH_DEVICE ? 'Tap' : 'Press Space or click'} to reveal Hungarian</div>
+      <div style="font-size:0.8rem; color:var(--text-muted);">${IS_TOUCH_DEVICE ? 'Tap' : 'Press Space or click'} to reveal Italian</div>
     `;
 
     back.innerHTML = `
@@ -5333,7 +5333,7 @@ function startVocabSpeedMatch() {
   const shuffledEng = [...deck].sort(() => Math.random() - 0.5);
 
   targetCol.innerHTML = deck.map(w => `
-    <button class="match-tile hindi" data-id="${w.id}" data-type="hindi" aria-label="Hungarian word: ${w.target}">
+    <button class="match-tile hindi" data-id="${w.id}" data-type="hindi" aria-label="Italian word: ${w.target}">
       <span class="hindi-match-text">${w.target}</span>
       <span class="match-roman" style="${isHidden ? 'display:none;' : ''}; font-size:0.75rem; color:var(--secondary); font-weight:500;">${w.phonetic || ''}</span>
     </button>
@@ -5345,7 +5345,7 @@ function startVocabSpeedMatch() {
     </button>
   `).join('');
 
-  if (statusEl) statusEl.textContent = "Click a Hungarian word, then match its English meaning.";
+  if (statusEl) statusEl.textContent = "Click a Italian word, then match its English meaning.";
   announce("Vocab Speed Match started. 6 pairs to match.");
 
   targetCol.querySelectorAll('.match-tile').forEach(tile => {
@@ -5440,107 +5440,107 @@ function handleVocabMatchSelection(tile, type) {
 const BUILTIN_TARGETED_QUIZ_PACKS = [
   {
     id: "days-of-week",
-    title: "Days of the Week (A hét napjai)",
+    title: "Days of the Week (Giorni della settimana)",
     icon: "🗓️",
-    description: "Drill Monday through Sunday in Hungarian, English meaning, and calendar sequence.",
+    description: "Drill Monday through Sunday in Italian, English meaning, and calendar sequence.",
     items: [
-      { id: "hetfo", target: "hétfő", phonetic: "hayt-feu", english: "Monday", order: 1 },
-      { id: "kedd", target: "kedd", phonetic: "kedd", english: "Tuesday", order: 2 },
-      { id: "szerda", target: "szerda", phonetic: "ser-daw", english: "Wednesday", order: 3 },
-      { id: "csutortok", target: "csütörtök", phonetic: "cheu-teur-teuk", english: "Thursday", order: 4 },
-      { id: "pentek", target: "péntek", phonetic: "payn-tek", english: "Friday", order: 5 },
-      { id: "szombat", target: "szombat", phonetic: "som-bawt", english: "Saturday", order: 6 },
-      { id: "vasarnap", target: "vasárnap", phonetic: "vaw-shaar-nawp", english: "Sunday", order: 7 }
+      { id: "lunedi", target: "lunedì", phonetic: "loo-neh-DEE", english: "Monday", order: 1 },
+      { id: "martedi", target: "martedì", phonetic: "mahr-teh-DEE", english: "Tuesday", order: 2 },
+      { id: "mercoledi", target: "mercoledì", phonetic: "mehr-koh-leh-DEE", english: "Wednesday", order: 3 },
+      { id: "giovedi", target: "giovedì", phonetic: "joh-veh-DEE", english: "Thursday", order: 4 },
+      { id: "venerdi", target: "venerdì", phonetic: "veh-nehr-DEE", english: "Friday", order: 5 },
+      { id: "sabato", target: "sabato", phonetic: "SAH-bah-toh", english: "Saturday", order: 6 },
+      { id: "domenica", target: "domenica", phonetic: "doh-MEH-nee-kah", english: "Sunday", order: 7 }
     ]
   },
   {
     id: "question-words",
-    title: "Question Words (Kérdőszavak)",
+    title: "Question Words (Parole interrogative)",
     icon: "❓",
-    description: "Master the 5 W's and H in Hungarian for asking questions and daily conversation.",
+    description: "Master the 5 W's and H in Italian for asking questions and daily conversation.",
     items: [
-      { id: "mi", target: "mi", phonetic: "mee", english: "what", hint: "Nominative 'what' (Accusative is 'mit?')" },
-      { id: "hol", target: "hol", phonetic: "hol", english: "where", hint: "Asks for static location (vs. 'hová?' = where to)" },
-      { id: "mikor", target: "mikor", phonetic: "mi-kor", english: "when", hint: "Asks for time or date" },
-      { id: "miert", target: "miért", phonetic: "mi-ayrt", english: "why", hint: "Asks for a reason or cause" },
-      { id: "ki", target: "ki", phonetic: "kee", english: "who", hint: "Asks for a person or identity" },
-      { id: "hogyan", target: "hogy / hogyan", phonetic: "hodj / ho-djawn", english: "how", hint: "Asks for method, manner, or health ('Hogy vagy?')" },
-      { id: "mennyi", target: "mennyi / hány", phonetic: "men-nyi / haany", english: "how much / how many", hint: "'Mennyi' = uncountable/price; 'hány' = countable" },
-      { id: "kie", target: "kié", phonetic: "ki-ay", english: "whose", hint: "Asks for ownership ('Kié ez a könyv?')" }
+      { id: "cosa", target: "che cosa / cosa", phonetic: "keh KOH-zah", english: "what", hint: "Asks what someone is doing or wants" },
+      { id: "dove", target: "dove", phonetic: "DOH-veh", english: "where", hint: "Elides to dov'è before è" },
+      { id: "quando", target: "quando", phonetic: "KWAHN-doh", english: "when", hint: "Asks for time or date" },
+      { id: "perche", target: "perché", phonetic: "pehr-KEH", english: "why / because", hint: "Used for both the question and the answer!" },
+      { id: "chi", target: "chi", phonetic: "kee", english: "who", hint: "Always hard k sound (kee)" },
+      { id: "come", target: "come", phonetic: "KOH-meh", english: "how", hint: "Come stai? = How are you?" },
+      { id: "quanto", target: "quanto / quanti", phonetic: "KWAHN-toh", english: "how much / how many", hint: "Quanto costa? = How much does it cost?" },
+      { id: "quale", target: "quale", phonetic: "KWAH-leh", english: "which", hint: "Plural: quali" }
     ]
   },
   {
     id: "time-frequency",
-    title: "Time & Frequency (Idő és gyakoriság)",
+    title: "Time & Frequency (Tempo e frequenza)",
     icon: "⏰",
     description: "Practice key temporal markers like today, tomorrow, yesterday, now, and always.",
     items: [
-      { id: "ma", target: "ma", phonetic: "maw", english: "today", hint: "Present day" },
-      { id: "holnap", target: "holnap", phonetic: "hol-nawp", english: "tomorrow", hint: "The day after today" },
-      { id: "tegnap", target: "tegnap", phonetic: "teg-nawp", english: "yesterday", hint: "The day before today" },
-      { id: "most", target: "most", phonetic: "mosht", english: "now", hint: "At the present moment ('s' = 'sh')" },
-      { id: "mindig", target: "mindig", phonetic: "min-dig", english: "always", hint: "Continuously or every time" },
-      { id: "naponta", target: "minden nap", phonetic: "min-den nawp", english: "every day / daily", hint: "Daily routine" }
+      { id: "oggi", target: "oggi", phonetic: "OHJ-jee", english: "today", hint: "Present day" },
+      { id: "domani", target: "domani", phonetic: "doh-MAH-nee", english: "tomorrow", hint: "The day after today" },
+      { id: "ieri", target: "ieri", phonetic: "YEH-ree", english: "yesterday", hint: "The day before today" },
+      { id: "adesso", target: "adesso / ora", phonetic: "ah-DEHS-soh", english: "now", hint: "At the present moment" },
+      { id: "sempre", target: "sempre", phonetic: "SEHM-preh", english: "always", hint: "Per sempre = forever" },
+      { id: "ogni_giorno", target: "ogni giorno", phonetic: "OH-nyee JOHR-noh", english: "every day / daily", hint: "Daily routine" }
     ]
   },
   {
     id: "directions",
-    title: "Directions & Positions (Irányok és névutók)",
+    title: "Directions & Positions (Direzioni e posizioni)",
     icon: "🧭",
-    description: "Drill essential spatial postpositions and directions: right, left, under, above, in front, and behind.",
+    description: "Drill essential spatial words and directions: right, left, straight, behind, above, and below.",
     items: [
-      { id: "jobbra", target: "jobbra", phonetic: "yobb-raw", english: "to the right" },
-      { id: "balra", target: "balra", phonetic: "bawl-raw", english: "to the left" },
-      { id: "elott", target: "előtt", phonetic: "e-leutt", english: "in front of / before" },
-      { id: "mogott", target: "mögött", phonetic: "meu-geutt", english: "behind" },
-      { id: "felett", target: "felett", phonetic: "fe-lett", english: "above / over" },
-      { id: "alatt", target: "alatt", phonetic: "aw-lawtt", english: "under / below" },
-      { id: "bent", target: "bent", phonetic: "bent", english: "inside" },
-      { id: "kint", target: "kint", phonetic: "kint", english: "outside" }
+      { id: "destra", target: "a destra", phonetic: "ah DEHS-trah", english: "to the right" },
+      { id: "sinistra", target: "a sinistra", phonetic: "ah see-NEES-trah", english: "to the left" },
+      { id: "dritto", target: "sempre dritto", phonetic: "SEHM-preh DREET-toh", english: "straight ahead" },
+      { id: "dietro", target: "dietro", phonetic: "DYEH-troh", english: "behind" },
+      { id: "sopra", target: "sopra", phonetic: "SOH-prah", english: "above / on top" },
+      { id: "sotto", target: "sotto", phonetic: "SOHT-toh", english: "under / below" },
+      { id: "dentro", target: "dentro", phonetic: "DEHN-troh", english: "inside" },
+      { id: "fuori", target: "fuori", phonetic: "FWOH-ree", english: "outside" }
     ]
   },
   {
     id: "numbers-1-10",
-    title: "Numbers 1–10 (Számok 1–10)",
+    title: "Numbers 1–10 (Numeri 1–10)",
     icon: "🔢",
-    description: "Master counting from one to ten in Hungarian.",
+    description: "Master counting from one to ten in Italian.",
     items: [
-      { id: "egy", target: "egy", phonetic: "edj", english: "one (1)", order: 1 },
-      { id: "ketto", target: "kettő", phonetic: "ket-teu", english: "two (2)", order: 2 },
-      { id: "harom", target: "három", phonetic: "haa-rom", english: "three (3)", order: 3 },
-      { id: "negy", target: "négy", phonetic: "naydj", english: "four (4)", order: 4 },
-      { id: "ot", target: "öt", phonetic: "eut", english: "five (5)", order: 5 },
-      { id: "hat", target: "hat", phonetic: "hawt", english: "six (6)", order: 6 },
-      { id: "het", target: "hét", phonetic: "hayt", english: "seven (7)", order: 7 },
-      { id: "nyolc", target: "nyolc", phonetic: "nyolts", english: "eight (8)", order: 8 },
-      { id: "kilenc", target: "kilenc", phonetic: "ki-lents", english: "nine (9)", order: 9 },
-      { id: "tiz", target: "tíz", phonetic: "teez", english: "ten (10)", order: 10 }
+      { id: "uno", target: "uno", phonetic: "OO-noh", english: "one (1)", order: 1 },
+      { id: "due", target: "due", phonetic: "DOO-eh", english: "two (2)", order: 2 },
+      { id: "tre", target: "tre", phonetic: "treh", english: "three (3)", order: 3 },
+      { id: "quattro", target: "quattro", phonetic: "KWAHT-troh", english: "four (4)", order: 4 },
+      { id: "cinque", target: "cinque", phonetic: "CHEEN-kweh", english: "five (5)", order: 5 },
+      { id: "sei", target: "sei", phonetic: "say", english: "six (6)", order: 6 },
+      { id: "sette", target: "sette", phonetic: "SEHT-teh", english: "seven (7)", order: 7 },
+      { id: "otto", target: "otto", phonetic: "OHT-toh", english: "eight (8)", order: 8 },
+      { id: "nove", target: "nove", phonetic: "NOH-veh", english: "nine (9)", order: 9 },
+      { id: "dieci", target: "dieci", phonetic: "DYEH-chee", english: "ten (10)", order: 10 }
     ]
   },
   {
     id: "swearing-slang",
-    title: "Swearing & Slang (Káromkodás)",
+    title: "Swearing & Slang (Parolacce e Slang)",
     icon: "🌶️",
-    description: "Drill everyday Hungarian swear words, insults, and spicy expressions — from mild exclamations to heavy-duty profanity.",
+    description: "Drill everyday Italian swear words, insults, and spicy expressions — from mild minced oaths to heavy profanity.",
     items: [
-      { id: "a_fenebe", target: "a fenébe!", phonetic: "aw feh-nay-beh", english: "damn it! / drat!", hint: "[Mild] Literally 'into the abyss!' Safe everyday exclamation" },
-      { id: "hulye", target: "hülye", phonetic: "hue-yeh", english: "stupid / idiot / dumb", hint: "[Mild] Everyday word for 'stupid' or 'idiot'" },
-      { id: "barom", target: "barom", phonetic: "baw-rom", english: "moron / brute / idiot", hint: "[Mild–Moderate] Literally 'cattle / ox'" },
-      { id: "marha", target: "marha", phonetic: "mawr-haw", english: "idiot / fool (or 'bloody/super')", hint: "[Mild–Moderate] 'marha jó!' = 'bloody awesome!'" },
-      { id: "pofatlan", target: "pofátlan", phonetic: "po-faat-lawn", english: "shameless / brazen / cheeky jerk", hint: "[Mild–Moderate] Literally 'without a mug/shame'" },
-      { id: "basszus", target: "basszus!", phonetic: "baws-sush", english: "damn it! / shoot!", hint: "[Moderate] Minced oath for 'baszd meg!'" },
-      { id: "szar", target: "szar", phonetic: "sawr", english: "shit / crap / terrible", hint: "[Moderate] Exact equivalent of 'shit'" },
-      { id: "szarok_ra", target: "szarok rá", phonetic: "saw-rok raa", english: "I don't give a shit", hint: "[Moderate] Literally 'I shit onto it'" },
-      { id: "seggfej", target: "seggfej", phonetic: "shegg-fey", english: "asshole / shithead", hint: "[Moderate] Compound of 'segg' (ass) + 'fej' (head)" },
-      { id: "kurva", target: "kurva", phonetic: "kur-vaw", english: "whore / bitch (or 'fucking' intensifier)", hint: "[Strong] Very common intensifier ('kurva jó!')" },
-      { id: "kurva_eletbe", target: "a kurva életbe!", phonetic: "aw kur-vaw ay-let-beh", english: "goddammit! / fuck my life!", hint: "[Strong] Iconic Hungarian outburst" },
-      { id: "baszd_meg", target: "baszd meg!", phonetic: "bawzd meg", english: "fuck it! / fuck you!", hint: "[Strong] Imperative of 'baszik' (to fuck)" },
-      { id: "lofaszt", target: "lófaszt!", phonetic: "loh-fawst", english: "bullshit! / no way in hell!", hint: "[Strong] Literally 'horse dick!'" },
-      { id: "picsaba", target: "a picsába!", phonetic: "aw pi-chaa-baw", english: "fuck! / damn it!", hint: "[Strong] Literally 'into the cunt!'" },
-      { id: "menj_a_picsaba", target: "menj a picsába!", phonetic: "meny aw pi-chaa-baw", english: "fuck off! / go to hell!", hint: "[Strong] Definitive Hungarian 'fuck off!'" },
-      { id: "geci", target: "geci", phonetic: "geh-tsi", english: "asshole / cum / fucking (intensifier)", hint: "[Strong] Also used as intensifier ('geci jó!')" },
-      { id: "fasz", target: "fasz", phonetic: "faws", english: "dick / cock / prick", hint: "[Strong] 'mi a fasz?' = 'what the fuck?'" },
-      { id: "faszom", target: "a faszom!", phonetic: "aw faw-som", english: "fuck! / goddammit! (lit. my dick!)", hint: "[Strong] Frustrated possessive outburst" }
+      { id: "cavolo", target: "cavolo!", phonetic: "KAH-voh-loh", english: "darn! / shoot! (lit. cabbage)", hint: "[Mild] Polite stand-in for cazzo!" },
+      { id: "accidenti", target: "accidenti!", phonetic: "aht-chee-DEHN-tee", english: "darn it! / damn!", hint: "[Mild] Classic mild exclamation" },
+      { id: "porca_miseria", target: "porca miseria!", phonetic: "POHR-kah mee-ZEH-ryah", english: "damn it! / bloody hell!", hint: "[Mild–Moderate] Very common everyday outburst" },
+      { id: "scemo", target: "scemo", phonetic: "SHEH-moh", english: "idiot / dumb / silly", hint: "[Mild] Everyday mild insult or tease" },
+      { id: "bastardo", target: "bastardo", phonetic: "bahs-TAHR-doh", english: "bastard / jerk", hint: "[Moderate] Serious or playful insult" },
+      { id: "merda", target: "merda", phonetic: "MEHR-dah", english: "shit / crap", hint: "[Moderate] Che giornata di merda! = What a shitty day!" },
+      { id: "che_palle", target: "che palle!", phonetic: "keh PAHL-leh", english: "what a drag! / how annoying!", hint: "[Moderate] Literally what balls!" },
+      { id: "stronzo", target: "stronzo", phonetic: "STROHN-tsoh", english: "asshole / piece of shit", hint: "[Moderate–Strong] Takes lo stronzo / gli stronzi" },
+      { id: "coglione", target: "coglione", phonetic: "koh-LYOH-neh", english: "dumbass / idiot / dickhead", hint: "[Moderate–Strong] Great practice for gli!" },
+      { id: "rompere_i_coglioni", target: "non rompere i coglioni!", phonetic: "nohn ROHM-peh-reh ee koh-LYOH-nee", english: "stop busting my balls!", hint: "[Strong] Leave me alone!" },
+      { id: "cazzo", target: "cazzo!", phonetic: "KAHT-tsoh", english: "fuck! / shit! / dick", hint: "[Strong] The Swiss Army knife of Italian swearing" },
+      { id: "che_cazzo", target: "che cazzo?!", phonetic: "keh KAHT-tsoh", english: "what the fuck?!", hint: "[Strong] Exact equivalent of WTF?!" },
+      { id: "vaffanculo", target: "vaffanculo!", phonetic: "vahf-fahn-KOO-loh", english: "fuck off! / go fuck yourself!", hint: "[Strong] Most iconic Italian swear word" },
+      { id: "non_me_ne_frega_un_cazzo", target: "non me ne frega un cazzo", phonetic: "nohn meh neh FREH-gah oon KAHT-tsoh", english: "I don't give a single fuck", hint: "[Strong] Ultimate I couldn't care less" },
+      { id: "porca_puttana", target: "porca puttana!", phonetic: "POHR-kah poot-TAH-nah", english: "goddammit! / motherfucker!", hint: "[Strong] Heavy-duty outburst" },
+      { id: "figlio_di_puttana", target: "figlio di puttana", phonetic: "FEE-lyoh dee poot-TAH-nah", english: "son of a bitch", hint: "[Strong] Harsh insult; practices gli" },
+      { id: "fottiti", target: "fottiti!", phonetic: "FOHT-tee-tee", english: "fuck you! / go screw yourself!", hint: "[Strong] Reflexive imperative of fottere" },
+      { id: "minchia", target: "minchia!", phonetic: "MEEN-kyah", english: "holy shit! / damn! / dude!", hint: "[Moderate–Strong] Sicilian slang used nationwide" }
     ]
   }
 ];
@@ -5577,7 +5577,7 @@ function generateTargetedQuizQuestions(topicId) {
     return unique.slice(0, 3);
   }
 
-  // 1. Meaning Recall: Hungarian -> English
+  // 1. Meaning Recall: Italian -> English
   const shuffledItems = [...items].sort(() => Math.random() - 0.5);
   shuffledItems.forEach(item => {
     const distractors = getDistractors(item, 'english');
@@ -5594,7 +5594,7 @@ function generateTargetedQuizQuestions(topicId) {
     });
   });
 
-  // 2. Reverse Production: English -> Hungarian
+  // 2. Reverse Production: English -> Italian
   const reverseSubset = [...items].sort(() => Math.random() - 0.5).slice(0, 5);
   reverseSubset.forEach(item => {
     const distractors = getDistractors(item, 'hindi', x => `${x.target} (${x.phonetic || ''})`);
@@ -5605,9 +5605,9 @@ function generateTargetedQuizQuestions(topicId) {
 
     questions.push({
       type: `${pack.icon || '🎯'} ${pack.title.split('(')[0].trim()} • Reverse Recall`,
-      question: `Which Hungarian word means <strong>"${item.english}"</strong>?`,
+      question: `Which Italian word means <strong>"${item.english}"</strong>?`,
       options: opts,
-      explanation: `<strong>"${item.english}"</strong> in Hungarian is <strong>${item.target}</strong> (${item.phonetic || ''}).${item.hint ? '<br>💡 ' + escapeHtml(item.hint) : ''}`
+      explanation: `<strong>"${item.english}"</strong> in Italian is <strong>${item.target}</strong> (${item.phonetic || ''}).${item.hint ? '<br>💡 ' + escapeHtml(item.hint) : ''}`
     });
   });
 
@@ -5642,7 +5642,7 @@ function generateTargetedQuizQuestions(topicId) {
       mi: { sentence: "_____ a neved?", meaning: "What is your name?", target: "Mi" },
       hol: { sentence: "_____ van a pályaudvar?", meaning: "Where is the train station?", target: "Hol" },
       mikor: { sentence: "_____ indul a vonat?", meaning: "When does the train depart?", target: "Mikor" },
-      miert: { sentence: "_____ tanulsz magyarul?", meaning: "Why are you learning Hungarian?", target: "Miért" },
+      miert: { sentence: "_____ tanulsz magyarul?", meaning: "Why are you learning Italian?", target: "Miért" },
       ki: { sentence: "_____ áll az ajtó előtt?", meaning: "Who is standing in front of the door?", target: "Ki" },
       hogyan: { sentence: "_____ vagy ma?", meaning: "How are you today?", target: "Hogy" },
       mennyi: { sentence: "_____ ez az alma?", meaning: "How much is this apple?", target: "Mennyi" },
@@ -5954,7 +5954,7 @@ function generateVocabQuizQuestions() {
 
     questions.push({
       type: "📍 Suffix Harmony (-ban vs. -ben)",
-      question: `How do you say <strong>"in the ${noun.english}"</strong> using the Hungarian inessive suffix (<em>-ban / -ben</em>) on <strong>"${noun.target}"</strong>?`,
+      question: `How do you say <strong>"in the ${noun.english}"</strong> using the Italian inessive suffix (<em>-ban / -ben</em>) on <strong>"${noun.target}"</strong>?`,
       options: opts,
       explanation: `Because <strong>${noun.target}</strong> is a <strong>${noun.nounTrait} Vowel</strong> noun, it takes <strong>-${isBack ? 'ban' : 'ben'}</strong>: <strong>a(z) ${correctForm}</strong>.`
     });
@@ -6001,7 +6001,7 @@ function generateVocabQuizQuestions() {
       type: "🎯 Accusative Direct Object (-t)",
       question: `When <strong>"${noun.target}"</strong> (${noun.english}) is the direct object of a sentence, what is its <strong>Accusative (-t)</strong> singular form?`,
       options: opts,
-      explanation: `Direct objects in Hungarian take the accusative <strong>-t</strong> ending (with linking vowel harmony): <strong>${correctAcc}</strong>.`
+      explanation: `Direct objects in Italian take the accusative <strong>-t</strong> ending (with linking vowel harmony): <strong>${correctAcc}</strong>.`
     });
   });
 
@@ -6567,7 +6567,7 @@ function initVocabNotesStudio() {
   }
 
   loadSampleBtn?.addEventListener('click', () => {
-    rawTextArea.value = `# Semester 1 - Key Hungarian Nouns and Adjectives
+    rawTextArea.value = `# Semester 1 - Key Italian Nouns and Adjectives
 - szoba (so-baw) - room [Back]
 - könyv (keunyv) - book [Front]
 - jó (yoh) - good [adj]
@@ -6728,7 +6728,7 @@ function initVocabNotesStudio() {
         previewTableBody.innerHTML = `
           <tr>
             <td colspan="8" style="text-align:center; padding:1.5rem; color:var(--text-muted);">
-              No vocabulary words were recognized. Ensure your notes contain Hungarian words with meanings.
+              No vocabulary words were recognized. Ensure your notes contain Italian words with meanings.
             </td>
           </tr>
         `;
@@ -6754,7 +6754,7 @@ function initVocabNotesStudio() {
               <input type="checkbox" class="vocab-preview-row-cb" data-idx="${idx}" ${item.selected ? 'checked' : ''} aria-label="Select ${escapeHtml(item.target)}">
             </td>
             <td>
-              <input type="text" class="table-input hindi-table-input vocab-preview-hindi-input" data-idx="${idx}" value="${escapeHtml(item.target)}" placeholder="Szó (Hungarian)" aria-label="Hungarian word">
+              <input type="text" class="table-input hindi-table-input vocab-preview-hindi-input" data-idx="${idx}" value="${escapeHtml(item.target)}" placeholder="Szó (Italian)" aria-label="Italian word">
             </td>
             <td>
               <input type="text" class="table-input vocab-preview-roman-input" data-idx="${idx}" value="${escapeHtml(item.phonetic)}" aria-label="Phonetic guide for ${escapeHtml(item.target)}">
@@ -6772,8 +6772,8 @@ function initVocabNotesStudio() {
             </td>
             <td>
               <select class="table-input vocab-preview-gender-select" data-idx="${idx}" aria-label="Vowel Harmony for ${escapeHtml(item.target)}">
-                <option value="Back" ${item.nounTrait === 'Back' || item.nounTrait === 'Masculine' ? 'selected' : ''}>🎵 Back (Mély)</option>
-                <option value="Front" ${item.nounTrait === 'Front' || item.nounTrait === 'Feminine' ? 'selected' : ''}>🎶 Front (Magas)</option>
+                <option value="Back" ${item.nounTrait === 'Back' || item.nounTrait === 'Masculine' ? 'selected' : ''}>♂ Masculine (il/lo)</option>
+                <option value="Front" ${item.nounTrait === 'Front' || item.nounTrait === 'Feminine' ? 'selected' : ''}>♀ Feminine (la)</option>
                 <option value="none" ${!item.nounTrait ? 'selected' : ''}>Invariable</option>
               </select>
             </td>
@@ -7881,7 +7881,7 @@ function filterSoundFlashcards(soundId) {
   state.soundFlashIndex = 0;
   renderSoundFlashcard();
   const label = soundId === 'all'
-    ? 'all Hungarian sound & digraph words'
+    ? 'all Italian sound & digraph words'
     : soundId;
   announce(`Deck filtered to ${label}. ${state.soundFlashcardsList.length} cards available.`);
 }
@@ -8435,7 +8435,7 @@ function startSoundSpeedMatch() {
   targetCol.innerHTML = deck.map(w => {
     const tagClass = getSoundTagClass(w.soundId);
     return `
-      <button class="matra-match-tile hindi" data-id="${w.id}" data-type="hindi" aria-label="Hungarian word: ${w.target}">
+      <button class="matra-match-tile hindi" data-id="${w.id}" data-type="hindi" aria-label="Italian word: ${w.target}">
         <span style="font-family: var(--font-hindi); font-size: 1.5rem; font-weight: 700; color: var(--secondary);">${w.target}</span>
         <span class="match-roman" style="${isHidden ? 'display:none;' : ''}; font-size:0.75rem; color:var(--text-muted); font-family:var(--font-sans); font-weight:500;">${w.phonetic || ''}</span>
         <span class="matra-tag ${tagClass}" style="font-size:0.7rem; padding:0.15rem 0.4rem; margin-top:0.25rem;">${formatSafeScriptText(w.soundName)}</span>
@@ -8452,7 +8452,7 @@ function startSoundSpeedMatch() {
 
   if (scoreEl) scoreEl.textContent = '0 / 6';
   if (streakEl) streakEl.textContent = `🔥 ${state.soundMatchStreak || 0}`;
-  if (statusEl) statusEl.textContent = "Click a Hungarian sound word, then match its sound / English meaning.";
+  if (statusEl) statusEl.textContent = "Click a Italian sound word, then match its sound / English meaning.";
   announce("Sound Speed Match started. 6 pairs to match.");
 
   // 60-second countdown timer
@@ -8629,7 +8629,7 @@ function generateSoundQuizQuestions() {
       const options = [safeSoundName, ...distractors].sort(() => Math.random() - 0.5);
 
       questions.push({
-        prompt: `Which Hungarian vowel or digraph sound family is featured in <strong style="font-family:var(--font-hindi); font-size:1.6rem; color:var(--secondary);">${target.target}</strong> (${target.english})?`,
+        prompt: `Which Italian vowel or digraph sound family is featured in <strong style="font-family:var(--font-hindi); font-size:1.6rem; color:var(--secondary);">${target.target}</strong> (${target.english})?`,
         options: options,
         correctIndex: options.indexOf(safeSoundName),
         explanation: `${target.target} features ${safeSoundName} (${target.soundType}). Breakdown: ${formatSafeScriptText(target.breakdown)}. Rule: ${formatSafeScriptText(target.rule)}`,
@@ -8641,7 +8641,7 @@ function generateSoundQuizQuestions() {
         .sort(() => Math.random() - 0.5);
 
       questions.push({
-        prompt: `Which of the following Hungarian words exemplifies the <strong>${safeSoundName}</strong> sound family?`,
+        prompt: `Which of the following Italian words exemplifies the <strong>${safeSoundName}</strong> sound family?`,
         options: options.map(w => `${w.target} (${w.phonetic || ''} - ${w.english})`),
         correctIndex: options.findIndex(w => w.id === target.id),
         explanation: `Correct! ${target.target} exemplifies ${safeSoundName}. Breakdown: ${formatSafeScriptText(target.breakdown)} = ${target.target}.`,
@@ -8653,7 +8653,7 @@ function generateSoundQuizQuestions() {
       const options = [target, ...otherWords].sort(() => Math.random() - 0.5);
 
       questions.push({
-        prompt: `Which Hungarian word is formed by the letter & digraph breakdown:<br><strong style="font-family:var(--font-hindi); font-size:1.4rem; color:var(--primary);">${formatSafeScriptText(target.breakdown)}</strong>?`,
+        prompt: `Which Italian word is formed by the letter & digraph breakdown:<br><strong style="font-family:var(--font-hindi); font-size:1.4rem; color:var(--primary);">${formatSafeScriptText(target.breakdown)}</strong>?`,
         options: options.map(w => `${w.target} (${w.english})`),
         correctIndex: options.findIndex(w => w.id === target.id),
         explanation: `${formatSafeScriptText(target.breakdown)} = ${target.target} ("${target.english}"). Phonics: [${target.phonics || ''}].`,
@@ -8665,7 +8665,7 @@ function generateSoundQuizQuestions() {
       const options = [target, ...sameLengthOthers].sort(() => Math.random() - 0.5);
 
       questions.push({
-        prompt: `Click the speaker below to listen. Which Hungarian word was pronounced?`,
+        prompt: `Click the speaker below to listen. Which Italian word was pronounced?`,
         hasAudioHero: true,
         audioText: target.target,
         options: options.map(w => `${w.target} (${w.phonetic || ''})`),
@@ -9268,7 +9268,7 @@ function renderLexiconRowsHtml(filtered, issueCount) {
               </div>
               <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem; margin-bottom:1rem;">
                 <div>
-                  <label style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:3px;">Hungarian Word ${hasTargetIssue ? '⚠️' : ''}</label>
+                  <label style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:3px;">Italian Word ${hasTargetIssue ? '⚠️' : ''}</label>
                   <input type="text" class="search-input lex-edit-hindi ${hasTargetIssue ? 'field-error' : ''}" value="${escapeHtml(e.item.target)}" style="font-family:var(--font-hindi); font-size:1.15rem; font-weight:700; width:100%;">
                 </div>
                 <div>
