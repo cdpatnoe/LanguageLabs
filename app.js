@@ -310,6 +310,52 @@ function clearSpeakingButtonState() {
   }
 }
 
+const VOICE_PREF_STORAGE_KEY = ((typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.storagePrefix) ? window.LANGUAGE_CONFIG.storagePrefix : 'italian') + '_preferred_voice_v1';
+
+function getAvailableTargetVoices() {
+  if (!('speechSynthesis' in window)) return [];
+  const freshVoices = window.speechSynthesis.getVoices();
+  if (freshVoices && freshVoices.length) {
+    cachedVoices = freshVoices;
+  }
+  const voices = (freshVoices && freshVoices.length) ? freshVoices : cachedVoices;
+  if (!voices || !voices.length) return [];
+
+  const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
+    ? window.LANGUAGE_CONFIG.speech
+    : { bcp47: 'it-IT', langPrefix: 'it' };
+  const bcp47Lower = (speechCfg.bcp47 || 'it-IT').toLowerCase().replace('_', '-');
+  const langPrefix = (speechCfg.langPrefix || 'it').toLowerCase();
+
+  return voices.filter(v => {
+    const l = (v.lang || '').toLowerCase().replace('_', '-');
+    return l === bcp47Lower || l === langPrefix || l.startsWith(langPrefix + '-');
+  });
+}
+
+function populateVoiceSelector() {
+  const sel = document.getElementById('voice-selector');
+  if (!sel) return;
+  const langVoices = getAvailableTargetVoices();
+  let saved = 'auto';
+  try { saved = localStorage.getItem(VOICE_PREF_STORAGE_KEY) || 'auto'; } catch (e) {}
+
+  const bestAuto = findTargetVoice({ ignoreSaved: true });
+  const autoLabel = bestAuto ? `🔊 Auto: ${bestAuto.name}` : '🔊 Auto (No it-IT voice found)';
+
+  sel.innerHTML = `<option value="auto">${escapeHtml(autoLabel)}</option>` +
+    langVoices.map(v => {
+      const tag = v.localService ? 'Local' : 'Cloud';
+      return `<option value="${escapeHtml(v.name)}">🔊 ${escapeHtml(v.name)} (${tag})</option>`;
+    }).join('');
+
+  if (saved !== 'auto' && langVoices.some(v => v.name === saved)) {
+    sel.value = saved;
+  } else {
+    sel.value = 'auto';
+  }
+}
+
 function refreshVoices() {
   if ('speechSynthesis' in window) {
     try {
@@ -318,6 +364,7 @@ function refreshVoices() {
       cachedVoices = [];
     }
   }
+  populateVoiceSelector();
 }
 
 if ('speechSynthesis' in window) {
@@ -326,6 +373,17 @@ if ('speechSynthesis' in window) {
     refreshVoices();
   };
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  populateVoiceSelector();
+  const sel = document.getElementById('voice-selector');
+  if (sel) {
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem(VOICE_PREF_STORAGE_KEY, sel.value); } catch (e) {}
+      speakTargetText('Ciao! Parlo italiano.');
+    });
+  }
+});
 
 // --- Target-Language Syllable & Phoneme Decomposition Helpers (Config-Driven) ---
 function splitWordSyllables(word) {
@@ -349,13 +407,20 @@ function getSyllabicSpeechText(word) {
 
 function findTargetVoice(options = {}) {
   const preferLocal = Boolean(options && options.preferLocal);
-  if (!('speechSynthesis' in window)) return null;
-  const freshVoices = window.speechSynthesis.getVoices();
-  if (freshVoices && freshVoices.length) {
-    cachedVoices = freshVoices;
+  const ignoreSaved = Boolean(options && options.ignoreSaved);
+  const langVoices = getAvailableTargetVoices();
+  if (!langVoices.length) return null;
+
+  // 0. Honor explicit user choice from header voice picker
+  if (!ignoreSaved) {
+    try {
+      const savedName = localStorage.getItem(VOICE_PREF_STORAGE_KEY);
+      if (savedName && savedName !== 'auto') {
+        const savedVoice = langVoices.find(v => v.name === savedName);
+        if (savedVoice) return savedVoice;
+      }
+    } catch (e) {}
   }
-  const voices = (freshVoices && freshVoices.length) ? freshVoices : cachedVoices;
-  if (!voices || !voices.length) return null;
 
   const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
     ? window.LANGUAGE_CONFIG.speech
@@ -365,42 +430,32 @@ function findTargetVoice(options = {}) {
         preferredLocalVoiceRegex: /Alice|Federica|Luca|Paola|Elsa|Cosimo|Google italiano|Italian|Italiano/i
       };
 
-  const bcp47Lower = (speechCfg.bcp47 || 'it-IT').toLowerCase().replace('_', '-');
-  const langPrefix = (speechCfg.langPrefix || 'it').toLowerCase();
   const voiceRegex = speechCfg.preferredLocalVoiceRegex || /Alice|Federica|Luca|Paola|Elsa|Cosimo|Google italiano|Italian|Italiano/i;
+  const highQualityRegex = /Google italiano|Natural|Enhanced|Premium|Siri|Federica|Luca|Paola/i;
   const noveltyRegex = /\b(Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox)\b/i;
-
-  const isTargetLang = (v) => {
-    const l = (v.lang || '').toLowerCase().replace('_', '-');
-    return l === bcp47Lower || l === langPrefix || l.startsWith(langPrefix + '-');
-  };
-
-  // Strictly restrict candidates to target-language voices so an English voice is never selected
-  const langVoices = voices.filter(isTargetLang);
-  if (!langVoices.length) return null;
 
   const cleanVoices = langVoices.filter(v => !noveltyRegex.test(v.name || ''));
   const pool = cleanVoices.length ? cleanVoices : langVoices;
 
-  // 1. Preferred named local voice (e.g. Alice / Federica / Luca on macOS)
+  // 1. High-quality natural/cloud voice (e.g. Google italiano in Chrome, or Federica/Enhanced on macOS)
+  if (!preferLocal) {
+    let hq = pool.find(v => highQualityRegex.test(v.name || ''));
+    if (hq) return hq;
+  }
+
+  // 2. Preferred named local voice (e.g. Federica / Luca / Alice on macOS)
   let voice = pool.find(v => v.localService && voiceRegex.test(v.name || ''));
   if (voice) return voice;
 
-  // 2. If preferLocal (slow reading), pick any local target-language voice before remote
-  if (preferLocal) {
-    voice = pool.find(v => v.localService);
-    if (voice) return voice;
-  }
-
-  // 3. Preferred named voice (local or remote, e.g. Google italiano)
-  voice = pool.find(v => voiceRegex.test(v.name || ''));
-  if (voice) return voice;
-
-  // 4. Any local target-language voice
+  // 3. Any local target-language voice
   voice = pool.find(v => v.localService);
   if (voice) return voice;
 
-  // 5. Fallback to first target-language voice
+  // 4. Preferred named voice (cloud)
+  voice = pool.find(v => voiceRegex.test(v.name || ''));
+  if (voice) return voice;
+
+  // 5. Fallback to first clean target-language voice
   return pool[0] || null;
 }
 
