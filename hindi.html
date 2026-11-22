@@ -5054,6 +5054,9 @@ button, .nav-btn, .match-tile, .matra-match-tile, .quiz-opt-btn,
         <button type="button" class="switch-focus-btn" id="open-lexicon-manager-btn" aria-label="Open Data Cleanup & Lexicon Manager" title="Clean up, edit, and sanitize saved words database (Shortcut: D)" style="background:var(--card-warm); border:1.5px solid var(--border); color:var(--secondary); font-weight:600;">
           <span aria-hidden="true">🛠️</span> <span class="btn-label">Clean Up Data</span>
         </button>
+        <select id="voice-selector" aria-label="Select Hindi speech voice" title="Choose Hindi pronunciation voice" style="padding:0.45rem 0.65rem; border-radius:10px; border:1.5px solid var(--border); background:var(--card-warm); color:var(--text-main); font-size:0.82rem; font-weight:600; max-width:190px; cursor:pointer;">
+          <option value="auto">🔊 Voice: Auto (hi-IN)</option>
+        </select>
         <button type="button" class="switch-focus-btn" id="open-focus-modal-btn" aria-label="Open learning focus chooser dialog (Shortcut: Key M)" title="Choose learning focus (Shortcut: M)">
           <span aria-hidden="true">⚙️</span> <span class="btn-label">Choose Focus</span>
         </button>
@@ -15032,6 +15035,45 @@ function clearSpeakingButtonState() {
   }
 }
 
+const VOICE_PREF_STORAGE_KEY = 'hindi_preferred_voice_v1';
+
+function getAvailableHindiVoices() {
+  if (!('speechSynthesis' in window)) return [];
+  const freshVoices = window.speechSynthesis.getVoices();
+  if (freshVoices && freshVoices.length) {
+    cachedVoices = freshVoices;
+  }
+  const voices = (freshVoices && freshVoices.length) ? freshVoices : cachedVoices;
+  if (!voices || !voices.length) return [];
+  return voices.filter(v => {
+    const l = (v.lang || '').toLowerCase().replace('_', '-');
+    return l === 'hi-in' || l === 'hi' || l.startsWith('hi-') || /Hindi|हिन्दी|Lekha|Kalpana|Hemant|Ravi/i.test(v.name || '');
+  });
+}
+
+function populateVoiceSelector() {
+  const sel = document.getElementById('voice-selector');
+  if (!sel) return;
+  const langVoices = getAvailableHindiVoices();
+  let saved = 'auto';
+  try { saved = localStorage.getItem(VOICE_PREF_STORAGE_KEY) || 'auto'; } catch (e) {}
+
+  const bestAuto = findHindiVoice({ ignoreSaved: true });
+  const autoLabel = bestAuto ? `🔊 Auto: ${bestAuto.name}` : '🔊 Auto (No hi-IN voice found)';
+
+  sel.innerHTML = `<option value="auto">${escapeHtml(autoLabel)}</option>` +
+    langVoices.map(v => {
+      const tag = v.localService ? 'Local' : 'Cloud';
+      return `<option value="${escapeHtml(v.name)}">🔊 ${escapeHtml(v.name)} (${tag})</option>`;
+    }).join('');
+
+  if (saved !== 'auto' && langVoices.some(v => v.name === saved)) {
+    sel.value = saved;
+  } else {
+    sel.value = 'auto';
+  }
+}
+
 function refreshVoices() {
   if ('speechSynthesis' in window) {
     try {
@@ -15040,6 +15082,7 @@ function refreshVoices() {
       cachedVoices = [];
     }
   }
+  populateVoiceSelector();
 }
 
 if ('speechSynthesis' in window) {
@@ -15048,6 +15091,17 @@ if ('speechSynthesis' in window) {
     refreshVoices();
   };
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  populateVoiceSelector();
+  const sel = document.getElementById('voice-selector');
+  if (sel) {
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem(VOICE_PREF_STORAGE_KEY, sel.value); } catch (e) {}
+      speakHindi('नमस्ते! मैं हिन्दी बोलती हूँ।');
+    });
+  }
+});
 
 // --- Hindi Syllable & Phoneme Decomposition Helpers ---
 function splitHindiSyllables(word) {
@@ -15073,44 +15127,55 @@ function getSyllabicHindiSpeechText(word) {
 
 function findHindiVoice(options = {}) {
   const preferLocal = Boolean(options && options.preferLocal);
+  const ignoreSaved = Boolean(options && options.ignoreSaved);
   if (!('speechSynthesis' in window)) return null;
-  const voices = (cachedVoices && cachedVoices.length) ? cachedVoices : window.speechSynthesis.getVoices();
+  const freshVoices = window.speechSynthesis.getVoices();
+  if (freshVoices && freshVoices.length) {
+    cachedVoices = freshVoices;
+  }
+  const voices = (freshVoices && freshVoices.length) ? freshVoices : cachedVoices;
   if (!voices || !voices.length) return null;
 
-  // If local voice is preferred (e.g. for slow reading so Chrome on Mac/Windows uses a local voice rather than Google remote voice which ignores rate)
-  if (preferLocal) {
-    // 1. Local exact Hindi match (like Apple Lekha on macOS, or Windows local voices)
-    let localVoice = voices.find(v => 
-      v.localService && (v.lang === 'hi-IN' || v.lang === 'hi_IN' || v.lang === 'hi')
-    );
-    if (localVoice) return localVoice;
+  const langVoices = getAvailableHindiVoices();
 
-    // 2. Local voice containing Hindi / Lekha / Indic
-    localVoice = voices.find(v => 
-      v.localService && (v.lang.toLowerCase().startsWith('hi') || /Hindi|Lekha|हिन्दी|Kalpana|Hemant|Ravi/i.test(v.name))
-    );
-    if (localVoice) return localVoice;
+  // 0. Honor explicit user choice from header voice picker
+  if (!ignoreSaved && langVoices.length) {
+    try {
+      const savedName = localStorage.getItem(VOICE_PREF_STORAGE_KEY);
+      if (savedName && savedName !== 'auto') {
+        const savedVoice = langVoices.find(v => v.name === savedName);
+        if (savedVoice) return savedVoice;
+      }
+    } catch (e) {}
   }
 
-  // Standard search:
-  // 1. Direct exact BCP-47 match for Hindi (India)
-  let voice = voices.find(v => v.lang === 'hi-IN' || v.lang === 'hi_IN' || v.lang === 'hi');
-  if (voice) return voice;
+  const highQualityRegex = /Google|Natural|Enhanced|Premium|Siri/i;
+  const namedHindiRegex = /Hindi|Lekha|हिन्दी|Kalpana|Hemant|Ravi/i;
+  const noveltyRegex = /\b(Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox)\b/i;
 
-  // 2. Microsoft Windows Hindi voices (Microsoft Hemant, Microsoft Kalpana, Microsoft Ravi)
-  voice = voices.find(v => 
-    /Hemant|Kalpana|Ravi/i.test(v.name) && (/Hindi/i.test(v.name) || v.lang.startsWith('hi'))
-  );
-  if (voice) return voice;
+  if (langVoices.length) {
+    const cleanVoices = langVoices.filter(v => !noveltyRegex.test(v.name || ''));
+    const pool = cleanVoices.length ? cleanVoices : langVoices;
 
-  // 3. Name or language includes Hindi / Devanagari (e.g. "Lekha" on macOS, "Google हिन्दी", etc.)
-  voice = voices.find(v => 
-    v.lang.toLowerCase().startsWith('hi') || /Hindi|Lekha|हिन्दी/i.test(v.name)
-  );
-  if (voice) return voice;
+    if (!preferLocal) {
+      let hq = pool.find(v => highQualityRegex.test(v.name || ''));
+      if (hq) return hq;
+    }
 
-  // 4. Any Indian locale voice as gentle fallback (e.g. en-IN, mr-IN, gu-IN or similar Indic voices)
-  voice = voices.find(v => v.lang.endsWith('-IN') || v.lang.endsWith('_IN'));
+    let localVoice = pool.find(v => v.localService && namedHindiRegex.test(v.name || ''));
+    if (localVoice) return localVoice;
+
+    localVoice = pool.find(v => v.localService);
+    if (localVoice) return localVoice;
+
+    let namedVoice = pool.find(v => namedHindiRegex.test(v.name || ''));
+    if (namedVoice) return namedVoice;
+
+    return pool[0] || null;
+  }
+
+  // Fallback: any Indian locale voice
+  let voice = voices.find(v => v.lang && (v.lang.endsWith('-IN') || v.lang.endsWith('_IN')));
   return voice;
 }
 
