@@ -310,6 +310,56 @@ function clearSpeakingButtonState() {
   }
 }
 
+const VOICE_PREF_STORAGE_KEY = ((typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.storagePrefix) ? window.LANGUAGE_CONFIG.storagePrefix : 'langlab') + '_preferred_voice_v1';
+
+function getAvailableTargetVoices() {
+  if (!('speechSynthesis' in window)) return [];
+  const freshVoices = window.speechSynthesis.getVoices();
+  if (freshVoices && freshVoices.length) {
+    cachedVoices = freshVoices;
+  }
+  const voices = (freshVoices && freshVoices.length) ? freshVoices : cachedVoices;
+  if (!voices || !voices.length) return [];
+
+  const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
+    ? window.LANGUAGE_CONFIG.speech
+    : { bcp47: 'hu-HU', langPrefix: 'hu' };
+  const bcp47Lower = (speechCfg.bcp47 || 'hu-HU').toLowerCase().replace('_', '-');
+  const langPrefix = (speechCfg.langPrefix || 'hu').toLowerCase();
+
+  return voices.filter(v => {
+    const l = (v.lang || '').toLowerCase().replace('_', '-');
+    return l === bcp47Lower || l === langPrefix || l.startsWith(langPrefix + '-');
+  });
+}
+
+function populateVoiceSelector() {
+  const sel = document.getElementById('voice-selector');
+  if (!sel) return;
+  const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
+    ? window.LANGUAGE_CONFIG.speech
+    : { bcp47: 'hu-HU' };
+  const bcp47 = speechCfg.bcp47 || 'hu-HU';
+  const langVoices = getAvailableTargetVoices();
+  let saved = 'auto';
+  try { saved = localStorage.getItem(VOICE_PREF_STORAGE_KEY) || 'auto'; } catch (e) {}
+
+  const bestAuto = findTargetVoice({ ignoreSaved: true });
+  const autoLabel = bestAuto ? `🔊 Auto: ${bestAuto.name}` : `🔊 Auto (No ${bcp47} voice found)`;
+
+  sel.innerHTML = `<option value="auto">${escapeHtml(autoLabel)}</option>` +
+    langVoices.map(v => {
+      const tag = v.localService ? 'Local' : 'Cloud';
+      return `<option value="${escapeHtml(v.name)}">🔊 ${escapeHtml(v.name)} (${tag})</option>`;
+    }).join('');
+
+  if (saved !== 'auto' && langVoices.some(v => v.name === saved)) {
+    sel.value = saved;
+  } else {
+    sel.value = 'auto';
+  }
+}
+
 function refreshVoices() {
   if ('speechSynthesis' in window) {
     try {
@@ -318,6 +368,7 @@ function refreshVoices() {
       cachedVoices = [];
     }
   }
+  populateVoiceSelector();
 }
 
 if ('speechSynthesis' in window) {
@@ -326,6 +377,21 @@ if ('speechSynthesis' in window) {
     refreshVoices();
   };
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  populateVoiceSelector();
+  const sel = document.getElementById('voice-selector');
+  if (sel) {
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem(VOICE_PREF_STORAGE_KEY, sel.value); } catch (e) {}
+      const cfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG) ? window.LANGUAGE_CONFIG : {};
+      const sample = (cfg.speech && cfg.speech.testPhrase)
+        || (typeof window !== 'undefined' && Array.isArray(window.VERB_CURRICULUM) && window.VERB_CURRICULUM[0] && window.VERB_CURRICULUM[0].example && window.VERB_CURRICULUM[0].example.target)
+        || 'Szia!';
+      speakTargetText(sample);
+    });
+  }
+});
 
 // --- Target-Language Syllable & Phoneme Decomposition Helpers (Config-Driven) ---
 function splitWordSyllables(word) {
@@ -349,9 +415,20 @@ function getSyllabicSpeechText(word) {
 
 function findTargetVoice(options = {}) {
   const preferLocal = Boolean(options && options.preferLocal);
-  if (!('speechSynthesis' in window)) return null;
-  const voices = (cachedVoices && cachedVoices.length) ? cachedVoices : window.speechSynthesis.getVoices();
-  if (!voices || !voices.length) return null;
+  const ignoreSaved = Boolean(options && options.ignoreSaved);
+  const langVoices = getAvailableTargetVoices();
+  if (!langVoices.length) return null;
+
+  // 0. Honor explicit user choice from header voice picker
+  if (!ignoreSaved) {
+    try {
+      const savedName = localStorage.getItem(VOICE_PREF_STORAGE_KEY);
+      if (savedName && savedName !== 'auto') {
+        const savedVoice = langVoices.find(v => v.name === savedName);
+        if (savedVoice) return savedVoice;
+      }
+    } catch (e) {}
+  }
 
   const speechCfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG && window.LANGUAGE_CONFIG.speech)
     ? window.LANGUAGE_CONFIG.speech
@@ -361,30 +438,33 @@ function findTargetVoice(options = {}) {
         preferredLocalVoiceRegex: /Mariska|Szabolcs|Tünde|Hungarian|Magyar/i
       };
 
-  const bcp47 = speechCfg.bcp47 || 'hu-HU';
-  const bcp47Alt = bcp47.replace('-', '_');
-  const langPrefix = (speechCfg.langPrefix || 'hu').toLowerCase();
   const voiceRegex = speechCfg.preferredLocalVoiceRegex || /Mariska|Szabolcs|Tünde|Hungarian|Magyar/i;
+  const highQualityRegex = /Google|Natural|Enhanced|Premium|Siri/i;
+  const noveltyRegex = /\b(Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox)\b/i;
 
-  if (preferLocal) {
-    let localVoice = voices.find(v =>
-      v.localService && (v.lang === bcp47 || v.lang === bcp47Alt || v.lang === langPrefix)
-    );
-    if (localVoice) return localVoice;
+  const cleanVoices = langVoices.filter(v => !noveltyRegex.test(v.name || ''));
+  const pool = cleanVoices.length ? cleanVoices : langVoices;
 
-    localVoice = voices.find(v =>
-      v.localService && (v.lang.toLowerCase().startsWith(langPrefix) || voiceRegex.test(v.name))
-    );
-    if (localVoice) return localVoice;
+  // 1. High-quality natural/cloud voice when at normal speed
+  if (!preferLocal) {
+    let hq = pool.find(v => highQualityRegex.test(v.name || ''));
+    if (hq) return hq;
   }
 
-  let voice = voices.find(v => v.lang === bcp47 || v.lang === bcp47Alt || v.lang === langPrefix);
+  // 2. Preferred named local voice
+  let voice = pool.find(v => v.localService && voiceRegex.test(v.name || ''));
   if (voice) return voice;
 
-  voice = voices.find(v =>
-    v.lang.toLowerCase().startsWith(langPrefix) || voiceRegex.test(v.name)
-  );
-  return voice || null;
+  // 3. Any local target-language voice
+  voice = pool.find(v => v.localService);
+  if (voice) return voice;
+
+  // 4. Preferred named voice (cloud)
+  voice = pool.find(v => voiceRegex.test(v.name || ''));
+  if (voice) return voice;
+
+  // 5. Fallback to first clean target-language voice
+  return pool[0] || null;
 }
 
 // True on phones/tablets (no hover, coarse pointer) – used to show touch-friendly prompts
@@ -474,6 +554,7 @@ function speakTargetText(text, buttonEl = null, options = {}) {
           const voice = findTargetVoice({ preferLocal: preferLocal });
           if (voice) {
             utterance.voice = voice;
+            if (voice.lang) utterance.lang = voice.lang;
             if (!voice.localService && rate < 0.85 && !syllabic) {
               utterance.text = getSyllabicSpeechText(text);
             }
