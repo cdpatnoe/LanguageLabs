@@ -3947,12 +3947,12 @@ function initNotesIngestionStudio() {
     function normalizeExtractedDevanagari(text) {
       if (!text) return '';
       let s = text
-        // Remove accidental spaces/newlines before Devanagari combining matras/nukta/anusvara/virama
+        // 1. Fix visual-order leading short-i matra (ि placed before consonant at word start) BEFORE stripping spaces
+        .replace(/(^|[\s\d(\["'.,;:\-\/])\u093F((?:[\u0915-\u0939\u0958-\u095F]\u094D)*[\u0915-\u0939\u0958-\u095F][\u093C]?)/g, '$1$2\u093F')
+        // 2. Remove accidental spaces/newlines before Devanagari combining matras/nukta/anusvara/virama
         .replace(/[ \t\r\n]+([\u0900-\u0903\u093A-\u094F\u0951-\u0957\u0962-\u0963])/g, '$1')
-        // Remove accidental spaces immediately after virama (halant)
-        .replace(/\u094D[ \t]+([\u0915-\u0939\u0958-\u095F])/g, '\u094D$1')
-        // Fix visual-order leading short-i matra (ि placed before consonant at word start)
-        .replace(/(^|[\s(\["'.,;:\-\/])\u093F((?:[\u0915-\u0939\u0958-\u095F]\u094D)*[\u0915-\u0939\u0958-\u095F][\u093C]?)/g, '$1$2\u093F');
+        // 3. Remove accidental spaces immediately after virama (halant)
+        .replace(/\u094D[ \t]+([\u0915-\u0939\u0958-\u095F])/g, '\u094D$1');
       try {
         s = s.normalize('NFC');
       } catch (e) {}
@@ -4134,8 +4134,9 @@ function initNotesIngestionStudio() {
           if (!line) {
             line = piece;
           } else if (isCombiningMarkStart(piece) || line.endsWith('\u094D') || line.endsWith('\u093F')) {
-            // Glue combining matra / virama directly with no space
+            // Glue combining matra / virama directly with no space, without shifting prevX
             line += piece;
+            continue;
           } else if (line.endsWith(' ') || piece.startsWith(' ')) {
             line += piece;
           } else {
@@ -4143,7 +4144,7 @@ function initNotesIngestionStudio() {
             // Column gap vs inline continuation
             if (dx > 28) {
               line += '\t' + piece;
-            } else if (dx > 3) {
+            } else if (dx > 5) {
               line += ' ' + piece;
             } else {
               line += piece;
