@@ -3967,6 +3967,41 @@ function initNotesIngestionStudio() {
       return s;
     }
 
+    function estimateRunWidth(text, fontSize) {
+      if (!text) return 0;
+      const fs = (fontSize && fontSize > 0) ? fontSize : 11;
+      let units = 0;
+      for (let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        // Zero-width combining marks (Devanagari below/above matras, virama, anusvara, nukta, Latin combining)
+        if ((code >= 0x0900 && code <= 0x0902) ||
+            (code >= 0x093A && code <= 0x093D) ||
+            (code >= 0x0941 && code <= 0x0948) ||
+            (code >= 0x094D && code <= 0x094F) ||
+            (code >= 0x0951 && code <= 0x0957) ||
+            (code >= 0x0962 && code <= 0x0963) ||
+            (code >= 0x0300 && code <= 0x036F)) {
+          units += 0;
+        } else if (code === 0x093E || code === 0x093F || code === 0x0940 ||
+                   code === 0x0949 || code === 0x094A || code === 0x094B || code === 0x094C || code === 0x0903) {
+          // Spacing Devanagari side matras (ा, ि, ी, ो, ौ, ः)
+          units += 0.32;
+        } else if (code >= 0x0904 && code <= 0x097F) {
+          // Devanagari consonants / independent vowels
+          units += 0.65;
+        } else if (code === 32) {
+          units += 0.28;
+        } else if ('ilI1.,;:\'|!tfrj'.includes(text[i])) {
+          units += 0.30;
+        } else if ('mwMW@%'.includes(text[i])) {
+          units += 0.78;
+        } else {
+          units += 0.52;
+        }
+      }
+      return units * fs;
+    }
+
     function extractTextFromContentStream(stream) {
       const runs = [];
       let seq = 0;
@@ -3975,13 +4010,14 @@ function initNotesIngestionStudio() {
         let tx = 0;
         let ty = 0;
         let leading = 14;
+        let fontSize = 11;
         const numStack = [];
         let i = 0;
         const len = blk.length;
 
         const pushRun = (text) => {
           if (!text) return;
-          runs.push({ x: tx, y: ty, text, seq: seq++ });
+          runs.push({ x: tx, y: ty, fs: fontSize, text, seq: seq++ });
         };
 
         while (i < len) {
@@ -4065,7 +4101,7 @@ function initNotesIngestionStudio() {
                 let numStr = '';
                 while (j < len && /[-+0-9.]/.test(blk[j])) numStr += blk[j++];
                 const num = parseFloat(numStr);
-                if (!isNaN(num) && num < -160 && arrText && !arrText.endsWith(' ')) {
+                if (!isNaN(num) && num < -220 && arrText && !arrText.endsWith(' ')) {
                   arrText += ' ';
                 }
               } else {
@@ -4093,7 +4129,12 @@ function initNotesIngestionStudio() {
           } else if (/[A-Za-z*']/.test(ch)) {
             let op = '';
             while (i < len && /[A-Za-z0-9*'"]/.test(blk[i])) op += blk[i++];
-            if (op === 'Tm' && numStack.length >= 6) {
+            if (op === 'Tf' && numStack.length >= 1) {
+              const fs = Math.abs(numStack[numStack.length - 1]);
+              if (fs >= 4 && fs <= 72) fontSize = fs;
+            } else if (op === 'Tm' && numStack.length >= 6) {
+              const scaleY = Math.abs(numStack[numStack.length - 3]);
+              if (scaleY >= 4 && scaleY <= 72) fontSize = scaleY;
               tx = numStack[numStack.length - 2];
               ty = numStack[numStack.length - 1];
             } else if (op === 'Td' && numStack.length >= 2) {
@@ -4135,30 +4176,41 @@ function initNotesIngestionStudio() {
       const lineStrings = rows.map(row => {
         row.items.sort((a, b) => (Math.abs(a.x - b.x) > 1.5 ? a.x - b.x : a.seq - b.seq));
         let line = '';
-        let prevX = null;
+        let prevEndX = null;
+        let prevFs = 11;
         for (const item of row.items) {
           const piece = item.text;
           if (!piece) continue;
+          const itemFs = item.fs || prevFs || 11;
+          const pieceWidth = estimateRunWidth(piece, itemFs);
           if (!line) {
             line = piece;
-          } else if (isCombiningMarkStart(piece) || line.endsWith('\u094D') || line.endsWith('\u093F')) {
-            // Glue combining matra / virama directly with no space, without shifting prevX
-            line += piece;
+            prevEndX = item.x + pieceWidth;
+            prevFs = itemFs;
             continue;
-          } else if (line.endsWith(' ') || piece.startsWith(' ')) {
+          }
+          if (isCombiningMarkStart(piece) || line.endsWith('\u094D') || line.endsWith('\u093F')) {
+            // Glue combining matra / virama directly with no space
+            line += piece;
+            prevEndX = Math.max(prevEndX, item.x + pieceWidth);
+            continue;
+          }
+          if (line.endsWith(' ') || piece.startsWith(' ')) {
             line += piece;
           } else {
-            const dx = prevX !== null ? (item.x - prevX) : 0;
-            // Column gap vs inline continuation
-            if (dx > 28) {
+            const gap = prevEndX !== null ? (item.x - prevEndX) : 0;
+            const spaceThreshold = Math.max(2.2, itemFs * 0.22);
+            const colThreshold = Math.max(24, itemFs * 2.2);
+            if (gap > colThreshold) {
               line += '\t' + piece;
-            } else if (dx > 5) {
+            } else if (gap > spaceThreshold) {
               line += ' ' + piece;
             } else {
               line += piece;
             }
           }
-          prevX = item.x;
+          prevEndX = Math.max(prevEndX, item.x + pieceWidth);
+          prevFs = itemFs;
         }
         return normalizeExtractedDevanagari(line).trim();
       }).filter(Boolean);
