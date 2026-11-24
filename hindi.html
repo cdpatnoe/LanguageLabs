@@ -18651,15 +18651,48 @@ function initNotesIngestionStudio() {
       return decodeHexToUnicode(clean);
     }
 
+    function isCombiningMarkStart(str) {
+      return /^[\u0900-\u0903\u093A-\u094F\u0951-\u0957\u0962-\u0963\u0300-\u036F]/.test(str);
+    }
+
+    function normalizeExtractedDevanagari(text) {
+      if (!text) return '';
+      let s = text
+        // 1. Fix visual-order leading short-i matra (ि placed before consonant at word start) BEFORE stripping spaces
+        .replace(/(^|[\s\d(\["'.,;:\-\/])\u093F((?:[\u0915-\u0939\u0958-\u095F]\u094D)*[\u0915-\u0939\u0958-\u095F][\u093C]?)/g, '$1$2\u093F')
+        // 2. Remove accidental spaces/newlines before Devanagari combining matras/nukta/anusvara/virama
+        .replace(/[ \t\r\n]+([\u0900-\u0903\u093A-\u094F\u0951-\u0957\u0962-\u0963])/g, '$1')
+        // 3. Remove accidental spaces immediately after virama (halant)
+        .replace(/\u094D[ \t]+([\u0915-\u0939\u0958-\u095F])/g, '\u094D$1');
+      try {
+        s = s.normalize('NFC');
+      } catch (e) {}
+      return s;
+    }
+
     function extractTextFromContentStream(stream) {
-      const lines = [];
-      let currentLine = '';
+      const runs = [];
+      let seq = 0;
       const btBlocks = stream.match(/BT[\s\S]*?ET/g) || [];
       for (const blk of btBlocks) {
+        let tx = 0;
+        let ty = 0;
+        let leading = 14;
+        const numStack = [];
         let i = 0;
         const len = blk.length;
+
+        const pushRun = (text) => {
+          if (!text) return;
+          runs.push({ x: tx, y: ty, text, seq: seq++ });
+        };
+
         while (i < len) {
           const ch = blk[i];
+          if (/\s/.test(ch)) {
+            i++;
+            continue;
+          }
           if (ch === '(') {
             let depth = 1;
             let j = i + 1;
@@ -18680,11 +18713,11 @@ function initNotesIngestionStudio() {
             const rest = blk.slice(j + 1, j + 10).trimStart();
             if (rest.startsWith('Tj') || rest.startsWith("'") || rest.startsWith('"')) {
               if (rest.startsWith("'") || rest.startsWith('"')) {
-                if (currentLine.trim()) lines.push(currentLine.trim());
-                currentLine = '';
+                ty -= leading;
               }
-              currentLine += decodePdfLiteralString(buf);
+              pushRun(decodePdfLiteralString(buf));
             }
+            numStack.length = 0;
             i = j + 1;
           } else if (ch === '<' && blk[i + 1] !== '<') {
             const end = blk.indexOf('>', i + 1);
@@ -18693,17 +18726,16 @@ function initNotesIngestionStudio() {
               const rest = blk.slice(end + 1, end + 10).trimStart();
               if (rest.startsWith('Tj') || rest.startsWith("'")) {
                 if (rest.startsWith("'")) {
-                  if (currentLine.trim()) lines.push(currentLine.trim());
-                  currentLine = '';
+                  ty -= leading;
                 }
-                currentLine += decodePdfHexString(hex);
+                pushRun(decodePdfHexString(hex));
               }
+              numStack.length = 0;
               i = end + 1;
             } else {
               i++;
             }
           } else if (ch === '[') {
-            // Parse TJ array
             let j = i + 1;
             let arrText = '';
             while (j < len && blk[j] !== ']') {
@@ -18729,13 +18761,14 @@ function initNotesIngestionStudio() {
               } else if (blk[j] === '<' && blk[j + 1] !== '<') {
                 const end = blk.indexOf('>', j + 1);
                 if (end === -1) break;
-                arrText += decodePdfHexString(blk.slice(j + 1, end));
+                const decoded = decodePdfHexString(blk.slice(j + 1, end));
+                arrText += decoded;
                 j = end + 1;
-              } else if (blk[j] === '-' || (blk[j] >= '0' && blk[j] <= '9')) {
+              } else if (blk[j] === '-' || blk[j] === '+' || (blk[j] >= '0' && blk[j] <= '9') || blk[j] === '.') {
                 let numStr = '';
-                while (j < len && /[-0-9.]/.test(blk[j])) numStr += blk[j++];
+                while (j < len && /[-+0-9.]/.test(blk[j])) numStr += blk[j++];
                 const num = parseFloat(numStr);
-                if (!isNaN(num) && num < -120 && arrText && !arrText.endsWith(' ')) {
+                if (!isNaN(num) && num < -160 && arrText && !arrText.endsWith(' ')) {
                   arrText += ' ';
                 }
               } else {
@@ -18744,33 +18777,96 @@ function initNotesIngestionStudio() {
             }
             const rest = blk.slice(j + 1, j + 10).trimStart();
             if (rest.startsWith('TJ')) {
-              currentLine += arrText;
+              pushRun(arrText);
             }
+            numStack.length = 0;
             i = j + 1;
-          } else if (ch === 'T' && (blk[i + 1] === '*' || blk[i + 1] === 'd' || blk[i + 1] === 'D' || blk[i + 1] === 'm')) {
-            const op = blk.slice(i, i + 2);
-            const nextCh = blk[i + 2] || ' ';
-            if (/[\s\/\[\(<]/.test(nextCh)) {
-              if (op === 'T*' || op === 'TD' || op === 'Td' || op === 'Tm') {
-                if (currentLine.trim()) {
-                  lines.push(currentLine.trim());
-                  currentLine = '';
-                }
-              }
-              i += 2;
-            } else {
-              i++;
+          } else if (ch === '-' || ch === '+' || (ch >= '0' && ch <= '9') || ch === '.') {
+            let numStr = '';
+            while (i < len && /[-+0-9.]/.test(blk[i])) numStr += blk[i++];
+            const num = parseFloat(numStr);
+            if (!isNaN(num)) {
+              numStack.push(num);
+              if (numStack.length > 8) numStack.shift();
             }
+          } else if (ch === '/') {
+            // Skip PDF name tokens like /F1
+            i++;
+            while (i < len && !/[\s\/\[\(\)<>{}%]/.test(blk[i])) i++;
+          } else if (/[A-Za-z*']/.test(ch)) {
+            let op = '';
+            while (i < len && /[A-Za-z0-9*'"]/.test(blk[i])) op += blk[i++];
+            if (op === 'Tm' && numStack.length >= 6) {
+              tx = numStack[numStack.length - 2];
+              ty = numStack[numStack.length - 1];
+            } else if (op === 'Td' && numStack.length >= 2) {
+              tx += numStack[numStack.length - 2];
+              ty += numStack[numStack.length - 1];
+            } else if (op === 'TD' && numStack.length >= 2) {
+              const dy = numStack[numStack.length - 1];
+              tx += numStack[numStack.length - 2];
+              ty += dy;
+              leading = -dy;
+            } else if (op === 'TL' && numStack.length >= 1) {
+              leading = numStack[numStack.length - 1];
+            } else if (op === 'T*') {
+              ty -= leading;
+            }
+            numStack.length = 0;
           } else {
             i++;
           }
         }
-        if (currentLine.trim()) {
-          lines.push(currentLine.trim());
-          currentLine = '';
-        }
       }
-      return lines.join('\n');
+
+      if (!runs.length) return '';
+
+      // Group text runs into visual table rows by Y coordinate (within 5.5pt tolerance)
+      const rows = [];
+      for (const run of runs) {
+        let targetRow = rows.find(r => Math.abs(r.y - run.y) <= 5.5);
+        if (!targetRow) {
+          targetRow = { y: run.y, items: [] };
+          rows.push(targetRow);
+        }
+        targetRow.items.push(run);
+      }
+
+      // Sort rows top-to-bottom (PDF Y grows upward, so higher Y = higher on page)
+      rows.sort((a, b) => b.y - a.y);
+
+      const lineStrings = rows.map(row => {
+        row.items.sort((a, b) => (Math.abs(a.x - b.x) > 1.5 ? a.x - b.x : a.seq - b.seq));
+        let line = '';
+        let prevX = null;
+        for (const item of row.items) {
+          const piece = item.text;
+          if (!piece) continue;
+          if (!line) {
+            line = piece;
+          } else if (isCombiningMarkStart(piece) || line.endsWith('\u094D') || line.endsWith('\u093F')) {
+            // Glue combining matra / virama directly with no space, without shifting prevX
+            line += piece;
+            continue;
+          } else if (line.endsWith(' ') || piece.startsWith(' ')) {
+            line += piece;
+          } else {
+            const dx = prevX !== null ? (item.x - prevX) : 0;
+            // Column gap vs inline continuation
+            if (dx > 28) {
+              line += '\t' + piece;
+            } else if (dx > 5) {
+              line += ' ' + piece;
+            } else {
+              line += piece;
+            }
+          }
+          prevX = item.x;
+        }
+        return normalizeExtractedDevanagari(line).trim();
+      }).filter(Boolean);
+
+      return lineStrings.join('\n');
     }
 
     // 3. Extract text from all non-CMap streams
@@ -18782,11 +18878,13 @@ function initNotesIngestionStudio() {
       if (t && t.trim()) extractedParts.push(t.trim());
     }
 
-    return extractedParts
-      .join('\n')
-      .replace(/[ \t]{2,}/g, ' ')
-      .replace(/\n{3,}/g, '\n\n')
-      .trim();
+    return normalizeExtractedDevanagari(
+      extractedParts
+        .join('\n')
+        .replace(/[ ]{2,}/g, ' ')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim()
+    );
   }
   window.extractPdfTextFromArrayBuffer = extractPdfTextFromArrayBuffer;
 
@@ -21836,7 +21934,7 @@ function initVocabNotesStudio() {
   function parseVocabNotesContent(content, defaultSource = 'Pasted Notes') {
     const lines = content.split(/\r?\n/);
     const results = [];
-    const hindiWordRegex = /[\u0900-\u097F]+/;
+    const hindiWordRegex = /[\u0900-\u097F]+(?:\s+[\u0900-\u097F]+)*/;
     let currentSource = defaultSource;
 
     for (let line of lines) {
