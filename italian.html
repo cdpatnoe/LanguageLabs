@@ -5054,6 +5054,9 @@ button, .nav-btn, .match-tile, .matra-match-tile, .quiz-opt-btn,
         <button type="button" class="switch-focus-btn" id="open-lexicon-manager-btn" aria-label="Open Data Cleanup &amp; Lexicon Manager" title="Clean up, edit, and sanitize saved words database (Shortcut: D)" style="background:var(--card-warm); border:1.5px solid var(--border); color:var(--secondary); font-weight:600;">
           <span aria-hidden="true">🛠️</span> <span class="btn-label">Clean Up Data</span>
         </button>
+        <button type="button" class="switch-focus-btn" id="share-classwork-btn" aria-label="Share classwork via AirDrop or link" title="Share your custom classwork words &amp; verbs via AirDrop or URL" style="background:var(--card-warm); border:1.5px solid var(--border); color:var(--primary); font-weight:600;">
+          <span aria-hidden="true">📤</span> <span class="btn-label">Share Classwork</span>
+        </button>
         <select id="voice-selector" aria-label="Select Italian speech voice" title="Choose Italian pronunciation voice" style="padding:0.45rem 0.65rem; border-radius:10px; border:1.5px solid var(--border); background:var(--card-warm); color:var(--text-main); font-size:0.82rem; font-weight:600; max-width:190px; cursor:pointer;">
           <option value="auto">🔊 Voice: Auto (it-IT)</option>
         </select>
@@ -20078,6 +20081,255 @@ function wireLexiconManagerListeners(container, allEntries, issueCount, totalCou
     document.addEventListener('DOMContentLoaded', setup);
   } else {
     setup();
+  }
+})();
+
+// =========================================================================
+// CLASSWORK URL SHARE & AUTO-IMPORT (AirDrop / Web Share API + #import=...)
+// =========================================================================
+(function initClassworkUrlShare() {
+  function bytesToBase64Url(bytes) {
+    let bin = '';
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    }
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function base64UrlToBytes(b64url) {
+    const padded = b64url.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((b64url.length + 3) % 4);
+    const bin = atob(padded);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+
+  async function encodeClassworkPayload(obj) {
+    const jsonBytes = new TextEncoder().encode(JSON.stringify(obj));
+    if (typeof CompressionStream !== 'undefined') {
+      try {
+        const cs = new CompressionStream('gzip');
+        const writer = cs.writable.getWriter();
+        writer.write(jsonBytes);
+        writer.close();
+        const compressed = new Uint8Array(await new Response(cs.readable).arrayBuffer());
+        return 'gz.' + bytesToBase64Url(compressed);
+      } catch (e) {}
+    }
+    return 'raw.' + bytesToBase64Url(jsonBytes);
+  }
+
+  async function decodeClassworkPayload(str) {
+    if (!str || typeof str !== 'string') return null;
+    if (str.startsWith('gz.')) {
+      if (typeof DecompressionStream === 'undefined') {
+        throw new Error('This browser does not support gzip decompression.');
+      }
+      const compressed = base64UrlToBytes(str.slice(3));
+      const ds = new DecompressionStream('gzip');
+      const writer = ds.writable.getWriter();
+      writer.write(compressed);
+      writer.close();
+      const plainBytes = new Uint8Array(await new Response(ds.readable).arrayBuffer());
+      return JSON.parse(new TextDecoder().decode(plainBytes));
+    }
+    const rawPart = str.startsWith('raw.') ? str.slice(4) : str;
+    const bytes = base64UrlToBytes(rawPart);
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  function getLangMeta() {
+    const cfg = (typeof window !== 'undefined' && window.LANGUAGE_CONFIG) ? window.LANGUAGE_CONFIG : null;
+    if (cfg && cfg.storagePrefix) {
+      return {
+        id: cfg.id || cfg.storagePrefix,
+        pageSlug: cfg.storagePrefix,
+        name: cfg.name || cfg.storagePrefix
+      };
+    }
+    return { id: 'hi', pageSlug: 'hindi', name: 'Hindi' };
+  }
+
+  function collectCustomClasswork() {
+    const coreVerbs = new Set((window.VERB_CURRICULUM || []).map(v => (v.target || v.hindi || '').trim()));
+    const coreVocab = new Set((window.VOCAB_CURRICULUM || []).map(w => (w.target || w.hindi || '').trim()));
+
+    const customVerbs = (state.verbs || []).filter(v => {
+      const key = (v.target || v.hindi || '').trim();
+      return key && !coreVerbs.has(key);
+    });
+    const customVocab = (state.vocab || []).filter(w => {
+      const key = (w.target || w.hindi || '').trim();
+      return key && !coreVocab.has(key);
+    });
+    const customQuizzes = Array.isArray(state.customQuizPacks) ? state.customQuizPacks : [];
+
+    return {
+      v: 1,
+      lang: getLangMeta().id,
+      verbs: customVerbs,
+      vocab: customVocab,
+      quizzes: customQuizzes
+    };
+  }
+
+  async function copyTextFallback(text) {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) {}
+    }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function shareClassworkViaLink() {
+    const payloadObj = collectCustomClasswork();
+    const totalCount = payloadObj.verbs.length + payloadObj.vocab.length + payloadObj.quizzes.length;
+    if (totalCount === 0) {
+      showToast('No custom classwork words, verbs, or quizzes yet—import a PDF or add some notes first!', 'info', 5000);
+      return;
+    }
+
+    const encoded = await encodeClassworkPayload(payloadObj);
+    const meta = getLangMeta();
+    const isHttp = window.location.protocol === 'https:' || window.location.protocol === 'http:';
+    const baseUrl = isHttp
+      ? (window.location.origin + window.location.pathname)
+      : `https://cdpatnoe.github.io/LanguageLabs/${meta.pageSlug}.html`;
+    const shareUrl = `${baseUrl}#import=${encoded}`;
+
+    const parts = [];
+    if (payloadObj.vocab.length) parts.push(`${payloadObj.vocab.length} word${payloadObj.vocab.length === 1 ? '' : 's'}`);
+    if (payloadObj.verbs.length) parts.push(`${payloadObj.verbs.length} verb${payloadObj.verbs.length === 1 ? '' : 's'}`);
+    if (payloadObj.quizzes.length) parts.push(`${payloadObj.quizzes.length} quiz${payloadObj.quizzes.length === 1 ? '' : 'zes'}`);
+    const summary = parts.join(', ');
+
+    if (shareUrl.length > 32000) {
+      showToast(`Your classwork (${summary}) is quite large for a URL (${Math.round(shareUrl.length / 1024)} KB)—some apps may truncate it.`, 'warning', 7000);
+    }
+
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function' && isHttp) {
+      try {
+        await navigator.share({
+          title: `${meta.name} Language Lab — Classwork (${summary})`,
+          text: `Open to auto-import ${summary} into ${meta.name} Language Lab:`,
+          url: shareUrl
+        });
+        showToast(`Shared ${summary}!`, 'success', 4000);
+        return;
+      } catch (err) {
+        if (err && err.name === 'AbortError') return; // User closed AirDrop / Share Sheet
+      }
+    }
+
+    const copied = await copyTextFallback(shareUrl);
+    if (copied) {
+      showToast(`Copied shareable link for ${summary}! Open it on your phone or Mac to auto-import.`, 'success', 6000);
+    } else {
+      window.prompt('Copy your shareable classwork link:', shareUrl);
+    }
+  }
+
+  async function importClassworkFromUrlHash() {
+    const hash = window.location.hash || '';
+    const match = hash.match(/[#&]import=([A-Za-z0-9._-]+)/);
+    if (!match) return;
+
+    try {
+      const data = await decodeClassworkPayload(match[1]);
+      if (!data || typeof data !== 'object') return;
+
+      let addedVerbs = 0;
+      let addedVocab = 0;
+      let addedQuizzes = 0;
+
+      if (Array.isArray(data.verbs)) {
+        data.verbs.forEach(v => {
+          const key = (v && (v.target || v.hindi) || '').trim();
+          if (!key) return;
+          if (!state.verbs.some(ex => (ex.target || ex.hindi || '').trim() === key)) {
+            state.saveCustomVerb(v);
+            addedVerbs++;
+          }
+        });
+      }
+
+      if (Array.isArray(data.vocab)) {
+        data.vocab.forEach(w => {
+          const key = (w && (w.target || w.hindi) || '').trim();
+          if (!key) return;
+          if (!state.vocab.some(ex => (ex.target || ex.hindi || '').trim() === key)) {
+            state.saveCustomWord(w);
+            addedVocab++;
+          }
+        });
+      }
+
+      if (Array.isArray(data.quizzes) && typeof state.saveCustomQuizPack === 'function') {
+        data.quizzes.forEach(q => {
+          if (q && q.id && q.title && Array.isArray(q.items)) {
+            state.saveCustomQuizPack(q);
+            addedQuizzes++;
+          }
+        });
+      }
+
+      // Refresh UI views
+      if (typeof renderVerbGrid === 'function') renderVerbGrid();
+      if (typeof renderVocabGrid === 'function') renderVocabGrid();
+      if (typeof renderCustomQuizPacksUI === 'function') renderCustomQuizPacksUI();
+      if (typeof populateCustomQuizDropdown === 'function') populateCustomQuizDropdown();
+
+      // Clear #import=... so reloads don't re-trigger
+      try {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      } catch (e) {}
+
+      const parts = [];
+      if (addedVocab) parts.push(`${addedVocab} word${addedVocab === 1 ? '' : 's'}`);
+      if (addedVerbs) parts.push(`${addedVerbs} verb${addedVerbs === 1 ? '' : 's'}`);
+      if (addedQuizzes) parts.push(`${addedQuizzes} quiz${addedQuizzes === 1 ? '' : 'zes'}`);
+
+      if (parts.length > 0) {
+        showToast(`📥 Auto-imported ${parts.join(', ')} from shared classwork link!`, 'success', 7000);
+        announce(`Imported ${parts.join(', ')} from shared classwork link.`);
+      } else {
+        showToast('All classwork items from that shared link are already in your deck!', 'info', 4500);
+      }
+    } catch (err) {
+      console.error('Failed to import classwork from URL:', err);
+      showToast('Could not read the shared classwork link (it may be incomplete or corrupted).', 'warning', 6000);
+    }
+  }
+
+  function wireShareUI() {
+    const btn = document.getElementById('share-classwork-btn');
+    if (btn && !btn.dataset.shareWired) {
+      btn.dataset.shareWired = 'true';
+      btn.addEventListener('click', shareClassworkViaLink);
+    }
+    importClassworkFromUrlHash();
+  }
+
+  window.addEventListener('hashchange', importClassworkFromUrlHash);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireShareUI);
+  } else {
+    wireShareUI();
   }
 })();
 
